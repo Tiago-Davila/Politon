@@ -100,7 +100,7 @@ const Hero: React.FC = () => {
         }
       )
 
-        /* 8 — Estrellas decorativas animadas con GSAP */
+      /* 8 — Estrellas decorativas animadas con GSAP */
       const stars = sectionRef.current?.querySelectorAll('.hero-star')
       if (stars?.length) {
         stars.forEach((star, i) => {
@@ -328,8 +328,8 @@ const Hero: React.FC = () => {
           className="badge-vintage"
           style={{
             position: 'absolute',
-            top: '14%',
-            right: '4%',
+            bottom: '10%',
+            right: '8%',
             width: '100px',
             height: '100px',
             background: 'var(--polyton-red)',
@@ -451,15 +451,15 @@ const HeroBackground: React.FC = () => (
 
 /* Posiciones de estrellas decorativas */
 const STAR_POSITIONS = [
-  { char: '✦', top: '8%',  left: '5%',  size: '1.8rem', opacity: 0.8, color: 'var(--polyton-gold)', glow: true },
-  { char: '✦', top: '18%', left: '22%', size: '1rem',   opacity: 0.7, color: 'var(--polyton-gold)', glow: false },
-  { char: '✦', top: '35%', left: '3%',  size: '2.2rem', opacity: 0.9, color: 'var(--polyton-cream)', glow: true },
+  { char: '✦', top: '8%', left: '5%', size: '1.8rem', opacity: 0.8, color: 'var(--polyton-gold)', glow: true },
+  { char: '✦', top: '18%', left: '22%', size: '1rem', opacity: 0.7, color: 'var(--polyton-gold)', glow: false },
+  { char: '✦', top: '35%', left: '3%', size: '2.2rem', opacity: 0.9, color: 'var(--polyton-cream)', glow: true },
   { char: '✦', top: '65%', left: '12%', size: '1.4rem', opacity: 0.75, color: 'var(--polyton-gold)', glow: false },
-  { char: '✦', top: '82%', left: '6%',  size: '1rem',   opacity: 0.6, color: 'var(--polyton-cream)', glow: false },
+  { char: '✦', top: '82%', left: '6%', size: '1rem', opacity: 0.6, color: 'var(--polyton-cream)', glow: false },
   { char: '✦', top: '50%', left: '40%', size: '1.6rem', opacity: 0.85, color: 'var(--polyton-gold)', glow: true },
   { char: '✦', top: '15%', left: '42%', size: '0.9rem', opacity: 0.65, color: 'var(--polyton-gold)', glow: false },
   { char: '✦', top: '72%', left: '44%', size: '1.1rem', opacity: 0.7, color: 'var(--polyton-cream)', glow: false },
-  { char: '✦', top: '5%',  left: '36%', size: '1.3rem', opacity: 0.8, color: 'var(--polyton-gold)', glow: true },
+  { char: '✦', top: '5%', left: '36%', size: '1.3rem', opacity: 0.8, color: 'var(--polyton-gold)', glow: true },
   { char: '✦', top: '90%', left: '35%', size: '0.8rem', opacity: 0.6, color: 'var(--polyton-gold)', glow: false },
 ]
 
@@ -498,56 +498,6 @@ const SpeedLines: React.FC = () => (
 )
 
 /* ——— Scroll hint ——— */
-const ScrollHint: React.FC = () => (
-  <div
-    aria-label="Deslizá para explorar"
-    style={{
-      position: 'absolute',
-      bottom: '1.8rem',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      zIndex: 10,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '0.4rem',
-      animation: 'float-idle 2s ease-in-out infinite',
-    }}
-  >
-    <span
-      style={{
-        fontFamily: 'var(--font-subtitle)',
-        fontSize: '0.75rem',
-        color: 'var(--polyton-sand)',
-        letterSpacing: '0.12em',
-        textTransform: 'uppercase',
-      }}
-    >
-      Explorá
-    </span>
-    <div
-      style={{
-        width: '24px',
-        height: '36px',
-        border: '2px solid var(--polyton-sand)',
-        borderRadius: '12px',
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        paddingTop: '6px',
-      }}
-    >
-      <div
-        style={{
-          width: '4px',
-          height: '8px',
-          background: 'var(--polyton-gold)',
-          borderRadius: '2px',
-          animation: 'float-idle 1.4s ease-in-out infinite',
-        }}
-      />
-    </div>
-  </div>
-)
+
 
 export default Hero

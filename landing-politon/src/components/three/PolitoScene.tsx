@@ -1,16 +1,19 @@
 /**
  * PolitoScene.tsx — POLITÓN 2026
- * Three.js billboard sprite de Polito.
- * Vuela de derecha a izquierda mientras el usuario scrollea el Hero.
- * La animación es reversible: al scrollear para arriba Polito regresa.
+ *
+ * Carga polito3D.glb con GLTFLoader.
+ * - Mouse tracking: Polito gira suavemente hacia el cursor
+ * - Idle float: bobbing y rotation sin parar
+ * - Reproduce animaciones propias del GLB si existen
+ * - Entrada con GSAP (scale + opacity desde 0)
  */
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { gsap, ScrollTrigger } from '../../lib/gsap'
-import politoSrc from '../../assets/Polito.png'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { gsap } from '../../lib/gsap'
+import polito3DSrc from '../../assets/polito3D.glb'
 
 interface PolitoSceneProps {
-  /** ref al <section> del Hero — usado como trigger de ScrollTrigger */
   heroRef: React.RefObject<HTMLElement | null>
 }
 
@@ -21,148 +24,227 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    /* Respetar prefers-reduced-motion */
+    /* ── Respetar prefers-reduced-motion ── */
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    /* ─── RENDERER ─── */
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
+    /* ── RENDERER ── */
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setClearColor(0x000000, 0)
+    renderer.shadowMap.enabled = false
+    renderer.outputColorSpace = THREE.SRGBColorSpace
 
-    /* ─── ESCENA + CÁMARA ─── */
+    /* ── ESCENA + CÁMARA ── */
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100)
-    camera.position.set(0, 0, 5)
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200)
+    camera.position.set(0, 0, 8)
+    camera.lookAt(0, -0.2, 0)
 
+    /* ── ILUMINACIÓN ── */
+    // Luz ambiente cálida — tono vintage / crema
+    const ambientLight = new THREE.AmbientLight(0xf5edcf, 1.4)
+    scene.add(ambientLight)
+
+    // Luz direccional principal desde arriba-derecha
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5)
+    dirLight.position.set(4, 6, 5)
+    scene.add(dirLight)
+
+    // Luz de relleno dorada suave desde la izquierda
+    const fillLight = new THREE.DirectionalLight(0xe8a020, 0.8)
+    fillLight.position.set(-3, 2, 3)
+    scene.add(fillLight)
+
+    // Luz de rebote suave desde abajo
+    const bounceLight = new THREE.DirectionalLight(0xede0bc, 0.4)
+    bounceLight.position.set(0, -4, 2)
+    scene.add(bounceLight)
+
+    /* ── SYNC SIZE ── */
     const syncSize = () => {
       const w = canvas.clientWidth
       const h = canvas.clientHeight
+      if (w === 0 || h === 0) return
       renderer.setSize(w, h, false)
       camera.aspect = w / h
       camera.updateProjectionMatrix()
     }
     syncSize()
 
-    /* ─── ESTADO ANIMADO POR GSAP ─── */
-    // Estos valores son modificados por ScrollTrigger y leídos en el render loop.
-    const st = {
-      x:       2.4,   // posición inicial derecha
-      y:      -0.2,
-      scale:   1.0,
-      rotY:    0.0,   // banking (giro en Y)
-      rotX:    0.0,   // pitch (inclinar nariz)
-      opacity: 1.0,
+    /* ── ESTADO MOUSE ── */
+    // Posición normalizada del cursor: [-1, 1] en ambos ejes
+    const mouse = { x: 0, y: 0 }
+    // Target suavizado (lerp target)
+    const smoothMouse = { x: 0, y: 0 }
+
+    const onMouseMove = (e: MouseEvent) => {
+      const hero = heroRef.current
+      if (!hero) return
+      const rect = hero.getBoundingClientRect()
+      // Normalizar a [-1, 1] relativo al hero
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
     }
 
-    /* ─── MALLA ─── */
-    let mesh: THREE.Mesh | null = null
-    let stTrigger: ScrollTrigger | null = null
+    window.addEventListener('mousemove', onMouseMove)
+
+    /* ── MODELO GLB ── */
+    let modelRoot: THREE.Group | null = null
+    let mixer: THREE.AnimationMixer | null = null
     let rafId = 0
+    const clock = new THREE.Clock()
+    // Posición y rotación base del modelo (calculada al cargar, usada por el float idle)
+    const modelBase = { x: 0, y: 0, z: 0, rotZ: 0, rotX: 0 }
 
-    const loader = new THREE.TextureLoader()
-    loader.load(politoSrc, (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace
+    const loader = new GLTFLoader()
 
-      /* Proporción real de la imagen */
-      const imgAspect = tex.image.width / tex.image.height
-      const H = 2.4
-      const W = H * imgAspect
+    loader.load(
+      polito3DSrc,
+      (gltf) => {
+        modelRoot = gltf.scene
 
-      const geo = new THREE.PlaneGeometry(W, H)
-      const mat = new THREE.MeshBasicMaterial({
-        map: tex,
-        transparent: true,
-        alphaTest: 0.05,
-        depthWrite: false,
-        side: THREE.FrontSide,
-      })
+        /* ── Centrar y escalar con auto-fit al frustum ── */
+        // Aplicar rotación inicial "volando" para que el brazo baje al canvas
+        modelRoot.rotation.z = -0.25  // inclinar levemente en Z (lean forward)
+        modelRoot.rotation.x = 0.15  // pitch ligero para pose dinámica
 
-      mesh = new THREE.Mesh(geo, mat)
-      mesh.position.set(st.x, st.y, 0)
-      scene.add(mesh)
+        // Recalcular el bounding box DESPUÉS de la rotación inicial
+        const box = new THREE.Box3().setFromObject(modelRoot)
+        const center = box.getCenter(new THREE.Vector3())
+        const size = box.getSize(new THREE.Vector3())
 
-      /* ─── SCROLL TRIGGER ─── */
-      if (!reduced && heroRef.current) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.5,          // lag suave — el reverse es automático
-          },
+        // Calcular dimensiones del frustum en el plano Z=0
+        const fovRad = (camera.fov * Math.PI) / 180
+        const camDist = camera.position.z
+        const frustumH = 2 * Math.tan(fovRad / 2) * camDist
+        const frustumW = frustumH * camera.aspect
+
+        // Escalar para que el modelo (incluyendo brazo) quepa al 110% de la altura visible
+        const scaleH = (frustumH * 1.20) / size.y
+        const scaleW = (frustumW * 1.20) / size.x
+        const scale = Math.min(scaleH, scaleW)
+
+        modelRoot.scale.setScalar(scale)
+
+        // Centrar horizontalmente
+        modelRoot.position.x = -center.x * scale
+
+        // Centrar verticalmente con leve desplazamiento hacia arriba para compensar el tamaño
+        modelRoot.position.y = -(center.y * scale) + (frustumH * 0.05)
+        modelRoot.position.z = 0
+
+        // Guardar posición y rotación base para el float idle en el render loop
+        modelBase.x = modelRoot.position.x
+        modelBase.y = modelRoot.position.y
+        modelBase.z = 0
+        modelBase.rotZ = modelRoot.rotation.z
+        modelBase.rotX = modelRoot.rotation.x
+
+        /* Sombras soft en cada mesh */
+        modelRoot.traverse((child) => {
+          if ((child as THREE.Mesh).isMesh) {
+            const mesh = child as THREE.Mesh
+            mesh.castShadow = false
+            mesh.receiveShadow = false
+            // Mejorar materiales si son MeshStandardMaterial
+            if (mesh.material instanceof THREE.MeshStandardMaterial) {
+              mesh.material.roughness = 0.7
+              mesh.material.metalness = 0.1
+            }
+          }
         })
 
-        /*
-         * Trayectoria del vuelo:
-         *  Fase 1 (0–40%)  → despegue: sube y gira a la izquierda
-         *  Fase 2 (40–85%) → vuelo horizontal: cruza el hero
-         *  Fase 3 (85–100%)→ sale de pantalla + fade out
-         */
-        tl
-          .to(st, {
-            x: 0.3, y: 0.9,
-            scale: 0.93,
-            rotY: -0.22, rotX: -0.12,
-            opacity: 1,
-            duration: 0.4,
-            ease: 'power1.inOut',
-          })
-          .to(st, {
-            x: -3.0, y: 0.6,
-            scale: 0.80,
-            rotY: -0.35, rotX: -0.06,
-            opacity: 1,
-            duration: 0.45,
-            ease: 'power1.inOut',
-          })
-          .to(st, {
-            x: -5.5, y: 0.4,
-            scale: 0.65,
-            opacity: 0,
-            duration: 0.15,
-            ease: 'power2.in',
-          })
+        scene.add(modelRoot)
 
-        stTrigger = ScrollTrigger.getAll().at(-1) ?? null
+        /* Animaciones del GLB */
+        if (gltf.animations && gltf.animations.length > 0) {
+          mixer = new THREE.AnimationMixer(modelRoot)
+          // Reproducir la primera animación (idle, por lo general)
+          const action = mixer.clipAction(gltf.animations[0])
+          action.play()
+        }
+
+        /* Entrada: escala desde 0 con GSAP */
+        if (!reduced) {
+          modelRoot.scale.setScalar(0)
+          gsap.to(modelRoot.scale, {
+            x: scale,
+            y: scale,
+            z: scale,
+            duration: 0.9,
+            ease: 'back.out(1.8)',
+            delay: 0.6,
+          })
+        }
+
+        /* Canvas visible */
+        gsap.to(canvas, {
+          opacity: 1,
+          duration: 0.5,
+          delay: 0.4,
+        })
+      },
+      undefined,
+      (err) => {
+        console.error('[PolitoScene] Error al cargar polito3D.glb:', err)
       }
-    })
+    )
 
-    /* ─── RENDER LOOP ─── */
-    const clock = new THREE.Clock()
-
+    /* ── RENDER LOOP ── */
     const render = () => {
       rafId = requestAnimationFrame(render)
+      const delta = clock.getDelta()
+      const elapsed = clock.elapsedTime
 
-      if (mesh) {
-        const t = clock.getElapsedTime()
+      if (modelRoot) {
+        /* 1. Idle float — bobbing en Y + leve roll */
+        const floatY = Math.sin(elapsed * 0.8) * 0.12
+        const floatRoll = Math.sin(elapsed * 0.6) * 0.03
+        const floatPitch = Math.cos(elapsed * 0.5) * 0.02
 
-        /* Oscilación idle encima del estado GSAP */
-        const idleY = Math.sin(t * 0.65) * 0.045
-        const idleZ = Math.sin(t * 0.48) * 0.018
+        /* 2. Mouse tracking — suavizar con lerp */
+        if (!reduced) {
+          const lerpSpeed = 0.05
+          smoothMouse.x += (mouse.x - smoothMouse.x) * lerpSpeed
+          smoothMouse.y += (mouse.y - smoothMouse.y) * lerpSpeed
+        }
 
-        mesh.position.x = st.x
-        mesh.position.y = st.y + idleY
-        mesh.rotation.y = st.rotY
-        mesh.rotation.x = st.rotX
-        mesh.rotation.z = idleZ
-        mesh.scale.setScalar(st.scale)
-        ;(mesh.material as THREE.MeshBasicMaterial).opacity = st.opacity
+        /* Eje Y (yaw): mira izq/der según cursor (reducida sensibilidad) */
+        const targetYaw = smoothMouse.x * 0.20
+        /* Eje X (pitch): mira arriba/abajo según cursor + base lean (reducida sensibilidad) */
+        const targetPitch = smoothMouse.y * 0.12
+
+        modelRoot.rotation.y = targetYaw
+        // Base lean rotations + mouse + idle float
+        modelRoot.rotation.x = modelBase.rotX + targetPitch + floatPitch
+        modelRoot.rotation.z = modelBase.rotZ + floatRoll
+
+        /* Posición: float en Y alrededor del baseY guardado */
+        modelRoot.position.y = modelBase.y + floatY
       }
+
+      /* Actualizar mixer (animaciones propias del GLB) */
+      if (mixer) mixer.update(delta)
 
       renderer.render(scene, camera)
     }
 
     render()
 
-    /* ─── RESIZE ─── */
+    /* ── RESIZE ── */
     const ro = new ResizeObserver(syncSize)
     ro.observe(canvas)
 
-    /* ─── CLEANUP ─── */
+    /* ── CLEANUP ── */
     return () => {
       cancelAnimationFrame(rafId)
       ro.disconnect()
-      stTrigger?.kill()
+      window.removeEventListener('mousemove', onMouseMove)
+      mixer?.stopAllAction()
       renderer.dispose()
       scene.clear()
     }
@@ -172,14 +254,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      style={{
-        position: 'absolute',
-        inset: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 1,   /* entre fondo (0) y texto (2) */
-      }}
+      className="polito-canvas"
     />
   )
 }

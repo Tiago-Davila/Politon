@@ -6,6 +6,8 @@ import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import Countdown from './components/sections/Countdown'
 import WhatIsHackathon from './components/sections/WhatIsHackathon'
+import Challenges from './components/sections/Challenges'
+import Talks from './components/sections/Talks'
 
 /* Custom cursor — doble anillo tech */
 const CustomCursor: React.FC = () => {
@@ -77,6 +79,8 @@ const App: React.FC = () => {
         <Hero />
         <Countdown />
         <WhatIsHackathon />
+        <Challenges />
+        <Talks />
       </main>
     </>
   )

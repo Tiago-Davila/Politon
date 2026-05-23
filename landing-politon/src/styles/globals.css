@@ -1,0 +1,740 @@
+@import "tailwindcss";
+
+/* ============================================
+   POLITÓN 2026 — Design System
+   Estética: Rubber Hose Cartoon / Vintage 30s
+   Paleta directa de la identidad de marca
+   ============================================ */
+
+/* ---------- TAILWIND COLOR TOKENS ---------- */
+@theme {
+  /* Paleta oficial Politón */
+  --color-polyton-night: #1E2D5C;
+  --color-polyton-blue: #2C3A6B;
+  --color-polyton-gold: #E8A020;
+  --color-polyton-cream: #EDE0BC;
+  --color-polyton-sand: #C8B98A;
+  --color-polyton-red: #C94C2E;
+  --color-polyton-leather: #7A4E2D;
+  --color-polyton-ink: #1A1A1A;
+  --color-polyton-paper: #FDFAF2;
+  --color-polyton-vintage: #F5EDCF;
+
+  /* Fuentes */
+  --font-display: 'Lilita One', serif;
+  --font-subtitle: 'Boogaloo', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-accent: 'Special Elite', serif;
+}
+
+/* ---------- CSS VARIABLES GLOBALES ---------- */
+:root {
+  /* Colores */
+  --polyton-night: #1E2D5C;
+  --polyton-blue: #2C3A6B;
+  --polyton-gold: #E8A020;
+  --polyton-cream: #EDE0BC;
+  --polyton-sand: #C8B98A;
+  --polyton-red: #C94C2E;
+  --polyton-leather: #7A4E2D;
+  --polyton-ink: #1A1A1A;
+  --polyton-paper: #FDFAF2;
+  --polyton-vintage: #F5EDCF;
+
+  /* Fuentes */
+  --font-display: 'Lilita One', serif;
+  --font-subtitle: 'Boogaloo', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-accent: 'Special Elite', serif;
+
+  /* Sombras estilo caricatura — negro duro */
+  --shadow-cartoon-sm: 3px 3px 0px var(--polyton-ink);
+  --shadow-cartoon-md: 5px 5px 0px var(--polyton-ink);
+  --shadow-cartoon-lg: 7px 7px 0px var(--polyton-ink);
+
+  /* Bordes */
+  --border-cartoon: 3px solid var(--polyton-ink);
+  --border-cartoon-thick: 4px solid var(--polyton-ink);
+}
+
+/* ---------- RESET ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--polyton-paper);
+  color: var(--polyton-ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  position: relative;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- GRAIN TEXTURE (VINTAGE FILM) ---------- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- CUSTOM CURSOR ---------- */
+.cursor {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--polyton-red);
+  border: 2px solid var(--polyton-ink);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--polyton-gold);
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+.cursor.hovering {
+  width: 22px;
+  height: 22px;
+  background-color: var(--polyton-gold);
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--polyton-vintage);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--polyton-night);
+  border-radius: 0;
+}
+
+/* ---------- TIPOGRAFÍA ---------- */
+h1,
+.font-display {
+  font-family: var(--font-display);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+
+h2,
+h3,
+.font-subtitle {
+  font-family: var(--font-subtitle);
+  line-height: 1.1;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+/* ---------- UTILITARIOS CARTOON ---------- */
+
+/* Borde duro negro estilo caricatura */
+.border-cartoon {
+  border: 3px solid var(--polyton-ink);
+  box-shadow: var(--shadow-cartoon-md);
+}
+
+.border-cartoon-sm {
+  border: 2px solid var(--polyton-ink);
+  box-shadow: var(--shadow-cartoon-sm);
+}
+
+.border-cartoon-lg {
+  border: 4px solid var(--polyton-ink);
+  box-shadow: var(--shadow-cartoon-lg);
+}
+
+/* Botón estilo Cuphead */
+.btn-cuphead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-subtitle);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--polyton-cream);
+  background: var(--polyton-red);
+  border: 3px solid var(--polyton-ink);
+  box-shadow: 5px 5px 0px var(--polyton-ink);
+  padding: 0.65rem 1.6rem;
+  cursor: none;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  position: relative;
+  user-select: none;
+}
+
+.btn-cuphead:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px var(--polyton-ink);
+  background: #d9572f;
+}
+
+.btn-cuphead:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0px var(--polyton-ink);
+}
+
+.btn-cuphead-gold {
+  color: var(--polyton-ink);
+  background: var(--polyton-gold);
+}
+
+.btn-cuphead-gold:hover {
+  background: #d4911a;
+}
+
+.btn-cuphead-night {
+  color: var(--polyton-cream);
+  background: var(--polyton-night);
+}
+
+.btn-cuphead-night:hover {
+  background: var(--polyton-blue);
+}
+
+/* Badge circular estilo sticker vintage */
+.badge-vintage {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid var(--polyton-ink);
+  box-shadow: 3px 3px 0px var(--polyton-ink);
+  font-family: var(--font-display);
+  text-align: center;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Ornamento estrella de 4 puntas */
+.star-ornament::before,
+.star-ornament::after {
+  content: '✦';
+  color: var(--polyton-gold);
+  font-size: 0.8em;
+  margin: 0 0.3em;
+}
+
+/* ---------- ANIMACIONES ---------- */
+
+@keyframes float-idle {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+
+  66% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+
+@keyframes blink-eye {
+
+  0%,
+  90%,
+  100% {
+    scaleY: 1;
+  }
+
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes spin-star {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes speed-line-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes char-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(110%) rotate(3deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(0) rotate(-15deg);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1) rotate(4deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes stripe-slide {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 40px 40px;
+  }
+}
+
+@keyframes glow-pulse-gold {
+
+  0%,
+  100% {
+    text-shadow: 2px 2px 0 var(--polyton-ink), 0 0 0 transparent;
+  }
+
+  50% {
+    text-shadow: 2px 2px 0 var(--polyton-ink), 0 0 30px rgba(232, 160, 32, 0.5);
+  }
+}
+
+/* ---------- CHAR SPLIT ANIMATION ---------- */
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.word {
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* ---------- REDUCCIÓN DE MOVIMIENTO ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- SECCIONES ---------- */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- LINK BASE ---------- */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- NAVBAR LINK HOVER ---------- */
+.nav-link:hover {
+  color: var(--polyton-red) !important;
+}
+
+.nav-link:hover .nav-link-underline {
+  transform: scaleX(1) !important;
+}
+
+/* ============================================================
+   COUNTDOWN SECTION
+   ============================================================ */
+
+.countdown-section {
+  background-color: #0c1320;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 1rem 1rem;
+  overflow: hidden;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  min-width: 60px;
+}
+
+.cd-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--polyton-cream);
+  line-height: 1;
+  text-shadow: 2px 2px 0 var(--polyton-ink);
+  letter-spacing: 0.04em;
+}
+
+.cd-label {
+  font-family: var(--font-subtitle);
+  font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+  color: var(--polyton-gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.cd-sep {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--polyton-gold);
+  line-height: 1;
+  margin-top: -0.5rem;
+}
+
+/* ── Grid de cuadrantes del fondo ── */
+.countdown-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Líneas que dividen la sección en cuadrantes */
+  background-image:
+    linear-gradient(rgba(237, 224, 188, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(237, 224, 188, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Líneas de cuadrante gruesas en el centro */
+.countdown-section::before,
+.countdown-section::after {
+  content: '';
+  position: absolute;
+  background: rgba(237, 224, 188, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.countdown-section::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.countdown-section::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+/* ── Grain overlay ── */
+.countdown-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* ── Tira de película (perforaciones) ── */
+.film-strip {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  background: #080e18;
+  border-top: 2px solid rgba(237, 224, 188, 0.15);
+  border-bottom: 2px solid rgba(237, 224, 188, 0.15);
+  padding: 0.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.film-hole {
+  width: 20px;
+  height: 28px;
+  border-radius: 4px;
+  border: 2px solid rgba(237, 224, 188, 0.25);
+  background: #0c1320;
+  flex-shrink: 0;
+}
+
+/* ── Header ── */
+.countdown-header {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.countdown-eyebrow {
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  color: var(--polyton-gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.countdown-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  color: var(--polyton-cream);
+  line-height: 0.9;
+  text-shadow: 5px 5px 0 var(--polyton-ink);
+  letter-spacing: 0.05em;
+}
+
+.countdown-subtitle {
+  font-family: var(--font-subtitle);
+  font-size: 1.2rem;
+  color: var(--polyton-gold);
+  letter-spacing: 0.08em;
+}
+
+/* ── Grid de unidades ── */
+.countdown-units {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 2rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* ── FilmUnit card ── */
+.film-unit {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: visible;
+  opacity: 0;
+  /* GSAP anima */
+}
+
+/* Crosshair horizontal */
+.film-crosshair-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(237, 224, 188, 0.12);
+  pointer-events: none;
+}
+
+/* Crosshair vertical */
+.film-crosshair-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(237, 224, 188, 0.12);
+  pointer-events: none;
+}
+
+/* Contenedor del círculo SVG + número */
+.film-circle-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.film-circles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--polyton-cream);
+  opacity: 0.7;
+}
+
+.film-number {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  color: var(--polyton-cream);
+  line-height: 1;
+  text-shadow:
+    3px 3px 0 var(--polyton-ink),
+    0 0 30px rgba(232, 160, 32, 0.2);
+  letter-spacing: 0.02em;
+  display: block;
+}
+
+.film-label {
+  font-family: var(--font-subtitle);
+  font-size: 0.85rem;
+  color: var(--polyton-gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Corner marks eliminados */
+
+@media (max-width: 768px) {
+  .countdown-units {
+    gap: 1rem;
+  }
+
+  .film-unit {
+    width: 155px;
+    height: 190px;
+  }
+
+  .film-circle-wrap {
+    width: 130px;
+    height: 130px;
+  }
+
+  .film-number {
+    font-size: 3.2rem;
+  }
+}
+
+/* ============================================================
+   WHAT IS A HACKATHON SECTION
+   ============================================================ */
+
+.what-section {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--polyton-paper);
+
+  overflow: hidden;
+}
+
+.what-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+  padding-left: 2rem;
+}
+
+.what-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  color: var(--polyton-night);
+  text-shadow: 4px 4px 0 var(--polyton-ink);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.what-body {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--polyton-ink);
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .what-section {
+    padding: 3rem 1rem;
+  }
+}

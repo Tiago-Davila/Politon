@@ -99,7 +99,7 @@ const CardNav = ({
         const contentHeight = contentEl.scrollHeight
         Object.assign(contentEl.style, prev)
 
-        return 60 + contentHeight + 16
+        return 90 + contentHeight + 16
       }
     }
 
@@ -110,7 +110,7 @@ const CardNav = ({
     const navEl = navRef.current
     if (!navEl) return null
 
-    gsap.set(navEl, { height: 60, overflow: 'hidden' })
+    gsap.set(navEl, { height: 76, overflow: 'hidden' })
     gsap.set(cardsRef.current, { y: 50, opacity: 0 })
 
     const tl = gsap.timeline({ paused: true })

@@ -3,11 +3,10 @@
  *
  * Sección de Problemáticas con scroll horizontal hijack.
  * GSAP ScrollTrigger pina la sección y convierte el scroll vertical
- * en movimiento horizontal del carrusel.
+ * en movimiento horizontal del carrusel. Cards siempre visibles.
  */
 import React, { useEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '../../lib/gsap'
-import { splitText } from '../../lib/textSplit'
+import { gsap } from '../../lib/gsap'
 
 const CHALLENGES = [
   {
@@ -75,59 +74,32 @@ const Challenges: React.FC = () => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) return
 
-    /* Split del título */
-    if (headerTitleRef.current) {
-      const { chars } = splitText(headerTitleRef.current)
-      gsap.fromTo(
-        chars,
-        { y: '100%', opacity: 0 },
-        {
-          y: '0%',
-          opacity: 1,
-          duration: 0.55,
-          stagger: 0.03,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 80%' },
-        }
-      )
-    }
-
     /* ── Horizontal scroll hijack ──
      * Cada card ocupa 72.5vw → 1 card + ~1/3 del siguiente.
-     * Desplazamos el track: totalWidth − viewportWidth.
+     * Desplazamos el track con gsap.to (más performante que onUpdate + gsap.set).
      */
     const cards     = track.querySelectorAll<HTMLElement>('.challenge-card')
     const cardWidth = cards[0]?.offsetWidth ?? 0
     const totalW    = cardWidth * cards.length
     const maxScroll = Math.max(0, totalW - window.innerWidth)
 
-    /* Cards parten invisibles — se revelan al entrar */
-    gsap.set(cards, { opacity: 0, x: 24 })
-
-    const st = ScrollTrigger.create({
-      trigger: section,
-      pin: true,
-      pinSpacing: true,
-      start: 'top top',
-      end: () => `+=${maxScroll + 80}`,
-      scrub: 1.2,
-      invalidateOnRefresh: true,
-      onEnter: () => {
-        gsap.to(cards, {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power3.out',
-        })
-      },
-      onUpdate: (self) => {
-        gsap.set(track, { x: -self.progress * maxScroll })
+    const anim = gsap.to(track, {
+      x: -maxScroll,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        pinSpacing: true,
+        start: 'top top',
+        end: `+=${maxScroll + 80}`,
+        scrub: 1.2,
+        invalidateOnRefresh: true,
       },
     })
 
     return () => {
-      st.kill()
+      anim.scrollTrigger?.kill()
+      anim.kill()
     }
   }, [])
 
@@ -139,20 +111,11 @@ const Challenges: React.FC = () => {
     >
       {/* Header */}
       <div className="challenges-header">
-        <p className="challenges-eyebrow">
-          <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-          {' '}Elige tu batalla{' '}
-          <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-        </p>
         <div style={{ overflow: 'hidden' }}>
           <h2 ref={headerTitleRef} className="challenges-title">
             Problemáticas
           </h2>
         </div>
-        <p className="challenges-hint">
-          <span className="hint-arrow">→</span>
-          &nbsp;Deslizá para explorar
-        </p>
       </div>
 
       {/* Carrusel */}

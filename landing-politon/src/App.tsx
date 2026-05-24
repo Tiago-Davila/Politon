@@ -9,6 +9,8 @@ import WhatIsHackathon from './components/sections/WhatIsHackathon'
 import Challenges from './components/sections/Challenges'
 import Talks from './components/sections/Talks'
 
+import Register from './components/sections/Register'
+
 /* Custom cursor — doble anillo tech */
 const CustomCursor: React.FC = () => {
   const dotRef = useRef<HTMLDivElement>(null)
@@ -81,6 +83,7 @@ const App: React.FC = () => {
         <WhatIsHackathon />
         <Challenges />
         <Talks />
+        <Register />
       </main>
     </>
   )

@@ -10,9 +10,12 @@
 import React, { useEffect, useRef } from 'react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import PolitoScene from '../three/PolitoScene'
 
 const Hero: React.FC = () => {
+  const isDesktop = useMediaQuery('(min-width: 769px)')
+
   /* —— REFS —— */
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
@@ -141,9 +144,9 @@ const Hero: React.FC = () => {
 
       {/* ═══════════════════════════════════════
           POLITO — Three.js sprite animado por scroll
-          z-index 1: entre el fondo y el texto
+          Solo en desktop para rendimiento
           ═══════════════════════════════════════ */}
-      <PolitoScene heroRef={sectionRef} />
+      {isDesktop && <PolitoScene heroRef={sectionRef} />}
 
       {/* ═══════════════════════════════════════
           CONTENIDO — grid de dos columnas

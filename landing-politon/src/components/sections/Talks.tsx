@@ -1,126 +1,141 @@
 import React, { useEffect, useRef } from 'react'
-import { gsap } from '../../lib/gsap'
-import ProfileCard from '../ui/ProfileCard'
-import { splitText } from '../../lib/textSplit'
-import PolitoImg from '../../assets/polito-angulos.png'
-import LogoImg from '../../assets/logo-completo.png'
+import { gsap, ScrollTrigger } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    id: 's1',
-    name: 'Ana Dev',
-    title: 'Futuro Laboral',
-    handle: 'anadev',
-    status: 'Confirmada',
-    avatarUrl: PolitoImg,
-    iconUrl: LogoImg, // Icono de fondo
-    innerGradient: 'linear-gradient(145deg, rgba(201, 76, 46, 0.5) 0%, rgba(201, 76, 46, 0.1) 100%)', // polyton-red
-    behindGlowColor: 'rgba(201, 76, 46, 0.6)', 
+    name: 'Speaker 1',
+    topic: 'Tema de la charla',
+    image: 'https://placehold.co/400x500/2C3A6B/EDE0BC?text=S1',
+    accent: '#C94C2E',
   },
   {
-    id: 's2',
-    name: 'Leo Token',
-    title: 'Gamificación',
-    handle: 'leotoken',
-    status: 'Confirmado',
-    avatarUrl: PolitoImg,
-    iconUrl: LogoImg,
-    innerGradient: 'linear-gradient(145deg, rgba(232, 160, 32, 0.5) 0%, rgba(232, 160, 32, 0.1) 100%)', // polyton-gold
-    behindGlowColor: 'rgba(232, 160, 32, 0.6)',
+    name: 'Speaker 2',
+    topic: 'Tema de la charla',
+    image: 'https://placehold.co/400x500/1E2D5C/EDE0BC?text=S2',
+    accent: '#E8A020',
   },
   {
-    id: 's3',
-    name: 'Dra. S. Mind',
-    title: 'Vínculos',
-    handle: 'smind_psico',
-    status: 'Confirmada',
-    avatarUrl: PolitoImg,
-    iconUrl: LogoImg,
-    innerGradient: 'linear-gradient(145deg, rgba(124, 107, 196, 0.5) 0%, rgba(124, 107, 196, 0.1) 100%)', // indigo
-    behindGlowColor: 'rgba(124, 107, 196, 0.6)',
-  }
+    name: 'Speaker 3',
+    topic: 'Tema de la charla',
+    image: 'https://placehold.co/400x500/7A4E2D/EDE0BC?text=S3',
+    accent: '#2C3A6B',
+  },
 ]
 
 const Talks: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const cardsRef = useRef<HTMLDivElement>(null)
+  const stackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const section = sectionRef.current
-    if (!section) return
+    const stack = stackRef.current
+    if (!section || !stack) return
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) return
 
-    // Animar título
-    if (titleRef.current) {
-      const { chars } = splitText(titleRef.current)
-      gsap.fromTo(
-        chars,
-        { y: '100%', opacity: 0 },
+    const cards = Array.from(stack.querySelectorAll<HTMLElement>('.stack-card'))
+    if (!cards.length) return
+
+    const N = cards.length
+    // How many viewport heights the user must scroll per card reveal.
+    // Increase this to require more scrolling to reveal the next card.
+    const SCROLL_PER_CARD = 140 // in vh
+
+    /* Posiciones iniciales: stack visual con offset y escala */
+    cards.forEach((card, i) => {
+      const fromTop = N - 1 - i
+      gsap.set(card, {
+        y: -fromTop * 12,
+        scale: 1 - fromTop * 0.03,
+        zIndex: fromTop,
+      })
+    })
+
+    /* Timeline: las cards salen de arriba hacia abajo */
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        start: 'top top',
+        end: `+=${N * SCROLL_PER_CARD}vh`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    })
+
+    // Animate cards in DOM order: card 0 (first) should go first, leaving the last card as the base
+    for (let i = 0; i < N; i++) {
+      if (i === N - 1) continue
+      const pos = i / N
+      tl.to(
+        cards[i],
         {
-          y: '0%', opacity: 1,
-          duration: 0.6,
-          stagger: 0.04,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 80%' }
-        }
+          y: '-120%',
+          opacity: 0,
+          scale: 0.8,
+          rotation: -5,
+          ease: 'power2.inOut',
+          duration: 1 / N,
+        },
+        pos
       )
     }
 
-    // Animar cards de speakers
-    if (cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('.talks-card-wrapper')
-      gsap.fromTo(
-        cards,
-        { y: 60, opacity: 0, scale: 0.95 },
-        {
-          y: 0, opacity: 1, scale: 1,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'back.out(1.2)',
-          scrollTrigger: { trigger: cardsRef.current, start: 'top 85%' }
-        }
-      )
+    return () => {
+      tl.scrollTrigger?.kill()
+      tl.kill()
     }
   }, [])
 
   return (
-    <section ref={sectionRef} id="charlas" className="talks-section">
-      <div className="talks-header">
-        <p className="talks-eyebrow">
-          <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-          {' '}Inspiración{' '}
-          <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-        </p>
-        <div style={{ overflow: 'hidden' }}>
-          <h2 ref={titleRef} className="talks-title">Speakers</h2>
-        </div>
-        <p className="talks-subtitle">Conocé a los expertos que te van a guiar en cada problemática.</p>
-      </div>
-
-      <div className="talks-grid" ref={cardsRef}>
-        {SPEAKERS.map(speaker => (
-          <div key={speaker.id} className="talks-card-wrapper">
-            <ProfileCard
-              name={speaker.name}
-              title={speaker.title}
-              handle={speaker.handle}
-              status={speaker.status}
-              avatarUrl={speaker.avatarUrl}
-              miniAvatarUrl={speaker.avatarUrl}
-              iconUrl={speaker.iconUrl}
-              innerGradient={speaker.innerGradient}
-              behindGlowColor={speaker.behindGlowColor}
-              behindGlowSize="50%"
-              enableTilt={true}
-              enableMobileTilt={true}
-              contactText="Ver Perfil"
-              onContactClick={() => alert(`Perfil de ${speaker.name} próximamente`)}
-            />
+    <section ref={sectionRef} id="charlas" className="talks-stack-section">
+      <div className="talks-stack-inner">
+        <div className="talks-stack-left">
+          <p className="talks-stack-eyebrow">
+            <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
+            {' '}Inspiración{' '}
+            <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
+          </p>
+          <h2 className="talks-stack-title">Speakers</h2>
+          <p className="talks-stack-desc">
+            Conocé a los expertos que van a guiar a los equipos durante las 48 horas.
+            Cada speaker trae una perspectiva única sobre la problemática que aborda.
+          </p>
+          <div className="talks-stack-count">
+            <span className="tsc-number">{String(SPEAKERS.length).padStart(2, '0')}</span>
+            <span className="tsc-label">speakers<br />confirmados</span>
           </div>
-        ))}
+        </div>
+
+        <div ref={stackRef} className="talks-stack-right">
+          <div className="talks-stack-cards">
+            {SPEAKERS.map((s, i) => (
+              <article
+                key={i}
+                className="stack-card"
+                style={{ '--card-accent': s.accent } as React.CSSProperties}
+              >
+                <div className="stack-card-photo">
+                  <img src={s.image} alt={s.name} loading="lazy" />
+                </div>
+                <div className="stack-card-body">
+                  <div className="stack-card-tag" style={{ background: s.accent }}>
+                    Speaker
+                  </div>
+                  <h3 className="stack-card-name">{s.name}</h3>
+                  <p className="stack-card-topic">{s.topic}</p>
+                </div>
+                <div className="stack-card-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <div className="stack-card-badge" aria-hidden="true" style={{ background: s.accent }}>
+                  ★
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

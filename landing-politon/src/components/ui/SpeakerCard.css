@@ -1,0 +1,229 @@
+/* ──────────────────────────────────────────────
+   SpeakerCard — POLITÓN 2026
+   Foto full-bleed, iconos flotantes en fondo,
+   nombre + problemática arriba.
+────────────────────────────────────────────── */
+
+.sc-wrapper {
+  position: relative;
+  width: 280px;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  /* tilt CSS vars */
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --card-opacity: 0;
+
+  perspective: 600px;
+  transform: translate3d(0, 0, 0.1px);
+}
+
+/* ── Glow detrás ── */
+.sc-behind {
+  position: absolute;
+  inset: -20px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 36px;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    var(--sc-glow, rgba(232, 160, 32, 0.6)) 0%,
+    transparent 55%
+  );
+  filter: blur(40px) saturate(1.2);
+  opacity: calc(0.9 * var(--card-opacity));
+  transition: opacity 250ms ease;
+}
+
+.sc-wrapper:hover,
+.sc-wrapper.active {
+  --card-opacity: 1;
+}
+
+/* ── Card shell con tilt ── */
+.sc-shell {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transform: rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+  transition: transform 0.8s ease, box-shadow 0.3s ease;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.sc-wrapper:hover .sc-shell,
+.sc-wrapper.active .sc-shell {
+  transition: transform 0s, box-shadow 0.3s ease;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+/* ── Fondo oscuro base ── */
+.sc-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--sc-bg, #0d1228);
+  z-index: 0;
+}
+
+/* ── Gradiente de color temático (overlay suave sobre el fondo) ── */
+.sc-color-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--sc-gradient, linear-gradient(160deg, rgba(232,160,32,0.18) 0%, transparent 60%));
+  pointer-events: none;
+}
+
+/* ── Iconos flotantes en el fondo ── */
+.sc-icons-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sc-icon-float {
+  position: absolute;
+  object-fit: contain;
+  opacity: 0.12;
+  filter: grayscale(1) brightness(2);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Posiciones fijas para cada uno de los 6 iconos flotantes */
+.sc-icon-float:nth-child(1) { width: 90px;  top: 4%;   left: -8%;  transform: rotate(-12deg); opacity: 0.10; }
+.sc-icon-float:nth-child(2) { width: 70px;  top: 10%;  right: -5%; transform: rotate(8deg);   opacity: 0.14; }
+.sc-icon-float:nth-child(3) { width: 80px;  top: 42%;  left: -10%; transform: rotate(5deg);   opacity: 0.09; }
+.sc-icon-float:nth-child(4) { width: 60px;  top: 55%;  right: -8%; transform: rotate(-6deg);  opacity: 0.13; }
+.sc-icon-float:nth-child(5) { width: 100px; bottom: 5%; left: 2%;  transform: rotate(-4deg);  opacity: 0.08; }
+.sc-icon-float:nth-child(6) { width: 75px;  bottom: 8%; right: 0%; transform: rotate(10deg);  opacity: 0.11; }
+
+/* ── Foto del speaker (ocupa toda la altura desde abajo) ── */
+.sc-photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 92%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 3;
+
+  /* Desvanecimiento en la parte superior para que se integre con el texto */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.3) 8%,
+    rgba(0,0,0,0.85) 18%,
+    black 32%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.3) 8%,
+    rgba(0,0,0,0.85) 18%,
+    black 32%
+  );
+}
+
+/* ── Gradiente de oscurecimiento en la parte superior (para legibilidad del texto) ── */
+.sc-top-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  z-index: 4;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Texto (nombre + problemática) — arriba ── */
+.sc-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 20px 18px 0;
+  pointer-events: none;
+}
+
+.sc-name {
+  font-family: var(--font-subtitle, 'Boogaloo', cursive);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  margin: 0 0 4px;
+}
+
+.sc-topic {
+  font-family: var(--font-body, 'Nunito', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sc-accent, #f0c84a);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  margin: 0;
+}
+
+/* ── Shine holográfico en hover ── */
+.sc-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sc-wrapper:hover .sc-shine,
+.sc-wrapper.active .sc-shine {
+  opacity: 1;
+}
+
+/* ── Borde sutil ── */
+.sc-border {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.sc-wrapper:hover .sc-border,
+.sc-wrapper.active .sc-border {
+  border-color: rgba(255, 255, 255, 0.2);
+}

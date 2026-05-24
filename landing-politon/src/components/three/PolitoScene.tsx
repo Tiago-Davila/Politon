@@ -96,7 +96,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
     let modelRoot: THREE.Group | null = null
     let mixer: THREE.AnimationMixer | null = null
     let rafId = 0
-    const clock = new THREE.Clock()
+    const timer = new THREE.Timer()
     // Posición y rotación base del modelo (calculada al cargar, usada por el float idle)
     const modelBase = { x: 0, y: 0, z: 0, rotZ: 0, rotX: 0 }
 
@@ -109,8 +109,8 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
         /* ── Centrar y escalar con auto-fit al frustum ── */
         // Aplicar rotación inicial "volando" para que el brazo baje al canvas
-        modelRoot.rotation.z = -0.25  // inclinar levemente en Z (lean forward)
-        modelRoot.rotation.x = 0.15  // pitch ligero para pose dinámica
+        modelRoot.rotation.z = -0.30  // inclinar levemente en Z (lean forward)
+        modelRoot.rotation.x = 0.5  // pitch ligero para pose dinámica
 
         // Recalcular el bounding box DESPUÉS de la rotación inicial
         const box = new THREE.Box3().setFromObject(modelRoot)
@@ -124,8 +124,8 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
         const frustumW = frustumH * camera.aspect
 
         // Escalar para que el modelo (incluyendo brazo) quepa al 110% de la altura visible
-        const scaleH = (frustumH * 1.20) / size.y
-        const scaleW = (frustumW * 1.20) / size.x
+        const scaleH = (frustumH * 1.10) / size.y
+        const scaleW = (frustumW * 1.10) / size.x
         const scale = Math.min(scaleH, scaleW)
 
         modelRoot.scale.setScalar(scale)
@@ -194,11 +194,14 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
       }
     )
 
-    /* ── RENDER LOOP ── */
+    /* ── RENDER LOOP con pausa por visibilidad ── */
+    let isVisible = true
+
     const render = () => {
+      if (!isVisible) return
       rafId = requestAnimationFrame(render)
-      const delta = clock.getDelta()
-      const elapsed = clock.elapsedTime
+      const delta = timer.getDelta()
+      const elapsed = timer.getElapsed()
 
       if (modelRoot) {
         /* 1. Idle float — bobbing en Y + leve roll */
@@ -233,7 +236,39 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
       renderer.render(scene, camera)
     }
 
-    render()
+    const startRender = () => {
+      if (!isVisible) {
+        isVisible = true
+        rafId = requestAnimationFrame(render)
+      }
+    }
+
+    const stopRender = () => {
+      isVisible = false
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+        rafId = 0
+      }
+    }
+
+    rafId = requestAnimationFrame(render)
+
+    /* Pausar cuando el canvas sale del viewport */
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) startRender()
+        else stopRender()
+      },
+      { threshold: 0 }
+    )
+    io.observe(canvas)
+
+    /* Pausar cuando la tab está en background */
+    const onVisibility = () => {
+      if (document.hidden) stopRender()
+      else startRender()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
 
     /* ── RESIZE ── */
     const ro = new ResizeObserver(syncSize)
@@ -241,7 +276,9 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     /* ── CLEANUP ── */
     return () => {
-      cancelAnimationFrame(rafId)
+      stopRender()
+      io.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
       ro.disconnect()
       window.removeEventListener('mousemove', onMouseMove)
       mixer?.stopAllAction()

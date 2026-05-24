@@ -6,11 +6,13 @@
  * - Idle float: bobbing y rotation sin parar
  * - Reproduce animaciones propias del GLB si existen
  * - Entrada con GSAP (scale + opacity desde 0)
+ * - Dispara useLoader para ocultarloader cuando el modelo está listo
  */
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { gsap } from '../../lib/gsap'
+import { useLoader } from '../../contexts/LoaderContext'
 import polito3DSrc from '../../assets/polito3D.glb'
 
 interface PolitoSceneProps {
@@ -19,6 +21,7 @@ interface PolitoSceneProps {
 
 const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { setIsLoading } = useLoader()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -187,6 +190,9 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
           duration: 0.5,
           delay: 0.4,
         })
+
+        /* Ocultar loader cuando el modelo está listo */
+        setIsLoading(false)
       },
       undefined,
       (err) => {

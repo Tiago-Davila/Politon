@@ -105,6 +105,15 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     const loader = new GLTFLoader()
 
+    const loadStartTime = Date.now()
+    let loaderTimeoutId: number | null = null
+
+    function hideLoader() {
+      const elapsed = Date.now() - loadStartTime
+      const remaining = Math.max(0, 1000 - elapsed)
+      loaderTimeoutId = window.setTimeout(() => setIsLoading(false), remaining)
+    }
+
     loader.load(
       polito3DSrc,
       (gltf) => {
@@ -181,6 +190,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
             duration: 0.9,
             ease: 'back.out(1.8)',
             delay: 0.6,
+            onComplete: hideLoader,
           })
         }
 
@@ -189,10 +199,8 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
           opacity: 1,
           duration: 0.5,
           delay: 0.4,
+          onComplete: reduced ? hideLoader : undefined,
         })
-
-        /* Ocultar loader cuando el modelo está listo */
-        setIsLoading(false)
       },
       undefined,
       (err) => {
@@ -282,6 +290,8 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     /* ── CLEANUP ── */
     return () => {
+      if (loaderTimeoutId !== null) clearTimeout(loaderTimeoutId)
+      setIsLoading(false) // fallback: ensure loader hides on unmount
       stopRender()
       io.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)
@@ -291,7 +301,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
       renderer.dispose()
       scene.clear()
     }
-  }, [heroRef])
+  }, [heroRef, setIsLoading])
 
   return (
     <canvas

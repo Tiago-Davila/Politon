@@ -466,40 +466,6 @@ const STAR_POSITIONS = [
   { char: '✦', top: '90%', left: '35%', size: '0.8rem', opacity: 0.6, color: 'var(--polyton-gold)', glow: false },
 ]
 
-/* ——— Speed Lines SVG ——— */
-const SpeedLines: React.FC = () => (
-  <svg
-    viewBox="0 0 500 500"
-    width="520"
-    height="520"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    style={{ position: 'absolute' }}
-  >
-    {/* Líneas radiales estilo Cuphead */}
-    {Array.from({ length: 24 }, (_, i) => {
-      const angle = (i / 24) * 360
-      const rad = (angle * Math.PI) / 180
-      const x1 = 250 + Math.cos(rad) * 60
-      const y1 = 250 + Math.sin(rad) * 60
-      const x2 = 250 + Math.cos(rad) * 240
-      const y2 = 250 + Math.sin(rad) * 240
-      const w = i % 3 === 0 ? 3 : 1.5
-      return (
-        <line
-          key={i}
-          x1={x1} y1={y1}
-          x2={x2} y2={y2}
-          stroke="#E8A020"
-          strokeWidth={w}
-          strokeLinecap="round"
-          opacity={i % 3 === 0 ? 0.9 : 0.5}
-        />
-      )
-    })}
-  </svg>
-)
-
 /* ——— Scroll hint ——— */
 
 

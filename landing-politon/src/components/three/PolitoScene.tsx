@@ -105,15 +105,6 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     const loader = new GLTFLoader()
 
-    const loadStartTime = Date.now()
-    let loaderTimeoutId: number | null = null
-
-    function hideLoader() {
-      const elapsed = Date.now() - loadStartTime
-      const remaining = Math.max(0, 1000 - elapsed)
-      loaderTimeoutId = window.setTimeout(() => setIsLoading(false), remaining)
-    }
-
     loader.load(
       polito3DSrc,
       (gltf) => {
@@ -190,7 +181,6 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
             duration: 0.9,
             ease: 'back.out(1.8)',
             delay: 0.6,
-            onComplete: hideLoader,
           })
         }
 
@@ -199,7 +189,6 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
           opacity: 1,
           duration: 0.5,
           delay: 0.4,
-          onComplete: reduced ? hideLoader : undefined,
         })
       },
       undefined,
@@ -210,6 +199,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     /* ── RENDER LOOP con pausa por visibilidad ── */
     let isVisible = true
+    let loaderHidden = false
 
     const render = () => {
       if (!isVisible) return
@@ -218,6 +208,12 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
       const elapsed = timer.getElapsed()
 
       if (modelRoot) {
+        /* Ocultar loader cuando el modelo ya se renderizó visible */
+        if (!loaderHidden && modelRoot.scale.x > 0.92) {
+          loaderHidden = true
+          setIsLoading(false)
+        }
+
         /* 1. Idle float — bobbing en Y + leve roll */
         const floatY = Math.sin(elapsed * 0.8) * 0.12
         const floatRoll = Math.sin(elapsed * 0.6) * 0.03
@@ -290,7 +286,6 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     /* ── CLEANUP ── */
     return () => {
-      if (loaderTimeoutId !== null) clearTimeout(loaderTimeoutId)
       setIsLoading(false) // fallback: ensure loader hides on unmount
       stopRender()
       io.disconnect()

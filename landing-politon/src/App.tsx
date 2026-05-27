@@ -10,6 +10,7 @@ import RegistrationAccordion from './components/sections/RegistrationAccordion'
 import Challenges from './components/sections/Challenges'
 import Talks from './components/sections/Talks'
 import Register from './components/sections/Register'
+import EventDaysSummary from './components/sections/EventDaysSummary'
 import PageLoader from './components/ui/PageLoader'
 
 const AppContent: React.FC = () => {
@@ -25,6 +26,7 @@ const AppContent: React.FC = () => {
         <WhatIsHackathon />
         <Process />
         <RegistrationAccordion />
+        <EventDaysSummary />
         <Challenges />
         <Talks />
         <Register />

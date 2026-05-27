@@ -99,15 +99,24 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
     let modelRoot: THREE.Group | null = null
     let mixer: THREE.AnimationMixer | null = null
     let rafId = 0
+    let disposed = false
+    let loaderReleased = false
     const timer = new THREE.Timer()
     // Posición y rotación base del modelo (calculada al cargar, usada por el float idle)
     const modelBase = { x: 0, y: 0, z: 0, rotZ: 0, rotX: 0 }
 
     const loader = new GLTFLoader()
 
+    const releaseLoader = () => {
+      if (loaderReleased || disposed) return
+      loaderReleased = true
+      setIsLoading(false)
+    }
+
     loader.load(
       polito3DSrc,
       (gltf) => {
+        if (disposed) return
         modelRoot = gltf.scene
 
         /* ── Centrar y escalar con auto-fit al frustum ── */
@@ -171,36 +180,41 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
           action.play()
         }
 
-        /* Entrada: escala desde 0 con GSAP */
+        /* Entrada: escala desde un valor visible para evitar hero en blanco al liberar el loader. */
         if (!reduced) {
-          modelRoot.scale.setScalar(0)
+          modelRoot.scale.setScalar(scale * 0.72)
           gsap.to(modelRoot.scale, {
             x: scale,
             y: scale,
             z: scale,
             duration: 0.9,
             ease: 'back.out(1.8)',
-            delay: 0.6,
           })
         }
 
-        /* Canvas visible */
-        gsap.to(canvas, {
-          opacity: 1,
-          duration: 0.5,
-          delay: 0.4,
+        /* Pintar al menos un frame con el modelo ya agregado antes de quitar el loader. */
+        syncSize()
+        renderer.compile(scene, camera)
+        renderer.render(scene, camera)
+
+        requestAnimationFrame(() => {
+          if (disposed) return
+          gsap.to(canvas, {
+            opacity: 1,
+            duration: reduced ? 0 : 0.35,
+            onComplete: releaseLoader,
+          })
         })
       },
       undefined,
       (err) => {
         console.error('[PolitoScene] Error al cargar polito3D.glb:', err)
+        releaseLoader()
       }
     )
 
     /* ── RENDER LOOP con pausa por visibilidad ── */
     let isVisible = true
-    let loaderHidden = false
-
     const render = () => {
       if (!isVisible) return
       rafId = requestAnimationFrame(render)
@@ -208,12 +222,6 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
       const elapsed = timer.getElapsed()
 
       if (modelRoot) {
-        /* Ocultar loader cuando el modelo ya se renderizó visible */
-        if (!loaderHidden && modelRoot.scale.x > 0.92) {
-          loaderHidden = true
-          setIsLoading(false)
-        }
-
         /* 1. Idle float — bobbing en Y + leve roll */
         const floatY = Math.sin(elapsed * 0.8) * 0.12
         const floatRoll = Math.sin(elapsed * 0.6) * 0.03
@@ -286,7 +294,7 @@ const PolitoScene: React.FC<PolitoSceneProps> = ({ heroRef }) => {
 
     /* ── CLEANUP ── */
     return () => {
-      setIsLoading(false) // fallback: ensure loader hides on unmount
+      disposed = true
       stopRender()
       io.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)

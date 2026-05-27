@@ -14,10 +14,12 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 import PolitoScene from '../three/PolitoScene'
 import { useCountdown } from './Countdown'
 import { REGISTRATION_FORM_URL } from '../../lib/registration'
+import { useLoader } from '../../contexts/LoaderContext'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
   const time = useCountdown()
+  const { setIsLoading } = useLoader()
 
   /* —— REFS —— */
   const sectionRef = useRef<HTMLElement>(null)
@@ -28,6 +30,12 @@ const Hero: React.FC = () => {
   const taglineRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isDesktop) {
+      setIsLoading(false)
+    }
+  }, [isDesktop, setIsLoading])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -431,6 +439,7 @@ const HeroBackground: React.FC = () => (
     {/* Mitad izquierda — azul noche profundo */}
     <div
       aria-hidden="true"
+      className="hero-bg-base"
       style={{
         position: 'absolute',
         inset: 0,
@@ -450,6 +459,7 @@ const HeroBackground: React.FC = () => (
     {/* Diagonal que parte el hero — papel vintage en la derecha */}
     <div
       aria-hidden="true"
+      className="hero-bg-diagonal"
       style={{
         position: 'absolute',
         inset: 0,
@@ -469,6 +479,7 @@ const HeroBackground: React.FC = () => (
     {/* Puntos halftone sutiles en zona oscura */}
     <div
       aria-hidden="true"
+      className="hero-bg-halftone"
       style={{
         position: 'absolute',
         inset: 0,

@@ -5,6 +5,8 @@ import { LoaderProvider, useLoader } from './contexts/LoaderContext'
 import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import WhatIsHackathon from './components/sections/WhatIsHackathon'
+import Process from './components/sections/Process'
+import RegistrationAccordion from './components/sections/RegistrationAccordion'
 import Challenges from './components/sections/Challenges'
 import Talks from './components/sections/Talks'
 import Register from './components/sections/Register'
@@ -21,6 +23,8 @@ const AppContent: React.FC = () => {
       <main>
         <Hero />
         <WhatIsHackathon />
+        <Process />
+        <RegistrationAccordion />
         <Challenges />
         <Talks />
         <Register />

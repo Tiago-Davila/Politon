@@ -3,7 +3,7 @@ import { gsap } from '../../lib/gsap'
 import TextType from '../ui/TextType'
 
 const BODY_TEXT =
-  'Una hackathon es un evento de 48 horas donde equipos de 4 estudiantes del ciclo superior — 4to, 5to y 6to año — de las orientaciones Computación y Mecánica trabajan juntos para entender un problema real, generar ideas y presentar una solución concreta mediante un pitch y un reel.'
+  'Es una jornada intensiva donde equipos de 4 integrantes trabajarán durante 48hs para comprender un problema real, idear soluciones, validarlas y construir una propuesta concreta. Luego, se encargarán de ver cómo comunicar esa solución y realizar un video formato reel que refleje la solución que idearon. Está enfocada en la creatividad, resolución de problemas, trabajo interdisciplinario y comunicación de ideas.'
 
 const WhatIsHackathon: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null)

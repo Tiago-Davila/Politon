@@ -13,6 +13,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import FotoColegioImg from '../../assets/foto-horizontal-redes.jpg'
 import VideoSrc from '../../assets/video-simulacion-instagram.mp4'
+import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -97,52 +98,16 @@ const IconTwitch: React.FC = () => (
   </svg>
 )
 
-/* ── QR Placeholder SVG ── */
-const QRPlaceholder: React.FC = () => (
-  <svg
+const QR_URL = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=${encodeURIComponent(REGISTRATION_FORM_URL)}`
+
+/* ── QR de inscripción ── */
+const RegistrationQR: React.FC = () => (
+  <img
     className="reg-qr-svg"
-    viewBox="0 0 200 200"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="QR de inscripción — próximamente"
-  >
-    <rect width="200" height="200" fill="#EDE0BC" rx="8"/>
-    <rect x="20" y="20" width="60" height="60" rx="4" fill="none" stroke="#1E2D5C" strokeWidth="6"/>
-    <rect x="34" y="34" width="32" height="32" rx="2" fill="#1E2D5C"/>
-    <rect x="120" y="20" width="60" height="60" rx="4" fill="none" stroke="#1E2D5C" strokeWidth="6"/>
-    <rect x="134" y="34" width="32" height="32" rx="2" fill="#1E2D5C"/>
-    <rect x="20" y="120" width="60" height="60" rx="4" fill="none" stroke="#1E2D5C" strokeWidth="6"/>
-    <rect x="34" y="134" width="32" height="32" rx="2" fill="#1E2D5C"/>
-    {[
-      [90,20],[100,20],[110,20],
-      [90,30],[110,30],
-      [90,40],[100,40],[110,40],
-      [90,50],[110,50],
-      [90,60],[100,60],[110,60],
-      [90,70],[100,70],[110,70],
-      [90,80],[110,80],
-      [90,90],[100,90],[110,90],
-      [20,90],[30,90],[40,90],[50,90],[60,90],
-      [120,90],[130,90],[140,90],[150,90],[160,90],[170,90],
-      [120,100],[140,100],[160,100],
-      [120,110],[130,110],[140,110],[160,110],[170,110],
-      [120,120],[140,120],[160,120],
-      [120,130],[130,130],[150,130],[160,130],[170,130],
-      [120,140],[140,140],[150,140],
-      [120,150],[130,150],[140,150],[160,150],[170,150],
-    ].map(([x, y], i) => (
-      <rect key={i} x={x} y={y} width="8" height="8" rx="1" fill="#1E2D5C"/>
-    ))}
-    <text
-      x="100" y="188"
-      textAnchor="middle"
-      fontFamily="monospace"
-      fontSize="9"
-      fill="#2C3A6B"
-      letterSpacing="1"
-    >
-      PRÓXIMAMENTE
-    </text>
-  </svg>
+    src={QR_URL}
+    alt="QR de inscripción al Politón 2026"
+    loading="lazy"
+  />
 )
 
 const Register: React.FC = () => (
@@ -243,16 +208,24 @@ const Register: React.FC = () => (
       <div className="reg-col reg-col-right">
         <div className="reg-qr-block">
           <p className="reg-qr-label">Escaneá para inscribirte</p>
-          <div className="reg-qr-frame">
-            <QRPlaceholder />
-          </div>
+          <a
+            className="reg-qr-frame"
+            href={REGISTRATION_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Abrir formulario de inscripción"
+          >
+            <RegistrationQR />
+          </a>
         </div>
 
         <div className="reg-cta-block">
           <p className="reg-cta-question">¿Te<br />animás?</p>
           <a
-            href="#"
+            href={REGISTRATION_FORM_URL}
             className="reg-cta-btn"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="Inscribirse al Politón 2026"
           >
             Inscribite →

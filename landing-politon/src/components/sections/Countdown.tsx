@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 const TARGET = new Date('2026-06-24T00:00:00-03:00').getTime()
 
-const useCountdown = () => {
+export const useCountdown = () => {
   const calc = () => {
     const d = Math.max(0, TARGET - Date.now())
     return {

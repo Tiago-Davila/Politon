@@ -3,7 +3,7 @@
  * Basado en el componente CardNav de React Bits.
  * Adaptado a TypeScript + estética vintage Cuphead.
  */
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { gsap } from '../../lib/gsap'
 import './CardNav.css'
 
@@ -33,6 +33,7 @@ interface CardNavProps {
   buttonTextColor?: string
   buttonLabel?: string
   buttonHref?: string
+  rightContent?: ReactNode
 }
 
 /* ——— Icono flecha diagonal (reemplaza GoArrowUpRight de react-icons) ——— */
@@ -55,6 +56,8 @@ const ArrowUpRight = ({ className }: { className?: string }) => (
   </svg>
 )
 
+const isExternalHref = (href?: string) => Boolean(href?.startsWith('http'))
+
 /* ——— Componente principal ——— */
 const CardNav = ({
   logo,
@@ -68,6 +71,7 @@ const CardNav = ({
   buttonTextColor = '#FDFAF2',
   buttonLabel = '¡Inscribite!',
   buttonHref = '#registro',
+  rightContent,
 }: CardNavProps) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -208,13 +212,17 @@ const CardNav = ({
             )}
           </div>
 
-          <a
-            href={buttonHref}
-            className="card-nav-cta-button btn-cuphead"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            {buttonLabel}
-          </a>
+          {rightContent ?? (
+            <a
+              href={buttonHref}
+              className="card-nav-cta-button btn-cuphead"
+              style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+              target={isExternalHref(buttonHref) ? '_blank' : undefined}
+              rel={isExternalHref(buttonHref) ? 'noopener noreferrer' : undefined}
+            >
+              {buttonLabel}
+            </a>
+          )}
         </div>
 
         {/* ——— Cards expandibles ——— */}
@@ -234,6 +242,8 @@ const CardNav = ({
                     className="nav-card-link"
                     href={lnk.href ?? '#'}
                     aria-label={lnk.ariaLabel}
+                    target={isExternalHref(lnk.href) ? '_blank' : undefined}
+                    rel={isExternalHref(lnk.href) ? 'noopener noreferrer' : undefined}
                   >
                     <ArrowUpRight className="nav-card-link-icon" />
                     {lnk.label}

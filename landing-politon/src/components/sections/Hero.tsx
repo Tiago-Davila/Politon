@@ -155,6 +155,7 @@ const Hero: React.FC = () => {
           CONTENIDO — grid de dos columnas
           ═══════════════════════════════════════ */}
       <div
+        className="hero-content-grid"
         style={{
           position: 'relative',
           zIndex: 2,
@@ -297,6 +298,7 @@ const Hero: React.FC = () => {
           {/* CTA */}
           <div
             ref={ctaRef}
+            className="hero-cta-row"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -316,6 +318,7 @@ const Hero: React.FC = () => {
               ¡Inscribite ya! →
             </a>
             <span
+              className="hero-cta-note"
               style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: '0.85rem',
@@ -332,7 +335,7 @@ const Hero: React.FC = () => {
 
         <div
           ref={badgeRef}
-          className="badge-vintage"
+          className="badge-vintage hero-countdown-badge"
           aria-label="Cuenta regresiva para Politón 2026"
           style={{
             position: 'absolute',

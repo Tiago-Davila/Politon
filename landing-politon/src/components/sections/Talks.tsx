@@ -32,7 +32,8 @@ const Talks: React.FC = () => {
     if (!section || !stack) return
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
+    if (reduced || isMobile) return
 
     const cards = Array.from(stack.querySelectorAll<HTMLElement>('.stack-card'))
     if (!cards.length) return

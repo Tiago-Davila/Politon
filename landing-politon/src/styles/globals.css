@@ -116,6 +116,17 @@ html.lenis body {
   overflow: hidden;
 }
 
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  html,
+  html.lenis,
+  html.lenis body,
+  body {
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
 body {
   background-color: var(--polyton-paper);
   color: var(--polyton-ink);
@@ -687,6 +698,47 @@ a {
 /* Corner marks eliminados */
 
 @media (max-width: 768px) {
+  section#hero {
+    min-height: auto !important;
+    overflow: hidden !important;
+  }
+
+  .hero-content-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 5.5rem 1.25rem 2.5rem !important;
+    gap: 1rem !important;
+  }
+
+  .hero-content-grid > div[aria-hidden="true"] {
+    display: none !important;
+  }
+
+  .hero-countdown-badge {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(100%, 340px) !important;
+    min-width: 0 !important;
+    min-height: 104px !important;
+    margin-top: 1.1rem !important;
+    transform: rotate(-1deg) !important;
+  }
+
+  .hero-cta-row {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .hero-cta-note {
+    display: none !important;
+  }
+
+  section#hero h1 {
+    white-space: normal !important;
+    font-size: clamp(3.5rem, 22vw, 6rem) !important;
+  }
+
   .countdown-units {
     gap: 1rem;
   }
@@ -727,8 +779,10 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: 1rem;
   max-width: 720px;
+  min-height: 390px;
   width: 100%;
   text-align: center;
 }
@@ -751,12 +805,27 @@ a {
   color: var(--polyton-ink);
   line-height: 1.7;
   max-width: 680px;
+  min-height: 205px;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .what-section {
     padding: 3rem 1rem;
+    align-items: flex-start;
+  }
+
+  .what-container {
+    min-height: 520px;
+  }
+
+  .what-title {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+  }
+
+  .what-body {
+    min-height: 340px;
+    text-align: left;
   }
 }
 
@@ -1792,6 +1861,49 @@ a {
 }
 
 @media (max-width: 768px) {
+  .talks-stack-section {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .talks-stack-inner {
+    min-height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 4rem 1.25rem;
+  }
+
+  .talks-stack-left {
+    flex: none;
+    padding-right: 0;
+  }
+
+  .talks-stack-right,
+  .talks-stack-cards {
+    width: 100%;
+    max-width: 340px;
+    min-height: auto;
+    margin: 0 auto;
+  }
+
+  .talks-stack-cards {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .stack-card {
+    position: relative;
+    inset: auto;
+    width: min(100%, 280px);
+    height: 380px;
+    transform: none !important;
+    opacity: 1 !important;
+    margin-top: 0;
+  }
+
   .reg-section {
     padding: 4rem 1.5rem;
   }

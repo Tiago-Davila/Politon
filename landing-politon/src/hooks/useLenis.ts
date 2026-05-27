@@ -19,7 +19,13 @@ export function useLenis(): void {
   useEffect(() => {
     // Respetar prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
+    const isTouchOrMobile = window.matchMedia('(hover: none), (pointer: coarse), (max-width: 768px)').matches
+    if (prefersReducedMotion || isTouchOrMobile) {
+      document.documentElement.classList.remove('lenis', 'lenis-smooth')
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      return
+    }
 
     const lenis = new Lenis({
       duration: 1.2,

@@ -3,21 +3,21 @@ import { gsap } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    name: 'Speaker 1',
-    topic: 'Tema de la charla',
-    image: 'https://placehold.co/400x500/2C3A6B/EDE0BC?text=S1',
+    name: '?????',
+    topic: '???????',
+    silhouette: 'man-a',
     accent: '#C94C2E',
   },
   {
-    name: 'Speaker 2',
-    topic: 'Tema de la charla',
-    image: 'https://placehold.co/400x500/1E2D5C/EDE0BC?text=S2',
+    name: '?????',
+    topic: '???????',
+    silhouette: 'woman',
     accent: '#E8A020',
   },
   {
-    name: 'Speaker 3',
-    topic: 'Tema de la charla',
-    image: 'https://placehold.co/400x500/7A4E2D/EDE0BC?text=S3',
+    name: '?????',
+    topic: '???????',
+    silhouette: 'man-b',
     accent: '#2C3A6B',
   },
 ]
@@ -117,8 +117,15 @@ const Talks: React.FC = () => {
                 className="stack-card"
                 style={{ '--card-accent': s.accent } as React.CSSProperties}
               >
-                <div className="stack-card-photo">
-                  <img src={s.image} alt={s.name} loading="lazy" />
+                <div
+                  className={`stack-card-photo stack-card-photo--mystery stack-card-photo--${s.silhouette}`}
+                  aria-label={`${s.name}: identidad a revelar`}
+                >
+                  <div className="speaker-shadow" aria-hidden="true">
+                    <span className="speaker-shadow-head" />
+                    <span className="speaker-shadow-neck" />
+                    <span className="speaker-shadow-body" />
+                  </div>
                 </div>
                 <div className="stack-card-body">
                   <div className="stack-card-tag" style={{ background: s.accent }}>

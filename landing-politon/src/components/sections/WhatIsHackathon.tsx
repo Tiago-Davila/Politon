@@ -32,7 +32,7 @@ const WhatIsHackathon: React.FC = () => {
         <TextType
           as="p"
           text={BODY_TEXT}
-          typingSpeed={30}
+          typingSpeed={25}
           loop={false}
           showCursor
           cursorCharacter="|"

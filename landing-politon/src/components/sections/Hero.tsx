@@ -12,9 +12,12 @@ import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import PolitoScene from '../three/PolitoScene'
+import { useCountdown } from './Countdown'
+import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
+  const time = useCountdown()
 
   /* —— REFS —— */
   const sectionRef = useRef<HTMLElement>(null)
@@ -89,13 +92,13 @@ const Hero: React.FC = () => {
         { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: 'back.out(1.8)', delay: 1.0 }
       )
 
-      /* 7 — Badge 48hs */
+      /* 7 — Contador compacto */
       gsap.fromTo(
         badgeRef.current,
-        { scale: 0, rotate: -20, opacity: 0 },
+        { scale: 0, rotate: -8, opacity: 0 },
         {
           scale: 1,
-          rotate: 0,
+          rotate: 2,
           opacity: 1,
           duration: 0.7,
           ease: 'back.out(3)',
@@ -303,9 +306,11 @@ const Hero: React.FC = () => {
             }}
           >
             <a
-              href="#registro"
+              href={REGISTRATION_FORM_URL}
               id="hero-cta"
               className="btn-cuphead"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ fontSize: '1.1rem', padding: '0.75rem 2rem' }}
             >
               ¡Inscribite ya! →
@@ -325,45 +330,90 @@ const Hero: React.FC = () => {
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}
         <div style={{ minHeight: '520px' }} aria-hidden="true" />
 
-        {/* Badge 48 HORAS — posicionado absoluto en el hero */}
         <div
           ref={badgeRef}
           className="badge-vintage"
+          aria-label="Cuenta regresiva para Politón 2026"
           style={{
             position: 'absolute',
-            bottom: '10%',
-            right: '8%',
-            width: '100px',
-            height: '100px',
-            background: 'var(--polyton-red)',
-            color: 'var(--polyton-cream)',
+            bottom: '8%',
+            right: '5%',
+            width: 'min(360px, 34vw)',
+            minWidth: '280px',
+            minHeight: '112px',
+            background: 'var(--polyton-gold)',
+            color: 'var(--polyton-night)',
+            alignItems: 'stretch',
+            justifyContent: 'center',
             flexDirection: 'column',
-            gap: '0',
+            gap: '0.45rem',
             opacity: 0,
-            transform: 'rotate(8deg)',
+            transform: 'rotate(2deg)',
             zIndex: 3,
+            padding: '1rem',
+            borderRadius: '0.55rem',
           }}
         >
           <span
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '2rem',
-              lineHeight: 1,
-              textShadow: '2px 2px 0 var(--polyton-ink)',
-            }}
-          >
-            48
-          </span>
-          <span
-            style={{
               fontFamily: 'var(--font-subtitle)',
-              fontSize: '0.75rem',
-              letterSpacing: '0.1em',
+              fontSize: '0.82rem',
+              color: 'var(--polyton-night)',
+              letterSpacing: '0.12em',
               textTransform: 'uppercase',
+              textAlign: 'center',
             }}
           >
-            HORAS
+            Empieza en
           </span>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '0.35rem',
+            }}
+          >
+            {[
+              { value: time.days, label: 'Días' },
+              { value: time.hours, label: 'Hs' },
+              { value: time.minutes, label: 'Min' },
+              { value: time.seconds, label: 'Seg' },
+            ].map((unit) => (
+              <span
+                key={unit.label}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '0.08rem',
+                  minWidth: 0,
+                }}
+              >
+                <strong
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.55rem, 2.7vw, 2.45rem)',
+                    fontWeight: 400,
+                    lineHeight: 0.9,
+                    textShadow: '2px 2px 0 var(--polyton-cream)',
+                  }}
+                >
+                  {String(unit.value).padStart(2, '0')}
+                </strong>
+                <small
+                  style={{
+                    fontFamily: 'var(--font-subtitle)',
+                    fontSize: '0.68rem',
+                    color: 'var(--polyton-night)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {unit.label}
+                </small>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

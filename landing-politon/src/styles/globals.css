@@ -1070,7 +1070,8 @@ a {
 
 .signup-accordion-section {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 720px;
   overflow: hidden;
   background: var(--polyton-night);
   color: var(--polyton-cream);
@@ -1105,13 +1106,13 @@ a {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(26rem, 0.92fr);
+  grid-template-columns: minmax(0, 1fr) minmax(24rem, 0.9fr);
   align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
-  min-height: 100vh;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  height: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+  padding: clamp(2.2rem, 4.2vw, 4.2rem) clamp(1.25rem, 5vw, 4rem) clamp(1.6rem, 3vw, 2.8rem);
 }
 
 .signup-accordion-copy {
@@ -1120,7 +1121,7 @@ a {
 
 .signup-accordion-eyebrow {
   width: fit-content;
-  margin: 0 0 1rem;
+  margin: 0 0 0.7rem;
   padding: 0.35rem 0.8rem 0.25rem;
   transform: rotate(-1.5deg);
   border: 3px solid var(--polyton-ink);
@@ -1128,17 +1129,17 @@ a {
   box-shadow: 4px 4px 0 var(--polyton-ink);
   color: var(--polyton-ink);
   font-family: var(--font-subtitle);
-  font-size: 1rem;
+  font-size: 0.9rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .signup-accordion-title {
-  max-width: 13ch;
+  max-width: 12ch;
   margin: 0;
   color: var(--polyton-cream);
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6.6vw, 6.7rem);
+  font-size: clamp(2.7rem, 5.4vw, 5.45rem);
   line-height: 0.84;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -1146,18 +1147,18 @@ a {
 }
 
 .signup-accordion-intro {
-  max-width: 35rem;
-  margin: 1.3rem 0 2.5rem;
+  max-width: 34rem;
+  margin: 0.95rem 0 1.45rem;
   color: var(--polyton-sand);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
   font-weight: 800;
   line-height: 1.45;
 }
 
 .signup-accordion-list {
   display: grid;
-  gap: 0.2rem;
+  gap: 0;
 }
 
 .signup-accordion-item {
@@ -1167,7 +1168,7 @@ a {
   align-items: baseline;
   gap: 0.7rem;
   width: 100%;
-  padding: 0.3rem 0;
+  padding: 0.08rem 0;
   border: 0;
   background: transparent;
   text-align: left;
@@ -1177,7 +1178,7 @@ a {
 .signup-accordion-number {
   color: var(--polyton-gold);
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.9rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.65rem);
   line-height: 1;
   transition: transform 220ms ease;
 }
@@ -1186,8 +1187,8 @@ a {
   color: transparent;
   -webkit-text-stroke: 1.7px rgba(237, 224, 188, 0.46);
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 5.1vw, 5.8rem);
-  line-height: 0.86;
+  font-size: clamp(2.35rem, 4.35vw, 4.8rem);
+  line-height: 0.82;
   letter-spacing: 0;
   text-transform: uppercase;
   transition: color 220ms ease, -webkit-text-stroke-color 220ms ease, transform 220ms ease;
@@ -1214,15 +1215,16 @@ a {
   position: relative;
   display: grid;
   align-items: end;
-  min-height: min(70vh, 42rem);
+  min-height: min(67vh, 37rem);
 }
 
 .signup-accordion-card {
   position: relative;
   z-index: 4;
-  width: min(100%, 28rem);
+  width: min(100%, 27rem);
   margin-left: auto;
-  padding: 1.2rem 1.25rem;
+  margin-bottom: clamp(1rem, 4vh, 2.5rem);
+  padding: 1rem 1.1rem;
   transform: rotate(1.2deg);
   border: 4px solid var(--polyton-ink);
   background: var(--polyton-paper);
@@ -1234,7 +1236,7 @@ a {
   margin: 0 0 0.45rem;
   color: var(--polyton-red);
   font-family: var(--font-subtitle);
-  font-size: 1.15rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -1243,15 +1245,15 @@ a {
   margin: 0;
   color: var(--polyton-ink);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.34;
 }
 
 .signup-accordion-cta {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.7rem 1.2rem;
+  margin-top: 0.75rem;
+  padding: 0.62rem 1.05rem;
   border: 3px solid var(--polyton-ink);
   background: var(--polyton-red);
   box-shadow: 4px 4px 0 var(--polyton-ink);
@@ -1271,7 +1273,7 @@ a {
 
 .signup-accordion-visual {
   position: absolute;
-  inset: -3rem -2rem 7rem -2rem;
+  inset: -2rem -2rem 6.2rem -2rem;
   z-index: 2;
   display: grid;
   place-items: center;
@@ -1290,8 +1292,8 @@ a {
 
 .signup-accordion-image {
   position: absolute;
-  width: min(48vw, 39rem);
-  max-height: 66vh;
+  width: min(45vw, 34rem);
+  max-height: 56vh;
   object-fit: contain;
   opacity: 0;
   transform: translateY(1rem) scale(0.9) rotate(-2deg);
@@ -1305,8 +1307,14 @@ a {
 }
 
 @media (max-width: 960px) {
+  .signup-accordion-section {
+    height: auto;
+    min-height: 100vh;
+  }
+
   .signup-accordion-inner {
     grid-template-columns: 1fr;
+    height: auto;
     gap: 2.5rem;
   }
 
@@ -1353,6 +1361,37 @@ a {
 
   .signup-accordion-card {
     padding: 1rem;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 961px) {
+  .signup-accordion-section {
+    min-height: 640px;
+  }
+
+  .signup-accordion-inner {
+    padding-top: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .signup-accordion-title {
+    font-size: clamp(2.5rem, 4.8vw, 4.9rem);
+  }
+
+  .signup-accordion-intro {
+    margin-bottom: 1rem;
+  }
+
+  .signup-accordion-heading {
+    font-size: clamp(2.1rem, 3.9vw, 4.25rem);
+  }
+
+  .signup-accordion-image {
+    max-height: 50vh;
+  }
+
+  .signup-accordion-card {
+    margin-bottom: 1rem;
   }
 }
 

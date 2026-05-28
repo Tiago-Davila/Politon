@@ -22,7 +22,7 @@ const DAYS = [
 ]
 
 const EventDaysSummary: React.FC = () => (
-  <section className="days-summary-section" aria-labelledby="days-summary-title">
+  <section id="dias-del-evento" className="days-summary-section" aria-labelledby="days-summary-title">
     <div className="days-summary-grain" aria-hidden="true" />
     <span className="days-summary-marquee" aria-hidden="true">24 · 25 · 26</span>
 

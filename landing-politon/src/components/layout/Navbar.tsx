@@ -15,9 +15,7 @@ const NAV_ITEMS: CardNavItem[] = [
     bgColor: '#1E2D5C',  /* polyton-night */
     textColor: '#EDE0BC', /* polyton-cream */
     links: [
-      { label: '¿Qué es?',   ariaLabel: '¿Qué es una hackathon?', href: '#que-es'  },
-      { label: 'Desafíos',   ariaLabel: 'Ver los desafíos',        href: '#desafios' },
-      { label: 'Equipos',    ariaLabel: 'Cómo se forman los equipos', href: '#que-es' },
+      { label: '¿Qué es?', ariaLabel: '¿Qué es una hackathon?', href: '#que-es' },
     ],
   },
   {
@@ -25,18 +23,19 @@ const NAV_ITEMS: CardNavItem[] = [
     bgColor: '#2C3A6B',  /* polyton-blue */
     textColor: '#EDE0BC',
     links: [
-      { label: 'Cronograma', ariaLabel: 'Ver el cronograma', href: '#cronograma' },
-      { label: 'Lugar',      ariaLabel: 'Dónde se hace',     href: '#lugar'      },
-      { label: 'Charlas',    ariaLabel: 'Ver las charlas',   href: '#charlas'    },
+      { label: 'Cómo se desarrolla', ariaLabel: 'Cómo se desarrolla la hackathon', href: '#como-se-desarrolla' },
+      { label: 'Speakers',           ariaLabel: 'Ver los speakers',               href: '#charlas'           },
+      { label: 'Días del evento',    ariaLabel: 'Resumen de los 3 días',         href: '#dias-del-evento'   },
     ],
   },
   {
-    label: 'Participá',
+    label: 'Participa',
     bgColor: '#C94C2E',  /* polyton-red */
     textColor: '#FDFAF2', /* polyton-paper */
     links: [
-      { label: 'Premios',      ariaLabel: 'Ver los premios',           href: '#premios'  },
-      { label: 'Inscribite →', ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
+      { label: 'Información',     ariaLabel: 'Información de inscripción', href: '#inscripcion-info' },
+      { label: 'Nuestras Redes',  ariaLabel: 'Nuestras redes sociales',    href: '#registro'        },
+      { label: 'Inscribite →',    ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
     ],
   },
 ]

@@ -69,8 +69,26 @@ export function useLenis(): void {
     ScrollTrigger.addEventListener('refresh', () => lenis.scroll)
     ScrollTrigger.refresh()
 
+    // Interceptar clicks en links internos para scroll smooth
+    const handleClickLink = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a[href^="#"]')
+      if (!target) return
+
+      const href = target.getAttribute('href')
+      if (!href || href === '#') return
+
+      const element = document.querySelector(href) as HTMLElement
+      if (!element) return
+
+      e.preventDefault()
+      lenis.scrollTo(element, { offset: 0, duration: 1.2 })
+    }
+
+    document.addEventListener('click', handleClickLink)
+
     return () => {
       cancelAnimationFrame(rafRef.current)
+      document.removeEventListener('click', handleClickLink)
       lenis.destroy()
       lenisInstance = null
     }

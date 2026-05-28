@@ -111,7 +111,7 @@ const RegistrationQR: React.FC = () => (
 )
 
 const Register: React.FC = () => (
-  <section id="inscripcion" className="reg-section">
+  <section id="registro" className="reg-section">
     {/* Grain de fondo */}
     <div className="reg-grain" aria-hidden="true" />
 

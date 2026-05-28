@@ -4,7 +4,7 @@ import { gsap } from '../../lib/gsap'
 const PROCESS_STEPS = [
   {
     title: 'Comprender',
-    note: 'Leer el problema real sin saltar directo a la solucion.',
+    note: 'Leer el problema real sin saltar directo a la solución.',
   },
   {
     title: 'Oportunidades',
@@ -12,15 +12,15 @@ const PROCESS_STEPS = [
   },
   {
     title: 'Preguntas',
-    note: 'Convertir lo observado en desafios de diseno.',
+    note: 'Convertir lo observado en desafíos de diseño.',
   },
   {
     title: 'Ideas',
-    note: 'Abrir opciones, mezclar enfoques y elegir una direccion.',
+    note: 'Abrir opciones, mezclar enfoques y elegir una dirección.',
   },
   {
     title: 'Validar',
-    note: 'Probar rapido si la propuesta tiene sentido.',
+    note: 'Probar rápido si la propuesta tiene sentido.',
   },
   {
     title: 'Soluciones',
@@ -28,7 +28,7 @@ const PROCESS_STEPS = [
   },
   {
     title: 'Pitch + reel',
-    note: 'Comunicar la solucion con claridad, energia y evidencia.',
+    note: 'Comunicar la solución con claridad, energía y evidencia.',
   },
 ]
 
@@ -77,8 +77,8 @@ const Process: React.FC = () => {
   return (
     <section ref={sectionRef} id="como-se-desarrolla" className="process-section">
       <div className="process-copy">
-        <p className="process-eyebrow">Dinamica guiada</p>
-        <h2 className="process-title">Como se desarrolla?</h2>
+        <p className="process-eyebrow">Dinámica guiada</p>
+        <h2 className="process-title">¿Cómo se desarrolla?</h2>
         <p className="process-desc">
           Los equipos avanzan por etapas concretas: entienden, preguntan, prueban y terminan comunicando una idea real.
         </p>
@@ -88,7 +88,7 @@ const Process: React.FC = () => {
         <div ref={progressRef} className="process-progress" />
       </div>
 
-      <div ref={trackRef} className="process-track" aria-label="Etapas de la dinamica">
+      <div ref={trackRef} className="process-track" aria-label="Etapas de la dinámica">
         {PROCESS_STEPS.map((step, index) => (
           <article className="process-step" key={step.title}>
             <span className="process-step-number">{String(index + 1).padStart(2, '0')}</span>

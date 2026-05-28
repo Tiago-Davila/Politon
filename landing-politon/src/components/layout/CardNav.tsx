@@ -180,6 +180,15 @@ const CardNav = ({
     }
   }
 
+  const closeMenu = () => {
+    const tl = tlRef.current
+    if (!tl || !isExpanded) return
+
+    setIsHamburgerOpen(false)
+    tl.eventCallback('onReverseComplete', () => setIsExpanded(false))
+    tl.reverse()
+  }
+
   const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
     if (el) cardsRef.current[i] = el
   }
@@ -219,6 +228,7 @@ const CardNav = ({
               style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
               target={isExternalHref(buttonHref) ? '_blank' : undefined}
               rel={isExternalHref(buttonHref) ? 'noopener noreferrer' : undefined}
+              onClick={closeMenu}
             >
               {buttonLabel}
             </a>
@@ -244,6 +254,7 @@ const CardNav = ({
                     aria-label={lnk.ariaLabel}
                     target={isExternalHref(lnk.href) ? '_blank' : undefined}
                     rel={isExternalHref(lnk.href) ? 'noopener noreferrer' : undefined}
+                    onClick={closeMenu}
                   >
                     <ArrowUpRight className="nav-card-link-icon" />
                     {lnk.label}

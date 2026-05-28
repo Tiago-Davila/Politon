@@ -207,7 +207,7 @@ const Hero: React.FC = () => {
           </p>
 
           {/* Título principal */}
-          <div style={{ overflow: 'hidden', lineHeight: 0.88 }}>
+          <div style={{ overflow: 'visible', lineHeight: 1.05, paddingTop: '0.12em' }}>
             <h1
               ref={titleRef}
               style={{
@@ -215,7 +215,7 @@ const Hero: React.FC = () => {
                 fontSize: 'clamp(4rem, 7.5vw, 7.5rem)',
                 color: 'var(--polyton-cream)',
                 textTransform: 'uppercase',
-                lineHeight: 0.92,
+                lineHeight: 1.10,
                 letterSpacing: '0.02em',
                 whiteSpace: 'nowrap',
                 /* Sombra estilo cartoon */
@@ -285,7 +285,7 @@ const Hero: React.FC = () => {
                 letterSpacing: '0.06em',
               }}
             >
-              24 · 25 · 26 de Junio 2026
+              24 · 25 · 26 de junio 2026
             </p>
           </div>
 

@@ -1101,7 +1101,7 @@ a {
   .process-step {
     flex: 0 0 min(88vw, 22rem);
     min-height: 10.5rem;
-    padding: 0 0 1.25rem;
+    padding: 0 1.25rem 2rem;
     border: 0;
     background: transparent;
     box-shadow: none;

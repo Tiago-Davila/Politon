@@ -19,22 +19,22 @@ const NAV_ITEMS: CardNavItem[] = [
     ],
   },
   {
-    label: 'El Evento',
+    label: 'El evento',
     bgColor: '#2C3A6B',  /* polyton-blue */
     textColor: '#EDE0BC',
     links: [
       { label: 'Cómo se desarrolla', ariaLabel: 'Cómo se desarrolla la hackathon', href: '#como-se-desarrolla' },
-      { label: 'Speakers',           ariaLabel: 'Ver los speakers',               href: '#charlas'           },
+      { label: 'Charlas',            ariaLabel: 'Ver las charlas',                href: '#charlas'           },
       { label: 'Días del evento',    ariaLabel: 'Resumen de los 3 días',         href: '#dias-del-evento'   },
     ],
   },
   {
-    label: 'Participa',
+    label: 'Participá',
     bgColor: '#C94C2E',  /* polyton-red */
     textColor: '#FDFAF2', /* polyton-paper */
     links: [
       { label: 'Información',     ariaLabel: 'Información de inscripción', href: '#inscripcion-info' },
-      { label: 'Nuestras Redes',  ariaLabel: 'Nuestras redes sociales',    href: '#registro'        },
+      { label: 'Nuestras redes',  ariaLabel: 'Nuestras redes sociales',    href: '#registro'        },
       { label: 'Inscribite →',    ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
     ],
   },

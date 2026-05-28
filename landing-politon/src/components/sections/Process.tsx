@@ -46,7 +46,10 @@ const Process: React.FC = () => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches
     if (reduced || isMobile) return
 
-    const travel = () => Math.max(0, track.scrollWidth - window.innerWidth + 160)
+    const travel = () => {
+      const sectionWidth = section.getBoundingClientRect().width || window.innerWidth
+      return Math.max(0, track.scrollWidth - sectionWidth)
+    }
 
     const ctx = gsap.context(() => {
       gsap.to(track, {
@@ -57,7 +60,7 @@ const Process: React.FC = () => {
           pin: true,
           scrub: 1,
           start: 'top top',
-          end: () => `+=${travel() + window.innerHeight * 0.25}`,
+          end: () => `+=${travel() + window.innerHeight * 0.85}`,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             if (progressRef.current) {

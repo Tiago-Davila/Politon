@@ -899,7 +899,7 @@ a {
   gap: clamp(0.85rem, 2vh, 1.35rem);
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  padding: 0 clamp(1.25rem, 5vw, 0.5rem);
 }
 
 .process-eyebrow {
@@ -1083,7 +1083,7 @@ a {
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     margin-top: 1.75rem;
-    padding: 0 1.1rem 2.1rem;
+    padding: 0 3.25rem 2.1rem 1.1rem;
     transform: none !important;
     will-change: auto;
     -webkit-overflow-scrolling: touch;
@@ -1091,6 +1091,11 @@ a {
 
   .process-track::-webkit-scrollbar {
     display: none;
+  }
+
+  .process-track::after {
+    content: '';
+    flex: 0 0 1.6rem;
   }
 
   .process-step {

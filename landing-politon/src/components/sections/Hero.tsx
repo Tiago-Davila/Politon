@@ -11,10 +11,10 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import PolitoScene from '../three/PolitoScene'
 import { useCountdown } from './Countdown'
 import { REGISTRATION_FORM_URL } from '../../lib/registration'
 import { useLoader } from '../../contexts/LoaderContext'
+import politoHero from '../../assets/polito-hero.png'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
@@ -32,10 +32,9 @@ const Hero: React.FC = () => {
   const badgeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!isDesktop) {
-      setIsLoading(false)
-    }
-  }, [isDesktop, setIsLoading])
+    // La imagen SVG carga instantáneamente, liberamos el loader siempre
+    setIsLoading(false)
+  }, [setIsLoading])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -103,10 +102,10 @@ const Hero: React.FC = () => {
       /* 7 — Contador compacto */
       gsap.fromTo(
         badgeRef.current,
-        { scale: 0, rotate: -8, opacity: 0 },
+        { scale: 0, rotate: 0, opacity: 0 },
         {
           scale: 1,
-          rotate: 2,
+          rotate: 0,
           opacity: 1,
           duration: 0.7,
           ease: 'back.out(3)',
@@ -154,10 +153,21 @@ const Hero: React.FC = () => {
       <HeroBackground />
 
       {/* ═══════════════════════════════════════
-          POLITO — Three.js sprite animado por scroll
-          Solo en desktop para rendimiento
+          POLITO — Imagen SVG espejada (mano levantada a la derecha)
           ═══════════════════════════════════════ */}
-      {isDesktop && <PolitoScene heroRef={sectionRef} />}
+      {isDesktop && (
+        <img
+          src={politoHero}
+          alt=""
+          aria-hidden="true"
+          className="polito-canvas"
+          style={{
+            objectFit: 'contain',
+            objectPosition: 'center bottom',
+            opacity: 1,
+          }}
+        />
+      )}
 
       {/* ═══════════════════════════════════════
           CONTENIDO — grid de dos columnas
@@ -348,11 +358,12 @@ const Hero: React.FC = () => {
           aria-label="Cuenta regresiva para Politón 2026"
           style={{
             position: 'absolute',
-            bottom: '8%',
-            right: '5%',
-            width: 'min(360px, 34vw)',
-            minWidth: '280px',
-            minHeight: '112px',
+            bottom: '22%',
+            left: '47%',
+            marginLeft: '-160px',
+            width: 'min(320px, 28vw)',
+            minWidth: '260px',
+            minHeight: '100px',
             background: 'var(--polyton-gold)',
             color: 'var(--polyton-night)',
             alignItems: 'stretch',
@@ -360,9 +371,8 @@ const Hero: React.FC = () => {
             flexDirection: 'column',
             gap: '0.45rem',
             opacity: 0,
-            transform: 'rotate(2deg)',
             zIndex: 3,
-            padding: '1rem',
+            padding: '0.9rem 1rem',
             borderRadius: '0.55rem',
           }}
         >

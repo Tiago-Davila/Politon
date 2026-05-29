@@ -752,7 +752,7 @@ a {
     min-height: 86px !important;
     margin-top: 0.45rem !important;
     padding: 0.65rem 0.75rem !important;
-    transform: rotate(-1deg) !important;
+    transform: none !important;
   }
 
   .hero-cta-row {
@@ -1516,18 +1516,13 @@ a {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: 0; /* GSAP anima a 1 */
+  opacity: 1;
 }
 
-/* Mobile: ancho completo, altura reducida, detrás del texto */
+/* Mobile: oculto */
 @media (max-width: 768px) {
   .polito-canvas {
-    width: 100%;
-    height: 55%;
-    top: auto;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
+    display: none;
   }
 }
 /* ============================================================

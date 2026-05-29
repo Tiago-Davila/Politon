@@ -8,7 +8,7 @@ const REGISTRATION_ITEMS = [
   {
     title: 'Premios',
     kicker: 'Habrá grandes premios',
-    text: 'Los equipos que lleven sus ideas más lejos van a tener reconocimiento y premios pensados para celebrar el trabajo real.',
+    text: 'Los equipos que lleven sus ideas más lejos van a tener reconocimiento y premios.',
     image: premiosImg,
   },
   {
@@ -20,7 +20,7 @@ const REGISTRATION_ITEMS = [
   {
     title: 'Formulario',
     kicker: 'Sumate al Politón',
-    text: 'Inscribí tu equipo. Si quieren, también pueden apadrinar una dupla de ciclo básico para sumar nuevas miradas al desafío.',
+    text: 'Inscribí a tu equipo. Si quieren, también pueden apadrinar una dupla de ciclo básico para sumar nuevas miradas al desafío.',
     image: formularioImg,
   },
 ]
@@ -38,7 +38,7 @@ const RegistrationAccordion: React.FC = () => {
           <p className="signup-accordion-eyebrow">Inscripción abierta</p>
           <h2 className="signup-accordion-title">Sumate a la primera fase</h2>
           <p className="signup-accordion-intro">
-            Armá tu equipo, mezclá especialidades, invitá a otros años y vení a construir una solución en serio.
+            Armá tu equipo, mezclá especialidades, invitá a otros años y vení a construir una solución propia.
           </p>
 
           <div className="signup-accordion-list" role="tablist" aria-label="Información de inscripción">

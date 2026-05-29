@@ -202,7 +202,7 @@ const Hero: React.FC = () => {
             }}
           >
             <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-            IPM · Hackathon 2026
+            IPM · Hackatón 2026
             <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
           </p>
 
@@ -325,17 +325,18 @@ const Hero: React.FC = () => {
             >
               ¡Inscribite ya! →
             </a>
-            <span
-              className="hero-cta-note"
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.85rem',
-                color: 'var(--polyton-sand)',
-              }}
-            >
-              La inscripción dura poco
-            </span>
+
           </div>
+          <span
+            className="hero-cta-note"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.85rem',
+              color: 'var(--polyton-sand)',
+            }}
+          >
+            ¡Apurate! ¡Este viernes 29/05 a las 23:59 termina la inscripción!
+          </span>
         </div>
 
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}

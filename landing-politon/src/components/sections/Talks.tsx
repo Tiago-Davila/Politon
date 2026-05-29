@@ -3,26 +3,26 @@ import { gsap } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    name: 'A confirmar',
-    topic: 'Tema a confirmar',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'man-a',
     accent: '#C94C2E',
   },
   {
-    name: 'A confirmar',
-    topic: 'Tema a confirmar',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'woman',
     accent: '#E8A020',
   },
   {
-    name: 'A confirmar',
-    topic: 'Tema a confirmar',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'man-b',
     accent: '#2C3A6B',
   },
   {
-    name: 'A confirmar',
-    topic: 'Tema a confirmar',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'man-a',
     accent: '#7A4E2D',
   },
@@ -106,13 +106,13 @@ const Talks: React.FC = () => {
           </p>
           <h2 className="talks-stack-title">Charlas</h2>
           <p className="talks-stack-desc">
-            Conocé a las personas que van a guiar a los equipos durante las 48 horas.
-            Cada charla trae una perspectiva única sobre la problemática que aborda.
+            Conocé a las personas que van a exponer las problemáticas con las que los equipos trabajarán.
+            Cada charla trae una perspectiva única.
           </p>
-          <div className="talks-stack-count">
+          {/* <div className="talks-stack-count">
             <span className="tsc-number">{String(SPEAKERS.length).padStart(2, '0')}</span>
             <span className="tsc-label">charlas<br />a confirmar</span>
-          </div>
+          </div> */}
         </div>
 
         <div ref={stackRef} className="talks-stack-right">

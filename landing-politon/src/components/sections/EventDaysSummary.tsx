@@ -5,19 +5,19 @@ const DAYS = [
     day: 'Día 1',
     title: 'Comprender el problema',
     action: 'Idear soluciones',
-    copy: 'Escuchamos, preguntamos y convertimos el desafío en oportunidades claras para atacar en equipo.',
+    copy: 'Escuchamos, preguntamos y convertimos los desafíos en oportunidades claras para trabajar en equipo.',
   },
   {
     day: 'Día 2',
-    title: 'Tangibilizar',
-    action: 'Prototipar y pitchar',
-    copy: 'La idea baja a algo visible: maqueta, demo, historia, evidencia y una presentación con pulso.',
+    title: 'Dar forma a la solución',
+    action: 'Ordenar, mejorar y preparar el pitch',
+    copy: 'La idea empieza a tomar forma: definimos cómo funciona, para quién es y cómo la vamos a contar.',
   },
   {
     day: 'Día 3',
     title: 'Ajustes finales',
-    action: 'Reels y presentación',
-    copy: 'Pulimos detalles, contamos la solución con energía y salimos a defender lo construido.',
+    action: 'Reel y presentación',
+    copy: 'Pulimos la propuesta, armamos el reel final y presentamos la solución al jurado.',
   },
 ]
 

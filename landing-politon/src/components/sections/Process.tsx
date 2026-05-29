@@ -4,31 +4,27 @@ import { gsap } from '../../lib/gsap'
 const PROCESS_STEPS = [
   {
     title: 'Comprender',
-    note: 'Leer el problema real sin saltar directo a la solución.',
+    note: 'Escuchar problemáticas reales, analizar el contexto y descubrir oportunidades.',
   },
   {
-    title: 'Oportunidades',
-    note: 'Encontrar donde hay algo para mejorar, cambiar o inventar.',
+    title: 'Definir',
+    note: 'Elegir un desafío concreto y formular la pregunta que guiará la solución.',
   },
   {
-    title: 'Preguntas',
-    note: 'Convertir lo observado en desafíos de diseño.',
+    title: 'Idear',
+    note: 'Crear muchas ideas, combinarlas, priorizarlas y seleccionar una propuesta.',
   },
   {
-    title: 'Ideas',
-    note: 'Abrir opciones, mezclar enfoques y elegir una dirección.',
+    title: 'Construir',
+    note: 'Convertir la idea en una solución clara, posible y explicable.',
   },
   {
-    title: 'Validar',
-    note: 'Probar rápido si la propuesta tiene sentido.',
+    title: 'Comunicar',
+    note: 'Preparar el pitch y el reel para presentar la propuesta con impacto.',
   },
   {
-    title: 'Soluciones',
-    note: 'Bajar la idea a algo concreto y explicable.',
-  },
-  {
-    title: 'Pitch + reel',
-    note: 'Comunicar la solución con claridad, energía y evidencia.',
+    title: 'Presentar',
+    note: 'Compartir la solución final y participar por el pase a la siguiente fase.',
   },
 ]
 
@@ -80,7 +76,7 @@ const Process: React.FC = () => {
         <p className="process-eyebrow">Dinámica guiada</p>
         <h2 className="process-title">¿Cómo se desarrolla?</h2>
         <p className="process-desc">
-          Los equipos avanzan por etapas concretas: entienden, preguntan, prueban y terminan comunicando una idea real.
+          Los equipos avanzan por etapas concretas: escuchan, preguntan, idean, prueban y terminan comunicando su solución.
         </p>
       </div>
 

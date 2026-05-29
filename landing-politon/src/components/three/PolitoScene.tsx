@@ -13,7 +13,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { gsap } from '../../lib/gsap'
 import { useLoader } from '../../contexts/LoaderContext'
-import polito3DSrc from '../../assets/polito3D-web-lite.glb'
+import polito3DSrc from '../../assets/polito3D-web-balanced.glb'
 
 interface PolitoSceneProps {
   heroRef: React.RefObject<HTMLElement | null>

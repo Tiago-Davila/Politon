@@ -27,7 +27,7 @@ const WhatIsHackathon: React.FC = () => {
     <section ref={sectionRef} id="que-es" className="what-section">
       <div className="what-container">
         <h2 ref={titleRef} className="what-title">
-          ¿Qué es una Hackathon?
+          ¿Qué es una Hackatón?
         </h2>
         <TextType
           as="p"

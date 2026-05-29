@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Libre+Baskerville:wght@400;700&display=swap"
+    rel="stylesheet">
+  <title>Politón 2026 — Arranque</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0D1828;
+    }
+
+    /* Scan line */
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: -4px;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 5%, #C4A055 30%, #E8DCC8 50%, #C4A055 70%, transparent 95%);
+      animation: scan .5s ease-out 0s forwards;
+    }
+
+    @keyframes scan {
+      0% {
+        left: -4px;
+        opacity: 1;
+      }
+
+      85% {
+        opacity: 1;
+      }
+
+      100% {
+        left: calc(100% + 4px);
+        opacity: 0;
+      }
+    }
+
+    /* Panels */
+    .panel-l,
+    .panel-r {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: #0D1828;
+      will-change: transform;
+    }
+
+    .panel-l {
+      left: 0;
+      animation: inL .65s cubic-bezier(.76, 0, .24, 1) .25s backwards;
+    }
+
+    .panel-r {
+      right: 0;
+      animation: inR .65s cubic-bezier(.76, 0, .24, 1) .3s backwards;
+    }
+
+    @keyframes inL {
+      from {
+        transform: translateX(-100%)
+      }
+
+      to {
+        transform: translateX(0)
+      }
+    }
+
+    @keyframes inR {
+      from {
+        transform: translateX(100%)
+      }
+
+      to {
+        transform: translateX(0)
+      }
+    }
+
+    .panel-l::after,
+    .panel-r::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(90deg, transparent 0px, transparent 59px, rgba(196, 160, 85, .04) 59px, rgba(196, 160, 85, .04) 60px);
+    }
+
+    /* Decorative frame */
+    .frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 980px;
+      height: 680px;
+      border: 1px solid rgba(196, 160, 85, .2);
+      opacity: 0;
+      animation: frameIn .5s ease .95s forwards;
+    }
+
+    @keyframes frameIn {
+      to {
+        opacity: 1
+      }
+    }
+
+    /* Stage */
+    .stage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -54%);
+      width: 900px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      opacity: 0;
+      animation: logoIn .55s cubic-bezier(.34, 1.4, .64, 1) 1.05s forwards;
+      mix-blend-mode: screen;
+    }
+
+    .logo-wrap img {
+      height: 260px;
+      width: auto;
+    }
+
+    @keyframes logoIn {
+      from {
+        opacity: 0;
+        transform: scale(.7) translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
+      }
+    }
+
+    /* Title and pre-rule removed */
+
+    /* Year */
+    .year {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #C4A055;
+      letter-spacing: .6em;
+      padding-left: .6em;
+      opacity: 0;
+      transform: translateY(-24px);
+      animation: yearIn .4s ease 1.4s forwards;
+    }
+
+    @keyframes yearIn {
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* Rule */
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 22px 0 18px;
+    }
+
+    .rule-line {
+      height: 1.5px;
+      background: #C4A055;
+      opacity: .6;
+      width: 0;
+      animation: lineExpand .5s ease 1.65s forwards;
+    }
+
+    .rule-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #C4A055;
+      opacity: 0;
+      animation: dotIn .2s ease 2.0s forwards;
+      flex-shrink: 0;
+    }
+
+    @keyframes lineExpand {
+      to {
+        width: 180px
+      }
+    }
+
+    @keyframes dotIn {
+      to {
+        opacity: 1
+      }
+    }
+
+    /* Subtitles */
+    .institution {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 15px;
+      color: #B8A88A;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp .4s ease 1.75s forwards;
+    }
+
+    .date-line {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #C4A055;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeUp .4s ease 2.1s forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* Corner decorations */
+    .cdeco {
+      position: absolute;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      animation: decoIn .3s ease .95s both, decoPulse 2.5s ease 1.5s infinite;
+    }
+
+    .cdeco.tl {
+      top: 32px;
+      left: 32px;
+    }
+
+    .cdeco.tr {
+      top: 32px;
+      right: 32px;
+      transform: scaleX(-1);
+    }
+
+    .cdeco.bl {
+      bottom: 88px;
+      left: 32px;
+      transform: scaleY(-1);
+    }
+
+    .cdeco.br {
+      bottom: 88px;
+      right: 32px;
+      transform: scale(-1, -1);
+    }
+
+    @keyframes decoIn {
+      to {
+        opacity: .35
+      }
+    }
+
+    @keyframes decoPulse {
+
+      0%,
+      100% {
+        opacity: .3
+      }
+
+      50% {
+        opacity: .52
+      }
+    }
+
+    /* Ambient scan line */
+    .ambient-scan {
+      position: absolute;
+      top: 0;
+      left: -4px;
+      width: 4px;
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent 10%, rgba(196, 160, 85, .35) 50%, transparent 90%);
+      animation: ambScan 5s linear 3s infinite;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    @keyframes ambScan {
+      0% {
+        left: -4px;
+        opacity: 0;
+      }
+
+      3% {
+        opacity: .7;
+      }
+
+      97% {
+        opacity: .7;
+      }
+
+      100% {
+        left: calc(100% + 4px);
+        opacity: 0;
+      }
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: #0D1828;
+      border-top: 2px solid #C4A055;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      opacity: 0;
+      animation: fadeUp .5s ease 2.3s forwards;
+    }
+
+    .bt {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 12px;
+      letter-spacing: .22em;
+      color: #B8A88A;
+      text-transform: uppercase;
+    }
+
+    .bt strong {
+      color: #C4A055;
+    }
+
+    .bsep {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #C4A055;
+      opacity: .5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="ambient-scan"></div>
+  <div class="scan-line"></div>
+  <div class="panel-l"></div>
+  <div class="panel-r"></div>
+  <div class="frame"></div>
+
+  <div class="cdeco tl"><svg width="70" height="70" fill="none">
+      <path d="M6 6L6 52M6 6L52 6" stroke="#C4A055" stroke-width="2" />
+      <circle cx="6" cy="6" r="4" fill="#C4A055" />
+    </svg></div>
+  <div class="cdeco tr"><svg width="70" height="70" fill="none">
+      <path d="M6 6L6 52M6 6L52 6" stroke="#C4A055" stroke-width="2" />
+      <circle cx="6" cy="6" r="4" fill="#C4A055" />
+    </svg></div>
+  <div class="cdeco bl"><svg width="70" height="70" fill="none">
+      <path d="M6 6L6 52M6 6L52 6" stroke="#C4A055" stroke-width="2" />
+      <circle cx="6" cy="6" r="4" fill="#C4A055" />
+    </svg></div>
+  <div class="cdeco br"><svg width="70" height="70" fill="none">
+      <path d="M6 6L6 52M6 6L52 6" stroke="#C4A055" stroke-width="2" />
+      <circle cx="6" cy="6" r="4" fill="#C4A055" />
+    </svg></div>
+
+  <div class="stage">
+    <div class="logo-wrap">
+      <img src="LogoCompleto.png" alt="Logo de Politón 2026" style="width: auto; height: 400px;">
+    </div>
+    <div class="year">2026</div>
+    <div class="rule">
+      <div class="rule-line"></div>
+      <div class="rule-dot"></div>
+      <div class="rule-line"></div>
+    </div>
+    <div class="institution">Instituto Politécnico Modelo · Hackatón</div>
+    <div class="date-line">24 · 25 · 26 de Junio de 2026</div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bt"><strong>24 · 25 · 26</strong> de Junio 2026</div>
+    <div class="bsep"></div>
+    <div class="bt">Instituto Politécnico Modelo</div>
+    <div class="bsep"></div>
+    <div class="bt"><strong>#POLITÓN2026</strong></div>
+  </div>
+
+  <script>
+    const p = new URLSearchParams(location.search);
+    if (p.get('loop')) {
+      document.addEventListener('animationend', function () {
+        clearTimeout(window._loopT);
+        window._loopT = setTimeout(() => location.reload(), 2000);
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -4,31 +4,27 @@ import { gsap } from '../../lib/gsap'
 const PROCESS_STEPS = [
   {
     title: 'Comprender',
-    note: 'Leer el problema real sin saltar directo a la solucion.',
+    note: 'Escuchar problemáticas reales, analizar el contexto y descubrir oportunidades.',
   },
   {
-    title: 'Oportunidades',
-    note: 'Encontrar donde hay algo para mejorar, cambiar o inventar.',
+    title: 'Definir',
+    note: 'Elegir un desafío concreto y formular la pregunta que guiará la solución.',
   },
   {
-    title: 'Preguntas',
-    note: 'Convertir lo observado en desafios de diseno.',
+    title: 'Idear',
+    note: 'Crear muchas ideas, combinarlas, priorizarlas y seleccionar una propuesta.',
   },
   {
-    title: 'Ideas',
-    note: 'Abrir opciones, mezclar enfoques y elegir una direccion.',
+    title: 'Construir',
+    note: 'Convertir la idea en una solución clara, posible y explicable.',
   },
   {
-    title: 'Validar',
-    note: 'Probar rapido si la propuesta tiene sentido.',
+    title: 'Comunicar',
+    note: 'Preparar el pitch y el reel para presentar la propuesta con impacto.',
   },
   {
-    title: 'Soluciones',
-    note: 'Bajar la idea a algo concreto y explicable.',
-  },
-  {
-    title: 'Pitch + reel',
-    note: 'Comunicar la solucion con claridad, energia y evidencia.',
+    title: 'Presentar',
+    note: 'Compartir la solución final y participar por el pase a la siguiente fase.',
   },
 ]
 
@@ -77,10 +73,10 @@ const Process: React.FC = () => {
   return (
     <section ref={sectionRef} id="como-se-desarrolla" className="process-section">
       <div className="process-copy">
-        <p className="process-eyebrow">Dinamica guiada</p>
-        <h2 className="process-title">Como se desarrolla?</h2>
+        <p className="process-eyebrow">Dinámica guiada</p>
+        <h2 className="process-title">¿Cómo se desarrolla?</h2>
         <p className="process-desc">
-          Los equipos avanzan por etapas concretas: entienden, preguntan, prueban y terminan comunicando una idea real.
+          Los equipos avanzan por etapas concretas: escuchan, preguntan, idean, prueban y terminan comunicando su solución.
         </p>
       </div>
 
@@ -88,7 +84,7 @@ const Process: React.FC = () => {
         <div ref={progressRef} className="process-progress" />
       </div>
 
-      <div ref={trackRef} className="process-track" aria-label="Etapas de la dinamica">
+      <div ref={trackRef} className="process-track" aria-label="Etapas de la dinámica">
         {PROCESS_STEPS.map((step, index) => (
           <article className="process-step" key={step.title}>
             <span className="process-step-number">{String(index + 1).padStart(2, '0')}</span>

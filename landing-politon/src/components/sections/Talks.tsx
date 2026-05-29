@@ -3,22 +3,28 @@ import { gsap } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    name: '?????',
-    topic: '???????',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'man-a',
     accent: '#C94C2E',
   },
   {
-    name: '?????',
-    topic: '???????',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'woman',
     accent: '#E8A020',
   },
   {
-    name: '?????',
-    topic: '???????',
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
     silhouette: 'man-b',
     accent: '#2C3A6B',
+  },
+  {
+    name: 'Oculto',
+    topic: 'Aún no se revelará',
+    silhouette: 'man-a',
+    accent: '#7A4E2D',
   },
 ]
 
@@ -98,15 +104,15 @@ const Talks: React.FC = () => {
             {' '}Inspiración{' '}
             <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
           </p>
-          <h2 className="talks-stack-title">Speakers</h2>
+          <h2 className="talks-stack-title">Charlas</h2>
           <p className="talks-stack-desc">
-            Conocé a los expertos que van a guiar a los equipos durante las 48 horas.
-            Cada speaker trae una perspectiva única sobre la problemática que aborda.
+            Conocé a las personas que van a exponer las problemáticas con las que los equipos trabajarán.
+            Cada charla trae una perspectiva única.
           </p>
-          <div className="talks-stack-count">
+          {/* <div className="talks-stack-count">
             <span className="tsc-number">{String(SPEAKERS.length).padStart(2, '0')}</span>
-            <span className="tsc-label">speakers<br />confirmados</span>
-          </div>
+            <span className="tsc-label">charlas<br />a confirmar</span>
+          </div> */}
         </div>
 
         <div ref={stackRef} className="talks-stack-right">
@@ -129,7 +135,7 @@ const Talks: React.FC = () => {
                 </div>
                 <div className="stack-card-body">
                   <div className="stack-card-tag" style={{ background: s.accent }}>
-                    Speaker
+                    Charla
                   </div>
                   <h3 className="stack-card-name">{s.name}</h3>
                   <p className="stack-card-topic">{s.topic}</p>

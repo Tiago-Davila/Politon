@@ -11,10 +11,10 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import PolitoScene from '../three/PolitoScene'
 import { useCountdown } from './Countdown'
 import { REGISTRATION_FORM_URL } from '../../lib/registration'
 import { useLoader } from '../../contexts/LoaderContext'
+import politoHero from '../../assets/polito-hero.png'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
@@ -32,10 +32,9 @@ const Hero: React.FC = () => {
   const badgeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!isDesktop) {
-      setIsLoading(false)
-    }
-  }, [isDesktop, setIsLoading])
+    // La imagen SVG carga instantáneamente, liberamos el loader siempre
+    setIsLoading(false)
+  }, [setIsLoading])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -103,10 +102,10 @@ const Hero: React.FC = () => {
       /* 7 — Contador compacto */
       gsap.fromTo(
         badgeRef.current,
-        { scale: 0, rotate: -8, opacity: 0 },
+        { scale: 0, rotate: 0, opacity: 0 },
         {
           scale: 1,
-          rotate: 2,
+          rotate: 0,
           opacity: 1,
           duration: 0.7,
           ease: 'back.out(3)',
@@ -154,10 +153,21 @@ const Hero: React.FC = () => {
       <HeroBackground />
 
       {/* ═══════════════════════════════════════
-          POLITO — Three.js sprite animado por scroll
-          Solo en desktop para rendimiento
+          POLITO — Imagen SVG espejada (mano levantada a la derecha)
           ═══════════════════════════════════════ */}
-      {isDesktop && <PolitoScene heroRef={sectionRef} />}
+      {isDesktop && (
+        <img
+          src={politoHero}
+          alt=""
+          aria-hidden="true"
+          className="polito-canvas"
+          style={{
+            objectFit: 'contain',
+            objectPosition: 'center bottom',
+            opacity: 1,
+          }}
+        />
+      )}
 
       {/* ═══════════════════════════════════════
           CONTENIDO — grid de dos columnas
@@ -202,12 +212,12 @@ const Hero: React.FC = () => {
             }}
           >
             <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-            IPM · Hackathon 2026
+            IPM · Hackatón 2026
             <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
           </p>
 
           {/* Título principal */}
-          <div style={{ overflow: 'hidden', lineHeight: 0.88 }}>
+          <div style={{ overflow: 'visible', lineHeight: 1.05, paddingTop: '0.12em' }}>
             <h1
               ref={titleRef}
               style={{
@@ -215,7 +225,7 @@ const Hero: React.FC = () => {
                 fontSize: 'clamp(4rem, 7.5vw, 7.5rem)',
                 color: 'var(--polyton-cream)',
                 textTransform: 'uppercase',
-                lineHeight: 0.92,
+                lineHeight: 1.10,
                 letterSpacing: '0.02em',
                 whiteSpace: 'nowrap',
                 /* Sombra estilo cartoon */
@@ -285,7 +295,7 @@ const Hero: React.FC = () => {
                 letterSpacing: '0.06em',
               }}
             >
-              24 · 25 · 26 de Junio 2026
+              24 · 25 · 26 de junio 2026
             </p>
           </div>
 
@@ -325,17 +335,18 @@ const Hero: React.FC = () => {
             >
               ¡Inscribite ya! →
             </a>
-            <span
-              className="hero-cta-note"
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.85rem',
-                color: 'var(--polyton-sand)',
-              }}
-            >
-              La inscripción dura poco
-            </span>
+
           </div>
+          <span
+            className="hero-cta-note"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.85rem',
+              color: 'var(--polyton-sand)',
+            }}
+          >
+            ¡Apurate! ¡Este viernes 29/05 a las 23:59 termina la inscripción!
+          </span>
         </div>
 
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}
@@ -347,11 +358,12 @@ const Hero: React.FC = () => {
           aria-label="Cuenta regresiva para Politón 2026"
           style={{
             position: 'absolute',
-            bottom: '8%',
-            right: '5%',
-            width: 'min(360px, 34vw)',
-            minWidth: '280px',
-            minHeight: '112px',
+            bottom: '22%',
+            left: '47%',
+            marginLeft: '-160px',
+            width: 'min(320px, 28vw)',
+            minWidth: '260px',
+            minHeight: '100px',
             background: 'var(--polyton-gold)',
             color: 'var(--polyton-night)',
             alignItems: 'stretch',
@@ -359,9 +371,8 @@ const Hero: React.FC = () => {
             flexDirection: 'column',
             gap: '0.45rem',
             opacity: 0,
-            transform: 'rotate(2deg)',
             zIndex: 3,
-            padding: '1rem',
+            padding: '0.9rem 1rem',
             borderRadius: '0.55rem',
           }}
         >

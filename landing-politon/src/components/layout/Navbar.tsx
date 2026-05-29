@@ -11,31 +11,31 @@ import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const NAV_ITEMS: CardNavItem[] = [
   {
-    label: 'La Hackathon',
+    label: 'La Hackatón',
     bgColor: '#1E2D5C',  /* polyton-night */
     textColor: '#EDE0BC', /* polyton-cream */
     links: [
-      { label: '¿Qué es?', ariaLabel: '¿Qué es una hackathon?', href: '#que-es' },
+      { label: '¿Qué es?', ariaLabel: '¿Qué es una hackatón?', href: '#que-es' },
     ],
   },
   {
-    label: 'El Evento',
+    label: 'El evento',
     bgColor: '#2C3A6B',  /* polyton-blue */
     textColor: '#EDE0BC',
     links: [
-      { label: 'Cómo se desarrolla', ariaLabel: 'Cómo se desarrolla la hackathon', href: '#como-se-desarrolla' },
-      { label: 'Speakers',           ariaLabel: 'Ver los speakers',               href: '#charlas'           },
-      { label: 'Días del evento',    ariaLabel: 'Resumen de los 3 días',         href: '#dias-del-evento'   },
+      { label: 'Cómo se desarrolla', ariaLabel: 'Cómo se desarrolla la hackatón', href: '#como-se-desarrolla' },
+      { label: 'Charlas', ariaLabel: 'Ver las charlas', href: '#charlas' },
+      { label: 'Días del evento', ariaLabel: 'Resumen de los 3 días', href: '#dias-del-evento' },
     ],
   },
   {
-    label: 'Participa',
+    label: 'Participá',
     bgColor: '#C94C2E',  /* polyton-red */
     textColor: '#FDFAF2', /* polyton-paper */
     links: [
-      { label: 'Información',     ariaLabel: 'Información de inscripción', href: '#inscripcion-info' },
-      { label: 'Nuestras Redes',  ariaLabel: 'Nuestras redes sociales',    href: '#registro'        },
-      { label: 'Inscribite →',    ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
+      { label: 'Información', ariaLabel: 'Información de inscripción', href: '#inscripcion-info' },
+      { label: 'Nuestras redes', ariaLabel: 'Nuestras redes sociales', href: '#registro' },
+      { label: 'Inscribite →', ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
     ],
   },
 ]

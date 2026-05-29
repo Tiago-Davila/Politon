@@ -1,9 +1,9 @@
 /**
  * Register.tsx — POLITÓN 2026
  *
- * Sección final: inscripción + redes sociales.
+ * Sección final: transmisión en vivo + redes sociales + inscripción.
  * Layout de 3 columnas:
- *  - Izquierda: mockup de celular con video
+ *  - Izquierda: tarjeta de stream en vivo (YouTube + Twitch)
  *  - Centro:    foto del colegio + redes sociales
  *  - Derecha:   QR + CTA "¿Te animás?"
  */
@@ -11,8 +11,7 @@ import React, { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import FotoColegioImg from '../../assets/foto-horizontal-redes.jpg'
-import VideoSrc from '../../assets/video-simulacion-instagram.mp4'
+import StreamPreviewVideo from '../../assets/stream-preview.mp4'
 import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -26,7 +25,7 @@ const ConnectionLine: React.FC = () => {
     const redPath = redPathRef.current
     const shadowPath = shadowPathRef.current
     if (!redPath || !shadowPath) return
-    
+
     // Asumimos misma longitud para ambas (mismo d)
     const length = redPath.getTotalLength()
 
@@ -82,19 +81,19 @@ const ConnectionLine: React.FC = () => {
 /* ── Íconos SVG inline ── */
 const IconInstagram: React.FC = () => (
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
   </svg>
 )
 
 const IconYouTube: React.FC = () => (
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
   </svg>
 )
 
 const IconTwitch: React.FC = () => (
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582h-5.731l-3.045 3.045v-3.045H4.836V2.149h16.478v11.463zm-3.224-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269h-2.149V6.269h2.149z"/>
+    <path d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582h-5.731l-3.045 3.045v-3.045H4.836V2.149h16.478v11.463zm-3.224-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269h-2.149V6.269h2.149z" />
   </svg>
 )
 
@@ -117,10 +116,10 @@ const Register: React.FC = () => (
 
     {/* Línea animada por detrás */}
     <ConnectionLine />
-    
+
     {/* Título Principal */}
     <div className="reg-section-title-wrap">
-      <h2 className="reg-section-title">Nuestras Redes</h2>
+      <h2 className="reg-section-title">Seguilo en vivo</h2>
     </div>
 
     {/* Ornamento de texto rotado */}
@@ -128,34 +127,66 @@ const Register: React.FC = () => (
 
     <div className="reg-container">
 
-      {/* ── COLUMNA IZQUIERDA: celular con CSS ── */}
+      {/* ── COLUMNA IZQUIERDA: tarjeta de transmisión en vivo ── */}
       <div className="reg-col reg-col-left">
-        <div className="css-phone-mockup">
-          <div className="css-phone-notch" />
-          <div className="css-phone-button css-phone-button-left-1" />
-          <div className="css-phone-button css-phone-button-left-2" />
-          <div className="css-phone-button css-phone-button-right" />
-          <video
-            className="css-phone-video"
-            src={VideoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-label="Video de Instagram del Politécnico Mercedes"
-          />
+        <div className="reg-stream-card">
+
+          {/* Badge EN VIVO */}
+          <div className="reg-stream-live-badge" aria-label="Transmisión en vivo">
+            <span className="reg-stream-live-dot" aria-hidden="true" />
+            <span className="reg-stream-live-text">EN VIVO</span>
+          </div>
+
+          <p className="reg-stream-headline">
+            Viví la hackatón<br />completa online
+          </p>
+
+          <p className="reg-stream-sub">
+            La producción está a cargo<br />de los propios alumnos del IPM.
+          </p>
+
+          {/* Plataformas */}
+          <div className="reg-stream-platforms">
+            <a
+              href="https://www.youtube.com/@politecnicomodelo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="reg-stream-platform-btn reg-stream-platform-yt"
+              aria-label="Ver stream en YouTube"
+            >
+              <IconYouTube />
+              <span>YouTube</span>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="reg-stream-platform-btn reg-stream-platform-tw"
+              aria-label="Ver stream en Twitch"
+            >
+              <IconTwitch />
+              <span>Twitch</span>
+            </a>
+          </div>
+
+          <p className="reg-stream-dates">24 · 25 · 26 de Junio 2026</p>
+
         </div>
       </div>
 
       {/* ── COLUMNA CENTRAL: foto + redes ── */}
       <div className="reg-col reg-col-center">
 
-        {/* Foto horizontal del colegio */}
+        {/* Video preview del stream */}
         <div className="reg-school-photo-wrap">
-          <img
-            src={FotoColegioImg}
-            alt="Alumnos del Instituto Politécnico Mercedes"
+          <video
+            src={StreamPreviewVideo}
             className="reg-school-photo"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label="Preview del stream del Politón 2026"
           />
           <div className="reg-school-photo-overlay" />
           <span className="reg-school-badge">IPM</span>
@@ -168,7 +199,7 @@ const Register: React.FC = () => (
 
         {/* Texto + redes */}
         <div className="reg-social-block">
-          <p className="reg-follow-label">Seguinos en nuestras redes</p>
+          <p className="reg-follow-label">Seguinos y no te perdés nada</p>
 
           <div className="reg-social-links-row">
             <a
@@ -181,7 +212,7 @@ const Register: React.FC = () => (
               <IconInstagram />
             </a>
             <a
-              href="#"
+              href="https://www.youtube.com/@politecnicomodelo"
               target="_blank"
               rel="noopener noreferrer"
               className="reg-social-btn-icon"

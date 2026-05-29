@@ -2497,12 +2497,172 @@ a {
 }
 
 /* ─────────────────────────────────────────
+   COLUMNA IZQUIERDA — stream card
+───────────────────────────────────────── */
+
+.reg-stream-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  background: #111c2e;
+  border: 3px solid var(--polyton-ink);
+  border-radius: 16px;
+  box-shadow: 8px 8px 0 var(--polyton-ink);
+  padding: 2.2rem 1.8rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Brillo sutil de esquina top-left */
+.reg-stream-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 50%;
+  background: radial-gradient(ellipse at top left, rgba(232,160,32,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.reg-stream-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--polyton-red);
+  color: var(--polyton-paper);
+  font-family: var(--font-subtitle);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 4px;
+  border: 2px solid var(--polyton-ink);
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+}
+
+.reg-stream-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--polyton-paper);
+  flex-shrink: 0;
+  animation: reg-live-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes reg-live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.7); }
+}
+
+.reg-stream-live-text {
+  line-height: 1;
+}
+
+.reg-stream-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  color: var(--polyton-cream);
+  text-shadow: 2px 2px 0 var(--polyton-ink);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.reg-stream-sub {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: rgba(237, 224, 188, 0.65);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.reg-stream-platforms {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+}
+
+.reg-stream-platform-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--polyton-ink);
+  font-family: var(--font-subtitle);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--polyton-ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.reg-stream-platform-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.reg-stream-platform-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--polyton-ink);
+}
+
+.reg-stream-platform-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+}
+
+.reg-stream-platform-yt {
+  background: #ff0000;
+  color: #fff;
+}
+
+.reg-stream-platform-tw {
+  background: #9147ff;
+  color: #fff;
+}
+
+.reg-stream-dates {
+  font-family: var(--font-accent);
+  font-size: 0.8rem;
+  color: var(--polyton-gold);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
    COLUMNA CENTRAL — foto + redes
 ───────────────────────────────────────── */
+
+.reg-stream-iframe {
+  border: none;
+  width: 1920px;
+  height: 1080px;
+  /* Centrar horizontalmente: posición absoluta desde el centro */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px; /* -1920/2 para centrar */
+  transform-origin: top center;
+  transform: scale(calc(280 / 1080));
+  pointer-events: none;
+  display: block;
+}
 
 .reg-school-photo-wrap {
   position: relative;
   width: 100%;
+  height: 280px;
   border-radius: 12px;
   overflow: hidden;
   border: 3px solid var(--polyton-ink);
@@ -2746,6 +2906,11 @@ a {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
   }
+
+  .reg-stream-card {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2812,8 +2977,8 @@ a {
     width: 200px;
   }
 
-  .reg-school-photo {
-    height: 140px;
+  .reg-school-photo-wrap {
+    display: none;
   }
 
   .reg-qr-svg {

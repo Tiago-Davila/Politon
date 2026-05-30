@@ -12,7 +12,7 @@ import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { useCountdown } from './Countdown'
-import { REGISTRATION_FORM_URL } from '../../lib/registration'
+// import { REGISTRATION_FORM_URL } from '../../lib/registration' // inscripciones cerradas
 import { useLoader } from '../../contexts/LoaderContext'
 import politoHero from '../../assets/polito-hero.png'
 
@@ -325,28 +325,36 @@ const Hero: React.FC = () => {
               opacity: 0,
             }}
           >
-            <a
-              href={REGISTRATION_FORM_URL}
+            <div
               id="hero-cta"
-              className="btn-cuphead"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontSize: '1.1rem', padding: '0.75rem 2rem' }}
+              style={{
+                display: 'inline-flex',
+                flexDirection: 'column',
+                gap: '0.3rem',
+                background: 'rgba(0,0,0,0.25)',
+                border: '2px solid var(--polyton-sand)',
+                borderRadius: '0.5rem',
+                padding: '0.75rem 1.5rem',
+              }}
             >
-              ¡Inscribite ya! →
-            </a>
+              <span style={{
+                fontFamily: 'var(--font-subtitle)',
+                fontSize: '1.1rem',
+                color: 'var(--polyton-cream)',
+                letterSpacing: '0.04em',
+              }}>
+                🔒 Inscripciones cerradas
+              </span>
+              <span style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.85rem',
+                color: 'var(--polyton-sand)',
+              }}>
+                Próximamente más novedades
+              </span>
+            </div>
 
           </div>
-          <span
-            className="hero-cta-note"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '0.85rem',
-              color: 'var(--polyton-sand)',
-            }}
-          >
-            ¡Apurate! ¡Este viernes 29/05 a las 23:59 termina la inscripción!
-          </span>
         </div>
 
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}

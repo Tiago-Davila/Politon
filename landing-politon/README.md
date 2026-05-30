@@ -1,73 +1,116 @@
-# React + TypeScript + Vite
+# POLITÓN 2026 — Hackatón IPM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page oficial de **Politón 2026**, la hackatón del **Instituto Politécnico Mercedes (IPM)**, Buenos Aires, Argentina.  
+48 horas donde equipos de 4 estudiantes del ciclo superior (4to, 5to y 6to año) de Computación y Mecánica resuelven un problema real usando metodología **Design Thinking + Design Sprint**.
 
-Currently, two official plugins are available:
+**Sitio en vivo:** [politecnico.ipm.edu.ar](https://politecnico.ipm.edu.ar)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Stack tecnológico
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Tecnología | Versión | Uso |
+|---|---|---|
+| React 19 | ^19.2.6 | UI / componentes |
+| TypeScript | ~6.0 | Tipado |
+| Vite | ^5.4 | Bundler / dev server |
+| Tailwind CSS v4 | ^4.3 | Estilos utilitarios + tokens de marca |
+| GSAP | ^3.15 | Animaciones (ScrollTrigger, timeline) |
+| Lenis | ^1.3 | Smooth scroll |
+| Three.js | ^0.184 | Elementos 3D (Hero) |
+| Splitting.js | ^1.1 | Text reveal |
+| Radix UI | ^1.4 | Componentes accesibles (headless) |
+| Lucide React | ^1.16 | Iconos |
+| Shadcn/ui | ^4.8 | Sistema de componentes base |
+| Vercel Analytics | ^2.0 | Analytics y speed insights |
 
-## Expanding the ESLint configuration
+### Fuentes (Google Fonts)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Rol | Familia |
+|---|---|
+| Display / títulos | **Lilita One** |
+| Subtítulos / CTAs | **Boogaloo** |
+| Cuerpo | **Nunito** (400, 700, 800) |
+| Acento decorativo | **Special Elite** |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Instalación
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 1. Clonar el repo
+git clone https://github.com/tuusuario/landing-politon.git
+cd landing-politon
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar servidor de desarrollo
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Abrir [http://localhost:5173](http://localhost:5173) en el navegador.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Scripts
+
+| Comando | Descripción |
+|---|---|
+| `npm run dev` | Servidor de desarrollo con HMR |
+| `npm run build` | Compila TS + build de producción en `dist/` |
+| `npm run preview` | Previsualiza el build de producción |
+| `npm run lint` | ESLint sobre todo el proyecto |
+
+---
+
+## Estructura
+
 ```
+src/
+  components/
+    sections/     # Hero, Countdown, Challenges, Schedule, etc.
+    ui/           # Componentes base (shadcn)
+    layout/       # Navbar, Footer
+  hooks/          # useLenis, useGSAP
+  lib/            # Config de GSAP, Three.js
+  assets/
+    mascot/       # Sprites de Polito
+    logo/         # Versiones del logo
+    textures/     # Grain, papel envejecido
+  styles/
+    globals.css   # Tokens, animaciones, utilidades cartoon
+```
+
+---
+
+## Paleta de colores
+
+| Token | HEX | Uso |
+|---|---|---|
+| `polyton-night` | `#1E2D5C` | Fondos oscuros, títulos |
+| `polyton-blue` | `#2C3A6B` | Acento secundario |
+| `polyton-gold` | `#E8A020` | Destellos, badges |
+| `polyton-cream` | `#EDE0BC` | Texto sobre fondo oscuro |
+| `polyton-red` | `#C94C2E` | CTAs, botones principales |
+| `polyton-paper` | `#FDFAF2` | Fondo de página |
+| `polyton-ink` | `#1A1A1A` | Texto cuerpo, contornos |
+
+---
+
+## Despliegue
+
+El sitio se despliega en **Vercel** con deploy automático desde el branch `main`.  
+Apuntado al dominio **politecnico.ipm.edu.ar**.
+
+```bash
+npm run build   # Genera carpeta dist/
+```
+
+Luego Vercel toma `dist/` como directorio de salida (configuración por defecto).
+
+---
+
+## Licencia
+
+Uso interno — Instituto Politécnico Mercedes (IPM).

@@ -7,7 +7,6 @@ import React from 'react'
 import CardNav from './CardNav'
 import logoImg from '../../assets/logo-completo.png'
 import type { CardNavItem } from './CardNav'
-import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const NAV_ITEMS: CardNavItem[] = [
   {
@@ -35,7 +34,7 @@ const NAV_ITEMS: CardNavItem[] = [
     links: [
       { label: 'Información', ariaLabel: 'Información de inscripción', href: '#inscripcion-info' },
       { label: 'Nuestras redes', ariaLabel: 'Nuestras redes sociales', href: '#registro' },
-      { label: 'Inscribite →', ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL },
+      // { label: 'Inscribite →', ariaLabel: 'Ir al formulario de inscripción', href: REGISTRATION_FORM_URL }, // inscripciones cerradas
     ],
   },
 ]
@@ -50,8 +49,7 @@ const Navbar: React.FC = () => {
       menuColor="#1E2D5C"
       buttonBgColor="#C94C2E"
       buttonTextColor="#FDFAF2"
-      buttonLabel="¡Inscribite!"
-      buttonHref={REGISTRATION_FORM_URL}
+      rightContent={<span />}
       ease="power3.out"
     />
   )

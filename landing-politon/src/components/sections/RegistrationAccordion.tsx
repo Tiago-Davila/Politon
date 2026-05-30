@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import premiosImg from '../../assets/registration/premios.png'
 import ayudaImg from '../../assets/registration/inscripcion-ayuda.png'
 import solucionesImg from '../../assets/registration/soluciones-accordion.png'
-import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const REGISTRATION_ITEMS = [
   {

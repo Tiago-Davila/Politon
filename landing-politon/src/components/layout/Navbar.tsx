@@ -7,7 +7,6 @@ import React from 'react'
 import CardNav from './CardNav'
 import logoImg from '../../assets/logo-completo.png'
 import type { CardNavItem } from './CardNav'
-import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const NAV_ITEMS: CardNavItem[] = [
   {

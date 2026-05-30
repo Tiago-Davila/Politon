@@ -114,8 +114,9 @@ const Register: React.FC = () => (
     {/* Grain de fondo */}
     <div className="reg-grain" aria-hidden="true" />
 
-    {/* Línea animada por detrás */}
+    {/* Línea animada comentada — firulete naranja sacado
     <ConnectionLine />
+    */}
 
     {/* Título Principal */}
     <div className="reg-section-title-wrap">
@@ -235,32 +236,54 @@ const Register: React.FC = () => (
         </div>
       </div>
 
-      {/* ── COLUMNA DERECHA: QR + CTA ── */}
+      {/* ── COLUMNA DERECHA: qué vas a ver en el stream ── */}
       <div className="reg-col reg-col-right">
-        <div className="reg-qr-block">
-          <p className="reg-qr-label">Escaneá para inscribirte</p>
-          <a
-            className="reg-qr-frame"
-            href={REGISTRATION_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Abrir formulario de inscripción"
-          >
-            <RegistrationQR />
-          </a>
-        </div>
+        <div className="reg-stream-card">
 
-        <div className="reg-cta-block">
-          <p className="reg-cta-question">¿Te<br />animás?</p>
-          <a
-            href={REGISTRATION_FORM_URL}
-            className="reg-cta-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Inscribirse al Politón 2026"
-          >
-            Inscribite →
-          </a>
+          {/* Badge CONTENIDO */}
+          <div className="reg-stream-live-badge" aria-label="Contenido del stream">
+            <span className="reg-stream-live-dot" aria-hidden="true" style={{ background: 'var(--polyton-gold)', boxShadow: '0 0 6px var(--polyton-gold)' }} />
+            <span className="reg-stream-live-text">CONTENIDO</span>
+          </div>
+
+          <p className="reg-stream-headline">
+            ¿Qué vas<br />a ver?
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem' }}>
+            {[
+              { icon: '📹', titulo: 'Cámara en vivo', desc: 'El evento en tiempo real' },
+              { icon: '🎙️', titulo: 'Entrevistas', desc: 'Equipos, jurados y referentes' },
+              { icon: '📱', titulo: 'Móviles', desc: 'Cobertura desde adentro' },
+              { icon: '🎬', titulo: 'Secciones especiales', desc: 'Pitches, votaciones, juegos y más' },
+            ].map(({ icon, titulo, desc }) => (
+              <div
+                key={titulo}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(237,224,188,0.15)',
+                  borderRadius: '0.4rem',
+                  padding: '0.5rem 0.7rem',
+                }}
+              >
+                <span style={{ fontSize: '1.1rem', lineHeight: 1, flexShrink: 0 }}>{icon}</span>
+                <div>
+                  <p style={{ fontFamily: 'var(--font-subtitle)', fontSize: '0.9rem', color: 'var(--polyton-cream)', margin: 0, lineHeight: 1.2 }}>
+                    {titulo}
+                  </p>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--polyton-sand)', margin: 0 }}>
+                    {desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="reg-stream-dates">24 · 25 · 26 de Junio 2026</p>
+
         </div>
       </div>
 

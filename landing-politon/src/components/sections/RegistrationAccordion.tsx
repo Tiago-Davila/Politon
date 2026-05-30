@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import premiosImg from '../../assets/registration/premios.png'
 import ayudaImg from '../../assets/registration/inscripcion-ayuda.png'
-import formularioImg from '../../assets/registration/formulario.png'
+import solucionesImg from '../../assets/registration/soluciones-accordion.png'
 import { REGISTRATION_FORM_URL } from '../../lib/registration'
 
 const REGISTRATION_ITEMS = [
@@ -12,16 +12,16 @@ const REGISTRATION_ITEMS = [
     image: premiosImg,
   },
   {
-    title: '¿Tenés problemas para inscribirte?',
+    title: 'Equipos',
     kicker: 'Equipos libres',
     text: 'Participan estudiantes de 4to, 5to y 6to. Pueden mezclarse entre años, Computación y Mecánica, como ustedes quieran.',
     image: ayudaImg,
   },
   {
-    title: 'Formulario',
-    kicker: 'Sumate al Politón',
-    text: 'Inscribí a tu equipo. Si quieren, también pueden apadrinar una dupla de ciclo básico para sumar nuevas miradas al desafío.',
-    image: formularioImg,
+    title: 'Soluciones',
+    kicker: 'Múltiples actividades',
+    text: 'En equipo deberán seguir las actividades propuestas para idear, iterar, validar y llevar a cabo una solución concreta al problema planteado.',
+    image: solucionesImg,
   },
 ]
 
@@ -34,9 +34,8 @@ const RegistrationAccordion: React.FC = () => {
       <div className="signup-accordion-bg" aria-hidden="true" />
 
       <div className="signup-accordion-inner">
-        <div className="signup-accordion-copy">
-          <p className="signup-accordion-eyebrow">Inscripción abierta</p>
-          <h2 className="signup-accordion-title">Sumate a la primera fase</h2>
+        <div className="signup-accordion-copy" style={{ paddingTop: 'clamp(2rem, 5vw, 4rem)' }}>
+          <h2 className="signup-accordion-title">Arrancará la primera fase</h2>
           <p className="signup-accordion-intro">
             Armá tu equipo, mezclá especialidades, invitá a otros años y vení a construir una solución propia.
           </p>
@@ -69,6 +68,7 @@ const RegistrationAccordion: React.FC = () => {
           <div className="signup-accordion-card">
             <p className="signup-accordion-kicker">{activeItem.kicker}</p>
             <p className="signup-accordion-text">{activeItem.text}</p>
+            {/* inscripciones cerradas — link al formulario comentado
             {activeIndex === 2 && (
               <a
                 className="signup-accordion-cta"
@@ -79,6 +79,7 @@ const RegistrationAccordion: React.FC = () => {
                 Abrir formulario
               </a>
             )}
+            */}
           </div>
 
           <div className="signup-accordion-visual" aria-hidden="true">

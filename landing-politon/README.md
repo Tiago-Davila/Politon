@@ -113,4 +113,4 @@ Luego Vercel toma `dist/` como directorio de salida (configuración por defecto)
 
 ## Licencia
 
-Uso interno — Instituto Politécnico Mercedes (IPM).
+Uso interno — Instituto Politécnico Modelo (IPM).

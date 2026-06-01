@@ -1,6 +1,6 @@
 # POLITON 2026
 
-Landing page oficial de Politon 2026, la hackathon del Instituto Politecnico Mercedes (IPM). El sitio presenta una experiencia visual inspirada en rubber hose cartoon y afiches vintage, con Polito como mascota central, animaciones de scroll, modelo 3D en el hero y secciones informativas para estudiantes.
+Landing page oficial de Politon 2026, la hackathon del Instituto Politecnico Modelo (IPM). El sitio presenta una experiencia visual inspirada en rubber hose cartoon y afiches vintage, con Polito como mascota central, animaciones de scroll, modelo 3D en el hero y secciones informativas para estudiantes.
 
 Politon es un evento de 48 horas para equipos de estudiantes de 4to, 5to y 6to ano de Computacion y Mecanica. La propuesta combina Design Thinking y Design Sprint para entender un problema real, idear soluciones, validarlas y comunicarlas en un pitch.
 
@@ -194,11 +194,7 @@ El workflow:
 5. Ejecuta `vercel build`.
 6. Publica con `vercel deploy --prebuilt`.
 
-Requiere el secret:
 
-```text
-VERCEL_TOKEN
-```
 
 ## Verificacion Antes De Subir
 
@@ -213,4 +209,4 @@ El build es especialmente importante porque TypeScript esta configurado para fal
 
 ## Licencia
 
-Proyecto de uso institucional para el Instituto Politecnico Mercedes.
+Proyecto de uso institucional para el Instituto Politecnico Modelo (IPM).

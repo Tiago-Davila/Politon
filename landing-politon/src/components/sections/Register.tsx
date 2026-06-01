@@ -79,7 +79,7 @@ const Register: React.FC = () => (
               <span>YouTube</span>
             </a>
             <a
-              href="#"
+              href="https://www.twitch.tv/ipmtv_"
               target="_blank"
               rel="noopener noreferrer"
               className="reg-stream-platform-btn reg-stream-platform-tw"
@@ -142,7 +142,7 @@ const Register: React.FC = () => (
               <IconYouTube />
             </a>
             <a
-              href="#"
+              href="https://www.twitch.tv/ipmtv_"
               target="_blank"
               rel="noopener noreferrer"
               className="reg-social-btn-icon"

@@ -66,30 +66,6 @@ const Register: React.FC = () => (
             La producción está a cargo<br />de los propios alumnos del IPM.
           </p>
 
-          {/* Plataformas */}
-          <div className="reg-stream-platforms">
-            <a
-              href="https://www.youtube.com/@politecnicomodelo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reg-stream-platform-btn reg-stream-platform-yt"
-              aria-label="Ver stream en YouTube"
-            >
-              <IconYouTube />
-              <span>YouTube</span>
-            </a>
-            <a
-              href="https://www.twitch.tv/ipmtv_"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reg-stream-platform-btn reg-stream-platform-tw"
-              aria-label="Ver stream en Twitch"
-            >
-              <IconTwitch />
-              <span>Twitch</span>
-            </a>
-          </div>
-
           <p className="reg-stream-dates">24 · 25 · 26 de Junio 2026</p>
 
         </div>
@@ -162,48 +138,33 @@ const Register: React.FC = () => (
         <div className="reg-stream-card">
 
           {/* Badge CONTENIDO */}
-          <div className="reg-stream-live-badge" aria-label="Contenido del stream">
-            <span className="reg-stream-live-dot" aria-hidden="true" style={{ background: 'var(--polyton-gold)', boxShadow: '0 0 6px var(--polyton-gold)' }} />
-            <span className="reg-stream-live-text">CONTENIDO</span>
+          <div className="reg-stream-content-badge" aria-label="Contenido del stream">
+            CONTENIDO
           </div>
 
           <p className="reg-stream-headline">
             ¿Qué vas<br />a ver?
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem' }}>
+          <div className="reg-feature-list">
             {[
-              { icon: '📹', titulo: 'Cámara en vivo', desc: 'El evento en tiempo real' },
-              { icon: '🎙️', titulo: 'Entrevistas', desc: 'Equipos, jurados y referentes' },
-              { icon: '📱', titulo: 'Móviles', desc: 'Cobertura desde adentro' },
-              { icon: '🎬', titulo: 'Secciones especiales', desc: 'Pitches, votaciones, juegos y más' },
-            ].map(({ icon, titulo, desc }) => (
+              { titulo: 'Cámara en vivo', desc: 'El evento en tiempo real' },
+              { titulo: 'Entrevistas', desc: 'Equipos, jurados y referentes' },
+              { titulo: 'Móviles', desc: 'Cobertura desde adentro' },
+              { titulo: 'Secciones especiales', desc: 'Pitches, votaciones, juegos y más' },
+            ].map(({ titulo, desc }, index) => (
               <div
                 key={titulo}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.6rem',
-                  background: 'rgba(30,45,92,0.08)',
-                  border: '1px solid rgba(26,26,26,0.18)',
-                  borderRadius: '0.4rem',
-                  padding: '0.5rem 0.7rem',
-                }}
+                className="reg-feature-item"
               >
-                <span style={{ fontSize: '1.1rem', lineHeight: 1, flexShrink: 0 }}>{icon}</span>
-                <div>
-                  <p style={{ fontFamily: 'var(--font-subtitle)', fontSize: '0.9rem', color: 'var(--polyton-night)', margin: 0, lineHeight: 1.2 }}>
-                    {titulo}
-                  </p>
-                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--polyton-leather)', margin: 0 }}>
-                    {desc}
-                  </p>
+                <span className="reg-feature-number">{String(index + 1).padStart(2, '0')}</span>
+                <div className="reg-feature-copy">
+                  <p className="reg-feature-title">{titulo}</p>
+                  <p className="reg-feature-desc">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
-
-          <p className="reg-stream-dates">24 · 25 · 26 de Junio 2026</p>
 
         </div>
       </div>

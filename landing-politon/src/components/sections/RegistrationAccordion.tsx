@@ -82,14 +82,16 @@ const RegistrationAccordion: React.FC = () => {
           </div>
 
           <div className="signup-accordion-visual" aria-hidden="true">
-            <img
-              key={activeItem.title}
-              className="signup-accordion-image is-active"
-              src={activeItem.image}
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
+            {REGISTRATION_ITEMS.map((item, index) => (
+              <img
+                key={item.title}
+                className={`signup-accordion-image${activeIndex === index ? ' is-active' : ''}`}
+                src={item.image}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
           </div>
         </div>
       </div>

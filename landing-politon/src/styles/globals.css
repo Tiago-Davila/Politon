@@ -2502,10 +2502,12 @@ a {
   width: 100%;
   max-width: 340px;
   min-height: 100%;
-  background: var(--polyton-vintage);
+  background:
+    radial-gradient(circle at 18% 14%, rgba(232, 160, 32, 0.18) 0 10%, transparent 32%),
+    linear-gradient(160deg, var(--polyton-blue) 0%, var(--polyton-night) 62%, var(--polyton-ink) 100%);
   border: 3px solid var(--polyton-ink);
   border-radius: 8px;
-  box-shadow: 8px 8px 0 var(--polyton-ink), inset 0 0 0 2px var(--polyton-sand);
+  box-shadow: 8px 8px 0 var(--polyton-ink), inset 0 0 0 2px rgba(237, 224, 188, 0.22);
   padding: clamp(1.5rem, 2.2vw, 2rem) clamp(1.2rem, 2vw, 1.65rem);
   display: flex;
   flex-direction: column;
@@ -2523,8 +2525,8 @@ a {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 16% 18%, rgba(232,160,32,0.18) 0 2px, transparent 2.5px),
-    linear-gradient(135deg, rgba(232,160,32,0.13) 0%, transparent 45%);
+    radial-gradient(circle at 16% 18%, rgba(237,224,188,0.14) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 78% 62%, rgba(232,160,32,0.12) 0 2px, transparent 2.5px);
   background-size: 24px 24px, auto;
   pointer-events: none;
   opacity: 0.7;
@@ -2538,8 +2540,8 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--polyton-red);
-  color: var(--polyton-paper);
+  background: var(--polyton-gold);
+  color: var(--polyton-night);
   font-family: var(--font-subtitle);
   font-size: 0.82rem;
   font-weight: 700;
@@ -2553,11 +2555,32 @@ a {
   z-index: 1;
 }
 
+.reg-stream-content-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7.4rem;
+  background: var(--polyton-gold);
+  color: var(--polyton-night);
+  font-family: var(--font-subtitle);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 0.38rem 1rem;
+  border-radius: 4px;
+  border: 2px solid var(--polyton-ink);
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+  position: relative;
+  z-index: 1;
+}
+
 .reg-stream-live-dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--polyton-paper);
+  background: var(--polyton-red);
   flex-shrink: 0;
   animation: reg-live-pulse 1.2s ease-in-out infinite;
 }
@@ -2574,8 +2597,8 @@ a {
 .reg-stream-headline {
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 2.55vw, 2.2rem);
-  color: var(--polyton-night);
-  text-shadow: 2px 2px 0 var(--polyton-gold);
+  color: var(--polyton-cream);
+  text-shadow: 3px 3px 0 var(--polyton-ink);
   margin: 0;
   line-height: 1.02;
   text-transform: uppercase;
@@ -2586,8 +2609,8 @@ a {
 .reg-stream-sub {
   font-family: var(--font-body);
   font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--polyton-ink);
+  font-weight: 700;
+  color: var(--polyton-vintage);
   margin: 0;
   line-height: 1.42;
   max-width: 24ch;
@@ -2651,11 +2674,69 @@ a {
 .reg-stream-dates {
   font-family: var(--font-accent);
   font-size: 0.78rem;
-  color: var(--polyton-red);
+  color: var(--polyton-gold);
   letter-spacing: 0.08em;
   margin: 0;
   position: relative;
   z-index: 1;
+}
+
+.reg-feature-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  gap: 0.55rem;
+}
+
+.reg-feature-item {
+  display: grid;
+  grid-template-columns: 2.35rem 1fr;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 3.65rem;
+  padding: 0.55rem 0.65rem;
+  background: rgba(237, 224, 188, 0.08);
+  border: 1.5px solid rgba(237, 224, 188, 0.24);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.25);
+  text-align: left;
+}
+
+.reg-feature-number {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  background: var(--polyton-gold);
+  color: var(--polyton-night);
+  border: 2px solid var(--polyton-ink);
+  border-radius: 50%;
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.reg-feature-copy {
+  min-width: 0;
+}
+
+.reg-feature-title {
+  font-family: var(--font-subtitle);
+  font-size: 0.98rem;
+  color: var(--polyton-cream);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.reg-feature-desc {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--polyton-sand);
+  margin: 0.12rem 0 0;
+  line-height: 1.25;
 }
 
 /* ─────────────────────────────────────────
@@ -2761,7 +2842,9 @@ a {
   align-items: center;
   gap: 0.95rem;
   text-align: center;
-  background: var(--polyton-vintage);
+  background:
+    radial-gradient(circle at 92% 20%, rgba(232, 160, 32, 0.22) 0 8%, transparent 28%),
+    linear-gradient(145deg, var(--polyton-sand) 0%, var(--polyton-vintage) 46%, var(--polyton-cream) 100%);
   border: 3px solid var(--polyton-ink);
   border-radius: 8px;
   box-shadow: 7px 7px 0 var(--polyton-ink);
@@ -2821,7 +2904,7 @@ a {
 .reg-hashtag {
   font-family: var(--font-display);
   font-size: clamp(1.45rem, 2.6vw, 1.95rem);
-  color: var(--polyton-red);
+  color: var(--polyton-night);
   letter-spacing: 0.04em;
   text-shadow: 2px 2px 0 var(--polyton-gold);
   margin: 0;
@@ -3051,6 +3134,27 @@ a {
 
   .reg-stream-headline {
     font-size: 1.75rem;
+  }
+
+  .reg-feature-item {
+    grid-template-columns: 2rem 1fr;
+    min-height: auto;
+    padding: 0.5rem 0.55rem;
+    gap: 0.55rem;
+  }
+
+  .reg-feature-number {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.82rem;
+  }
+
+  .reg-feature-title {
+    font-size: 0.92rem;
+  }
+
+  .reg-feature-desc {
+    font-size: 0.7rem;
   }
 
   .reg-social-links-row {

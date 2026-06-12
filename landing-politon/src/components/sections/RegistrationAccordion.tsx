@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import premiosImg from '../../assets/registration/premios.png'
-import ayudaImg from '../../assets/registration/inscripcion-ayuda.png'
-import solucionesImg from '../../assets/registration/soluciones-accordion.png'
+import premiosImg from '../../assets/registration/premios.webp'
+import ayudaImg from '../../assets/registration/inscripcion-ayuda.webp'
+import solucionesImg from '../../assets/registration/soluciones-accordion.webp'
 
 const REGISTRATION_ITEMS = [
   {
@@ -82,15 +82,14 @@ const RegistrationAccordion: React.FC = () => {
           </div>
 
           <div className="signup-accordion-visual" aria-hidden="true">
-            {REGISTRATION_ITEMS.map((item, index) => (
-              <img
-                key={item.title}
-                className={`signup-accordion-image${activeIndex === index ? ' is-active' : ''}`}
-                src={item.image}
-                alt=""
-                loading="lazy"
-              />
-            ))}
+            <img
+              key={activeItem.title}
+              className="signup-accordion-image is-active"
+              src={activeItem.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
       </div>

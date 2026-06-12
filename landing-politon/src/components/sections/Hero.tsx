@@ -14,7 +14,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { useCountdown } from './Countdown'
 // import { REGISTRATION_FORM_URL } from '../../lib/registration' // inscripciones cerradas
 import { useLoader } from '../../contexts/LoaderContext'
-import politoHero from '../../assets/polito-hero.png'
+import politoHero from '../../assets/polito-hero.webp'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
@@ -28,7 +28,6 @@ const Hero: React.FC = () => {
   const specialRef = useRef<HTMLDivElement>(null)
   const dateRef = useRef<HTMLDivElement>(null)
   const taglineRef = useRef<HTMLParagraphElement>(null)
-  const ctaRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -92,14 +91,7 @@ const Hero: React.FC = () => {
         { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.85 }
       )
 
-      /* 6 — CTA */
-      gsap.fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 24, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: 'back.out(1.8)', delay: 1.0 }
-      )
-
-      /* 7 — Contador compacto */
+      /* 6 — Contador compacto */
       gsap.fromTo(
         badgeRef.current,
         { scale: 0, rotate: 0, opacity: 0 },
@@ -113,7 +105,7 @@ const Hero: React.FC = () => {
         }
       )
 
-      /* 8 — Estrellas decorativas animadas con GSAP */
+      /* 7 — Estrellas decorativas animadas con GSAP */
       const stars = sectionRef.current?.querySelectorAll('.hero-star')
       if (stars?.length) {
         stars.forEach((star, i) => {
@@ -161,6 +153,7 @@ const Hero: React.FC = () => {
           alt=""
           aria-hidden="true"
           className="polito-canvas"
+          decoding="async"
           style={{
             objectFit: 'contain',
             objectPosition: 'center bottom',
@@ -313,138 +306,92 @@ const Hero: React.FC = () => {
             ¿Te animás?
           </p>
 
-          {/* CTA */}
           <div
-            ref={ctaRef}
-            className="hero-cta-row"
+            ref={badgeRef}
+            className="badge-vintage hero-countdown-badge"
+            aria-label="Cuenta regresiva para Politón 2026"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              flexWrap: 'wrap',
+              width: 'min(320px, 100%)',
+              minWidth: '260px',
+              minHeight: '100px',
+              background: 'var(--polyton-gold)',
+              color: 'var(--polyton-night)',
+              alignItems: 'stretch',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              gap: '0.45rem',
               opacity: 0,
+              zIndex: 3,
+              padding: '0.9rem 1rem',
+              borderRadius: '0.55rem',
             }}
           >
-            <div
-              id="hero-cta"
+            <span
               style={{
-                display: 'inline-flex',
-                flexDirection: 'column',
-                gap: '0.3rem',
-                background: 'rgba(0,0,0,0.25)',
-                border: '2px solid var(--polyton-sand)',
-                borderRadius: '0.5rem',
-                padding: '0.75rem 1.5rem',
+                fontFamily: 'var(--font-subtitle)',
+                fontSize: '0.82rem',
+                color: 'var(--polyton-night)',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                textAlign: 'center',
               }}
             >
-              <span style={{
-                fontFamily: 'var(--font-subtitle)',
-                fontSize: '1.1rem',
-                color: 'var(--polyton-cream)',
-                letterSpacing: '0.04em',
-              }}>
-                🔒 Inscripciones cerradas
-              </span>
-              <span style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.85rem',
-                color: 'var(--polyton-sand)',
-              }}>
-                Próximamente más novedades
-              </span>
+              Empieza en
+            </span>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '0.35rem',
+              }}
+            >
+              {[
+                { value: time.days, label: 'Días' },
+                { value: time.hours, label: 'Hs' },
+                { value: time.minutes, label: 'Min' },
+                { value: time.seconds, label: 'Seg' },
+              ].map((unit) => (
+                <span
+                  key={unit.label}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.08rem',
+                    minWidth: 0,
+                  }}
+                >
+                  <strong
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(1.55rem, 2.7vw, 2.45rem)',
+                      fontWeight: 400,
+                      lineHeight: 0.9,
+                      textShadow: '2px 2px 0 var(--polyton-cream)',
+                    }}
+                  >
+                    {String(unit.value).padStart(2, '0')}
+                  </strong>
+                  <small
+                    style={{
+                      fontFamily: 'var(--font-subtitle)',
+                      fontSize: '0.68rem',
+                      color: 'var(--polyton-night)',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {unit.label}
+                  </small>
+                </span>
+              ))}
             </div>
-
           </div>
+
         </div>
 
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}
         <div style={{ minHeight: '520px' }} aria-hidden="true" />
-
-        <div
-          ref={badgeRef}
-          className="badge-vintage hero-countdown-badge"
-          aria-label="Cuenta regresiva para Politón 2026"
-          style={{
-            position: 'absolute',
-            bottom: '22%',
-            left: '47%',
-            marginLeft: '-160px',
-            width: 'min(320px, 28vw)',
-            minWidth: '260px',
-            minHeight: '100px',
-            background: 'var(--polyton-gold)',
-            color: 'var(--polyton-night)',
-            alignItems: 'stretch',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            gap: '0.45rem',
-            opacity: 0,
-            zIndex: 3,
-            padding: '0.9rem 1rem',
-            borderRadius: '0.55rem',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: 'var(--font-subtitle)',
-              fontSize: '0.82rem',
-              color: 'var(--polyton-night)',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              textAlign: 'center',
-            }}
-          >
-            Empieza en
-          </span>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '0.35rem',
-            }}
-          >
-            {[
-              { value: time.days, label: 'Días' },
-              { value: time.hours, label: 'Hs' },
-              { value: time.minutes, label: 'Min' },
-              { value: time.seconds, label: 'Seg' },
-            ].map((unit) => (
-              <span
-                key={unit.label}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '0.08rem',
-                  minWidth: 0,
-                }}
-              >
-                <strong
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.55rem, 2.7vw, 2.45rem)',
-                    fontWeight: 400,
-                    lineHeight: 0.9,
-                    textShadow: '2px 2px 0 var(--polyton-cream)',
-                  }}
-                >
-                  {String(unit.value).padStart(2, '0')}
-                </strong>
-                <small
-                  style={{
-                    fontFamily: 'var(--font-subtitle)',
-                    fontSize: '0.68rem',
-                    color: 'var(--polyton-night)',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {unit.label}
-                </small>
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
 
 

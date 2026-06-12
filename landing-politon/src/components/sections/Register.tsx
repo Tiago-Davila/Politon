@@ -107,6 +107,7 @@ const Register: React.FC = () => (
             muted
             loop
             playsInline
+            preload="none"
             aria-label="Preview del stream del Politón 2026"
           />
           <div className="reg-school-photo-overlay" />
@@ -183,18 +184,18 @@ const Register: React.FC = () => (
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.6rem',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(237,224,188,0.15)',
+                  background: 'rgba(30,45,92,0.08)',
+                  border: '1px solid rgba(26,26,26,0.18)',
                   borderRadius: '0.4rem',
                   padding: '0.5rem 0.7rem',
                 }}
               >
                 <span style={{ fontSize: '1.1rem', lineHeight: 1, flexShrink: 0 }}>{icon}</span>
                 <div>
-                  <p style={{ fontFamily: 'var(--font-subtitle)', fontSize: '0.9rem', color: 'var(--polyton-cream)', margin: 0, lineHeight: 1.2 }}>
+                  <p style={{ fontFamily: 'var(--font-subtitle)', fontSize: '0.9rem', color: 'var(--polyton-night)', margin: 0, lineHeight: 1.2 }}>
                     {titulo}
                   </p>
-                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--polyton-sand)', margin: 0 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--polyton-leather)', margin: 0 }}>
                     {desc}
                   </p>
                 </div>

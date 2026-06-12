@@ -5,7 +5,7 @@
  */
 import React from 'react'
 import CardNav from './CardNav'
-import logoImg from '../../assets/logo-completo.png'
+import logoImg from '../../assets/logo-completo-nav.webp'
 import type { CardNavItem } from './CardNav'
 
 const NAV_ITEMS: CardNavItem[] = [

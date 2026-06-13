@@ -267,6 +267,12 @@
     position: static;
     transform: none;
     order: 1;
+    justify-content: flex-start;
+    margin-right: auto;
+  }
+
+  .card-nav-logo {
+    height: 42px;
   }
 
   .card-nav-cta-button,

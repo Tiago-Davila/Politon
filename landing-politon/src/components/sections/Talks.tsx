@@ -20,12 +20,6 @@ const SPEAKERS = [
     silhouette: 'man-b',
     accent: '#2C3A6B',
   },
-  {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'man-a',
-    accent: '#7A4E2D',
-  },
 ]
 
 const Talks: React.FC = () => {

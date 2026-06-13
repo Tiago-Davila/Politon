@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import premiosImg from '../../assets/registration/premios.png'
-import ayudaImg from '../../assets/registration/inscripcion-ayuda.png'
-import solucionesImg from '../../assets/registration/soluciones-accordion.png'
+import premiosImg from '../../assets/registration/premios.webp'
+import ayudaImg from '../../assets/registration/inscripcion-ayuda.webp'
+import solucionesImg from '../../assets/registration/soluciones-accordion.webp'
 
 const REGISTRATION_ITEMS = [
   {
@@ -89,6 +89,7 @@ const RegistrationAccordion: React.FC = () => {
                 src={item.image}
                 alt=""
                 loading="lazy"
+                decoding="async"
               />
             ))}
           </div>

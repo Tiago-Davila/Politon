@@ -3,22 +3,34 @@ import { gsap } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'man-a',
-    accent: '#C94C2E',
+    name: 'Paloma Conde',
+    topic: 'La Paradoja de la Conexión: vínculos y ansiedad en la era digital',
+    photoUrl: '/speakers/paloma-conde.webp',
+    accent: '#C94C6E',
+    cardBg: '#2D1B4E',
+    sectionBg: '#2D1B4E',
+    nameColor: '#F0E6D3',
+    topicColor: '#C4A6D4',
   },
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'woman',
+    name: 'Lucas Saclier',
+    topic: 'IA, Empleo y Profesiones del Futuro',
+    photoUrl: '/speakers/lucas-saclier.webp',
     accent: '#E8A020',
+    cardBg: '#0F3A48',
+    sectionBg: '#1A4A5C',
+    nameColor: '#EDE0BC',
+    topicColor: '#7EC8D4',
   },
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'man-b',
-    accent: '#2C3A6B',
+    name: 'Micaela Brahim',
+    topic: 'Pequeñas Acciones, Grandes Cambios: El Impacto Ambiental y la Sustentabilidad',
+    photoUrl: '/speakers/micaela-brahim.webp',
+    accent: '#D4A040',
+    cardBg: '#1E3A1F',
+    sectionBg: '#2D4A2E',
+    nameColor: '#EDE0BC',
+    topicColor: '#A8C4A0',
   },
 ]
 
@@ -39,11 +51,12 @@ const Talks: React.FC = () => {
     if (!cards.length) return
 
     const N = cards.length
-    // How many viewport heights the user must scroll per card reveal.
-    // Increase this to require more scrolling to reveal the next card.
-    const SCROLL_PER_CARD = 140 // in vh
+    const SCROLL_PER_CARD = 140
 
-    /* Posiciones iniciales: stack visual con offset y escala */
+    /* Set initial section background */
+    gsap.set(section, { backgroundColor: SPEAKERS[0].sectionBg })
+
+    /* Stack initial positions */
     cards.forEach((card, i) => {
       const fromTop = N - 1 - i
       gsap.set(card, {
@@ -53,19 +66,19 @@ const Talks: React.FC = () => {
       })
     })
 
-    /* Timeline: las cards salen de arriba hacia abajo */
+    /* Timeline: card stack reveal + color transitions */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         pin: true,
         start: 'top top',
         end: `+=${N * SCROLL_PER_CARD}vh`,
-        scrub: 1,
+        scrub: 0.1,
         invalidateOnRefresh: true,
       },
     })
 
-    // Animate cards in DOM order: card 0 (first) should go first, leaving the last card as the base
+    /* Card slide-out animations */
     for (let i = 0; i < N; i++) {
       if (i === N - 1) continue
       const pos = i / N
@@ -75,12 +88,24 @@ const Talks: React.FC = () => {
           y: '-120%',
           opacity: 0,
           scale: 0.8,
-          rotation: -5,
+          rotation: 5,
           ease: 'power2.inOut',
           duration: 1 / N,
         },
         pos
       )
+    }
+
+    /* Smooth color transition when card is quiet (after slide-out ends) */
+    for (let i = 1; i < N; i++) {
+      const pos = i / N
+      tl.call(() => {
+        gsap.to(section, {
+          backgroundColor: SPEAKERS[i].sectionBg,
+          duration: 0.5,
+          ease: 'power2.inOut',
+        })
+      }, undefined, pos)
     }
 
     return () => {
@@ -103,10 +128,6 @@ const Talks: React.FC = () => {
             Conocé a las personas que van a exponer las problemáticas con las que los equipos trabajarán.
             Cada charla trae una perspectiva única.
           </p>
-          {/* <div className="talks-stack-count">
-            <span className="tsc-number">{String(SPEAKERS.length).padStart(2, '0')}</span>
-            <span className="tsc-label">charlas<br />a confirmar</span>
-          </div> */}
         </div>
 
         <div ref={stackRef} className="talks-stack-right">
@@ -115,17 +136,31 @@ const Talks: React.FC = () => {
               <article
                 key={i}
                 className="stack-card"
-                style={{ '--card-accent': s.accent } as React.CSSProperties}
+                style={{
+                  '--card-accent': s.accent,
+                  '--card-bg': s.cardBg,
+                  '--card-name-color': s.nameColor,
+                  '--card-topic-color': s.topicColor,
+                } as React.CSSProperties}
               >
-                <div
-                  className={`stack-card-photo stack-card-photo--mystery stack-card-photo--${s.silhouette}`}
-                  aria-label={`${s.name}: identidad a revelar`}
-                >
-                  <div className="speaker-shadow" aria-hidden="true">
-                    <span className="speaker-shadow-head" />
-                    <span className="speaker-shadow-neck" />
-                    <span className="speaker-shadow-body" />
-                  </div>
+                <div className="stack-card-photo" aria-label={`Foto de ${s.name}`}>
+                  <div
+                    className="stack-card-photo-bg"
+                    style={{
+                      background: `linear-gradient(155deg, ${s.accent}55, ${s.cardBg} 60%, #0a0a0a)`,
+                    }}
+                    aria-hidden="true"
+                  />
+                  <img
+                    src={s.photoUrl}
+                    alt={s.name}
+                    className="stack-card-photo-img"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none'
+                    }}
+                  />
+                  <div className="stack-card-ghibli-overlay" aria-hidden="true" />
                 </div>
                 <div className="stack-card-body">
                   <div className="stack-card-tag" style={{ background: s.accent }}>

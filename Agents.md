@@ -286,7 +286,7 @@ src/
 - **GSAP**: usar versión gratuita (core + ScrollTrigger). SplitText requiere Club GreenSock — evaluar `splitting.js` como alternativa.
 - **Lenis + React**: inicializar en `useLenis.ts`, exponer instancia via context si otras secciones necesitan control programático del scroll.
 - **Logos y mascota**: todos los assets tienen fondo negro — usar `mix-blend-mode: multiply` o recortar con CSS/canvas según el contexto.
-
+- **Commits y PRs**: Los commits son conventional, en español sin coautoria y los PRs sin mencion a Claude Code.
 ---
 
 ## Referencias de nivel de producción

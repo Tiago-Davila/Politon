@@ -697,59 +697,63 @@ a {
 
 /* Corner marks eliminados */
 
+/* Hero: fondo Dither a pantalla completa */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Hero: grain vintage sobre el halftone */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* Hero: Polito volando, tamaño medio, arriba del texto */
+.hero-polito {
+  position: relative;
+  z-index: 3;
+  width: clamp(220px, 24vw, 360px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-polito img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Sombra cartoon dura, sin desenfoque */
+  filter: drop-shadow(6px 8px 0 var(--polyton-ink));
+}
+
+/* Hero: filete ornamental a los lados de la fecha */
+.hero-date-rule {
+  width: 3rem;
+  height: 3px;
+  background: var(--polyton-gold);
+  border: 1px solid var(--polyton-ink);
+}
+
+
 @media (max-width: 768px) {
   section#hero {
-    min-height: auto !important;
+    min-height: 100svh !important;
     overflow: hidden !important;
   }
 
-  .hero-bg-base {
-    background:
-      radial-gradient(circle at 92% 18%, rgba(232, 160, 32, 0.12) 0 16%, transparent 38%),
-      linear-gradient(165deg, #1a2850 0%, var(--polyton-night) 58%, #253468 100%) !important;
+  .hero-date-rule {
+    display: none;
   }
 
-  .hero-bg-diagonal {
-    background:
-      linear-gradient(
-        104deg,
-        transparent 0%,
-        transparent 76%,
-        var(--polyton-vintage) 76%,
-        var(--polyton-vintage) 100%
-      ) !important;
-  }
-
-  .hero-bg-halftone {
-    clip-path: none !important;
-    opacity: 0.9;
-  }
-
-  .hero-content-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    padding: 6.25rem 1.25rem 1.75rem !important;
-    gap: 0.85rem !important;
-  }
-
-  .hero-content-grid > div:first-child {
-    gap: 0.9rem !important;
-    max-width: min(100%, 22rem);
-    padding-top: 0 !important;
-  }
-
-  .hero-content-grid > div[aria-hidden="true"] {
-    display: none !important;
-  }
-
-
-  .hero-cta-row {
-    margin-bottom: 0.4rem !important;
-  }
-
-  .hero-cta-note {
-    display: none !important;
+  .hero-polito {
+    width: min(64vw, 260px);
   }
 
   section#hero h1 {

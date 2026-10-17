@@ -11,14 +11,12 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import { useCountdown } from './Countdown'
 // import { REGISTRATION_FORM_URL } from '../../lib/registration' // inscripciones cerradas
 import { useLoader } from '../../contexts/LoaderContext'
 import politoHero from '../../assets/polito-hero.webp'
 
 const Hero: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 769px)')
-  const time = useCountdown()
   const { setIsLoading } = useLoader()
 
   /* —— REFS —— */
@@ -27,8 +25,6 @@ const Hero: React.FC = () => {
   const eyebrowRef = useRef<HTMLParagraphElement>(null)
   const specialRef = useRef<HTMLDivElement>(null)
   const dateRef = useRef<HTMLDivElement>(null)
-  const taglineRef = useRef<HTMLParagraphElement>(null)
-  const badgeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // La imagen SVG carga instantáneamente, liberamos el loader siempre
@@ -84,28 +80,7 @@ const Hero: React.FC = () => {
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
       )
 
-      /* 5 — Tagline "¿Te animás?" */
-      gsap.fromTo(
-        taglineRef.current,
-        { opacity: 0, x: -25 },
-        { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.85 }
-      )
-
-      /* 6 — Contador compacto */
-      gsap.fromTo(
-        badgeRef.current,
-        { scale: 0, rotate: 0, opacity: 0 },
-        {
-          scale: 1,
-          rotate: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: 'back.out(3)',
-          delay: 1.2,
-        }
-      )
-
-      /* 7 — Estrellas decorativas animadas con GSAP */
+      /* 5 — Estrellas decorativas animadas con GSAP */
       const stars = sectionRef.current?.querySelectorAll('.hero-star')
       if (stars?.length) {
         stars.forEach((star, i) => {
@@ -292,108 +267,11 @@ const Hero: React.FC = () => {
             </p>
           </div>
 
-          {/* Tagline */}
-          <p
-            ref={taglineRef}
-            style={{
-              fontFamily: 'var(--font-accent)',
-              fontSize: 'clamp(1.4rem, 3vw, 2rem)',
-              color: 'var(--polyton-gold)',
-              opacity: 0,
-              fontStyle: 'italic',
-            }}
-          >
-            ¿Te animás?
-          </p>
-
-          <div
-            ref={badgeRef}
-            className="badge-vintage hero-countdown-badge"
-            aria-label="Cuenta regresiva para Politón 2026"
-            style={{
-              width: 'min(320px, 100%)',
-              minWidth: '260px',
-              minHeight: '100px',
-              background: 'var(--polyton-gold)',
-              color: 'var(--polyton-night)',
-              alignItems: 'stretch',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              gap: '0.45rem',
-              opacity: 0,
-              zIndex: 3,
-              padding: '0.9rem 1rem',
-              borderRadius: '0.55rem',
-            }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-subtitle)',
-                fontSize: '0.82rem',
-                color: 'var(--polyton-night)',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                textAlign: 'center',
-              }}
-            >
-              Empieza en
-            </span>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '0.35rem',
-              }}
-            >
-              {[
-                { value: time.days, label: 'Días' },
-                { value: time.hours, label: 'Hs' },
-                { value: time.minutes, label: 'Min' },
-                { value: time.seconds, label: 'Seg' },
-              ].map((unit) => (
-                <span
-                  key={unit.label}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '0.08rem',
-                    minWidth: 0,
-                  }}
-                >
-                  <strong
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(1.55rem, 2.7vw, 2.45rem)',
-                      fontWeight: 400,
-                      lineHeight: 0.9,
-                      textShadow: '2px 2px 0 var(--polyton-cream)',
-                    }}
-                  >
-                    {String(unit.value).padStart(2, '0')}
-                  </strong>
-                  <small
-                    style={{
-                      fontFamily: 'var(--font-subtitle)',
-                      fontSize: '0.68rem',
-                      color: 'var(--polyton-night)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {unit.label}
-                  </small>
-                </span>
-              ))}
-            </div>
-          </div>
-
         </div>
 
         {/* ——— COLUMNA DERECHA: espacio — Polito vuela en el canvas Three.js ——— */}
         <div style={{ minHeight: '520px' }} aria-hidden="true" />
       </div>
-
 
     </section>
   )
@@ -497,6 +375,5 @@ const STAR_POSITIONS = [
 ]
 
 /* ——— Scroll hint ——— */
-
 
 export default Hero

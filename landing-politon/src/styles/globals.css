@@ -743,17 +743,6 @@ a {
     display: none !important;
   }
 
-  .hero-countdown-badge {
-    position: relative !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: min(100%, 310px) !important;
-    min-width: 0 !important;
-    min-height: 86px !important;
-    margin-top: 0.45rem !important;
-    padding: 0.65rem 0.75rem !important;
-    transform: none !important;
-  }
 
   .hero-cta-row {
     margin-bottom: 0.4rem !important;
@@ -2359,6 +2348,22 @@ a {
   flex-direction: column;
   justify-content: center;
   padding: clamp(4.5rem, 7vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+/* Footer: solo el hashtag centrado */
+.reg-footer {
+  min-height: auto;
+  align-items: center;
+  padding: clamp(3rem, 5vw, 4.5rem) 1.5rem;
+}
+
+.reg-footer .reg-hashtag {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--polyton-cream);
+  text-shadow: 3px 3px 0 var(--polyton-ink);
+  text-align: center;
 }
 
 /* ── Titulo de seccion ── */

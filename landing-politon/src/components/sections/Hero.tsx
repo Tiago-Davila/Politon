@@ -1,13 +1,12 @@
 /**
  * Hero.tsx — POLITÓN 2026
  *
- * Bloque de texto centrado sobre fondo Dither (React Bits) en modo halftone,
- * con la paleta de la marca + grain vintage encima. Polito entra volando
- * en pose Superman sobre el texto, queda flotando y al scrollear hacia la
- * siguiente sección se va volando fuera del Hero.
+ * Bloque de texto en la parte alta sobre fondo Dither (React Bits) en modo
+ * halftone, con la paleta de la marca + grain vintage encima. Polito entra
+ * volando en pose Superman y queda flotando de fondo, abajo y detrás del texto.
  */
 import React, { useEffect, useMemo, useRef } from 'react'
-import { gsap, ScrollTrigger } from '../../lib/gsap'
+import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
@@ -85,9 +84,9 @@ const Hero: React.FC = () => {
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
       )
 
-      /* 5 — Polito: entrada → flotar → irse volando con el scroll.
+      /* 5 — Polito: entrada volando → flotar en el lugar.
              Cada movimiento va en su propia capa para que no se pisen:
-             .hero-polito (scroll) > .hero-polito-flight (entrada) > img (idle) */
+             .hero-polito-flight (entrada) > img (idle) */
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       if (!reduced && politoRef.current) {
         const polito = politoRef.current
@@ -109,22 +108,6 @@ const Hero: React.FC = () => {
             repeat: -1,
             yoyo: true,
           })
-
-        /* Al bajar, se va volando hacia la derecha (hacia donde apunta el puño).
-           El "y" positivo compensa en parte el scroll de la página: así cruza la
-           pantalla en diagonal en vez de esconderse enseguida detrás del navbar. */
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.6,
-            },
-          })
-          .to(polito, { x: '110vw', rotate: -10, scale: 0.85, ease: 'none' }, 0)
-          .to(polito, { y: '55vh', ease: 'none' }, 0)
-        ScrollTrigger.refresh()
       }
     }, sectionRef)
 
@@ -140,12 +123,12 @@ const Hero: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--polyton-night)',
-        gap: '1.5rem',
-        padding: '7rem 1.25rem 3rem', /* top: clearance for floating CardNav */
+        /* top: espacio para el CardNav flotante */
+        padding: 'clamp(7.5rem, 17vh, 10rem) 1.25rem 3rem',
       }}
     >
       {/* ═══════════════════════════════════════
@@ -167,7 +150,7 @@ const Hero: React.FC = () => {
       <div className="hero-grain" aria-hidden="true" />
 
       {/* ═══════════════════════════════════════
-          POLITO — volando en pose Superman, arriba del texto
+          POLITO — volando en pose Superman, de fondo detrás del texto
           ═══════════════════════════════════════ */}
       <div ref={politoRef} className="hero-polito">
         <div className="hero-polito-flight">

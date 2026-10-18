@@ -36,7 +36,8 @@ const SPEAKERS = [
   },
 ]
 
-const DESKTOP_QUERY = '(min-width: 901px) and (prefers-reduced-motion: no-preference)'
+/* Desktop y mobile pinean; solo reduced motion cae al scroll horizontal nativo */
+const PINNED_QUERY = '(prefers-reduced-motion: no-preference)'
 /* Duración de cada pausa (card quieta mientras seguís scrolleando) */
 const HOLD = 0.9
 /* Duración del pase de una card a la siguiente (más alto = transición más lenta) */
@@ -56,7 +57,7 @@ const Talks: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
 
-  /* Desktop: pin + scrub */
+  /* Pin + scrub */
   useEffect(() => {
     const section = sectionRef.current
     const track = trackRef.current
@@ -64,7 +65,7 @@ const Talks: React.FC = () => {
 
     const mm = gsap.matchMedia()
 
-    mm.add(DESKTOP_QUERY, () => {
+    mm.add(PINNED_QUERY, () => {
       const cards = Array.from(track.querySelectorAll<HTMLElement>('.talk-slide'))
       const N = cards.length
       let step = 0
@@ -108,6 +109,7 @@ const Talks: React.FC = () => {
         scrollTrigger: {
           trigger: section,
           pin: true,
+          anticipatePin: 1,
           start: 'top top',
           /* Pausas + desplazamientos: HOLD + (N - 1) * (MOVE + HOLD) unidades */
           end: () => `+=${window.innerHeight * VH_PER_UNIT * (HOLD + (N - 1) * (MOVE + HOLD))}`,
@@ -142,14 +144,14 @@ const Talks: React.FC = () => {
     return () => mm.revert()
   }, [])
 
-  /* Mobile / reduced motion: scroll horizontal nativo con snap */
+  /* Reduced motion: scroll horizontal nativo con snap */
   useEffect(() => {
     const track = trackRef.current
     const section = sectionRef.current
     if (!track || !section) return
 
     const onScroll = () => {
-      if (window.matchMedia(DESKTOP_QUERY).matches) return
+      if (window.matchMedia(PINNED_QUERY).matches) return
       const cards = track.querySelectorAll<HTMLElement>('.talk-slide')
       if (cards.length < 2) return
       const step = cards[1].offsetLeft - cards[0].offsetLeft

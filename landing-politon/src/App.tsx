@@ -13,6 +13,7 @@ const EventDaysSummary = React.lazy(() => import('./components/sections/EventDay
 const Challenges = React.lazy(() => import('./components/sections/Challenges'))
 const Talks = React.lazy(() => import('./components/sections/Talks'))
 const Register = React.lazy(() => import('./components/sections/Register'))
+const Finalists = React.lazy(() => import('./components/sections/Finalists'))
 
 const LazySection = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -75,6 +76,10 @@ const AppContent: React.FC = () => {
 }
 
 const App: React.FC = () => {
+  if (window.location.pathname.replace(/\/$/, '') === '/segunda-fase') {
+    return <Suspense fallback={null}><Finalists /></Suspense>
+  }
+
   return (
     <LoaderProvider>
       <AppContent />

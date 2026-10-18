@@ -2068,6 +2068,249 @@ a {
 }
 
 /* ============================================================
+   STREAM — Scroll Expand (ref. React Bits)
+   ============================================================ */
+
+.stream-section {
+  position: relative;
+  height: 100vh;
+  height: 100lvh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--polyton-night);
+  color: var(--polyton-cream);
+}
+
+.stream-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* Recuadro que crece: clip-path animado por GSAP */
+.stream-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: inset(24% 28% 24% 28% round 24px);
+  will-change: clip-path;
+}
+
+.stream-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.3);
+  will-change: transform;
+  user-select: none;
+}
+
+/* Velo plano (sin gradiente) para leer el texto sobre la foto */
+.stream-tint {
+  position: absolute;
+  inset: 0;
+  background: var(--polyton-night);
+  opacity: 0;
+}
+
+/* Borde cartoon que sigue al recuadro */
+.stream-border {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  bottom: 24%;
+  left: 28%;
+  right: 28%;
+  border: 4px solid var(--polyton-ink);
+  border-radius: 24px;
+  box-shadow:
+    8px 8px 0 var(--polyton-ink),
+    inset 0 0 0 3px var(--polyton-gold);
+  pointer-events: none;
+}
+
+/* ── Título inicial, centrado sobre el recuadro ── */
+.stream-title-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.stream-eyebrow {
+  margin: 0 0 0.6rem;
+  padding: 0.3rem 0.85rem 0.2rem;
+  transform: rotate(-1.5deg);
+  border: 3px solid var(--polyton-ink);
+  background: var(--polyton-gold);
+  box-shadow: 4px 4px 0 var(--polyton-ink);
+  color: var(--polyton-ink);
+  font-family: var(--font-subtitle);
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stream-eyebrow span {
+  color: var(--polyton-red);
+}
+
+.stream-title {
+  margin: 0;
+  color: var(--polyton-cream);
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 12rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+  text-shadow: 7px 7px 0 var(--polyton-ink);
+  transform: rotate(-2deg);
+}
+
+/* ── Texto final, sobre la foto a pantalla completa ── */
+.stream-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.25rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.stream-kicker {
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.85rem 0.25rem;
+  transform: rotate(-1.5deg);
+  border: 3px solid var(--polyton-ink);
+  background: var(--polyton-red);
+  box-shadow: 4px 4px 0 var(--polyton-ink);
+  color: var(--polyton-cream);
+  font-family: var(--font-subtitle);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stream-heading {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--polyton-cream);
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6.4vw, 6.2rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-shadow: 5px 5px 0 var(--polyton-ink);
+}
+
+.stream-text {
+  max-width: 32rem;
+  margin: 1.2rem 0 0;
+  color: var(--polyton-cream);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.45;
+  text-shadow: 2px 2px 0 var(--polyton-ink);
+}
+
+.stream-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stream-chip {
+  padding: 0.3rem 0.95rem 0.2rem;
+  border: 3px solid var(--polyton-ink);
+  border-radius: 999px;
+  background: var(--polyton-cream);
+  box-shadow: 3px 3px 0 var(--polyton-ink);
+  color: var(--polyton-ink);
+  font-family: var(--font-subtitle);
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  letter-spacing: 0.04em;
+}
+
+.stream-chip:nth-child(even) {
+  background: var(--polyton-gold);
+}
+
+@media (max-width: 768px) {
+  .stream-frame {
+    clip-path: inset(33% 7% 33% 7% round 24px);
+  }
+
+  .stream-border {
+    top: 33%;
+    bottom: 33%;
+    left: 7%;
+    right: 7%;
+    box-shadow:
+      6px 6px 0 var(--polyton-ink),
+      inset 0 0 0 3px var(--polyton-gold);
+  }
+
+  .stream-title {
+    font-size: clamp(4rem, 22vw, 6rem);
+    text-shadow: 4px 4px 0 var(--polyton-ink);
+  }
+
+  .stream-heading {
+    text-shadow: 3px 3px 0 var(--polyton-ink);
+  }
+
+  .stream-chips {
+    gap: 0.5rem;
+  }
+}
+
+/* ── Reduced motion: foto completa, sin pin, solo el texto final ── */
+@media (prefers-reduced-motion: reduce) {
+  .stream-frame {
+    clip-path: none;
+  }
+
+  .stream-media {
+    transform: none;
+  }
+
+  .stream-tint {
+    opacity: 0.62;
+  }
+
+  .stream-border,
+  .stream-title-wrap {
+    display: none;
+  }
+
+  .stream-overlay {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
    REGISTER — Sección de inscripción y redes
    ============================================================ */
 
@@ -2083,20 +2326,214 @@ a {
   padding: clamp(4.5rem, 7vw, 7rem) clamp(1.25rem, 4vw, 4rem);
 }
 
-/* Footer: solo el hashtag centrado */
-.reg-footer {
-  min-height: auto;
-  align-items: center;
-  padding: clamp(3rem, 5vw, 4.5rem) 1.5rem;
+/* ============================================================
+   FOOTER — hashtag DepthText + redes
+   ============================================================ */
+
+.site-footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+  min-height: 82vh;
+  padding: clamp(3.5rem, 8vh, 6rem) clamp(1.25rem, 4vw, 4rem) clamp(1.5rem, 4vh, 2.5rem);
+  overflow: hidden;
+  background: var(--polyton-night);
+  color: var(--polyton-cream);
 }
 
-.reg-footer .reg-hashtag {
+.site-footer-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+/* ── Hashtag gigante ── */
+.site-footer-mark {
   position: relative;
   z-index: 1;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DepthText viene con sans genérica: se pasa a la display de la marca */
+.site-footer-depth .depth-text__layer,
+.site-footer-depth .depth-text__face {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* ── Fila inferior ── */
+.site-footer-bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.4rem;
+  border-top: 3px solid var(--polyton-cream);
+}
+
+.site-footer-label {
+  margin: 0 0 0.6rem;
+  color: var(--polyton-gold);
+  font-family: var(--font-subtitle);
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-footer-social ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
   color: var(--polyton-cream);
-  text-shadow: 3px 3px 0 var(--polyton-ink);
-  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Subrayado que se dibuja de izquierda a derecha */
+.site-footer-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--polyton-gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.site-footer-index {
+  align-self: flex-start;
+  color: var(--polyton-sand);
+  font-family: var(--font-subtitle);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.site-footer-icon {
+  width: 0.8em;
+  height: 0.8em;
+  fill: currentColor;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.site-footer-roll {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.site-footer-roll > span {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.site-footer-roll > span + span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: var(--polyton-gold);
+}
+
+.site-footer-arrow {
+  font-family: var(--font-subtitle);
+  font-size: 0.7em;
+  color: var(--polyton-gold);
+  opacity: 0;
+  transform: translate(-0.4em, 0.4em);
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.site-footer-link:hover::after,
+.site-footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.site-footer-link:hover .site-footer-roll > span,
+.site-footer-link:focus-visible .site-footer-roll > span {
+  transform: translateY(-100%);
+}
+
+.site-footer-link:hover .site-footer-icon,
+.site-footer-link:focus-visible .site-footer-icon {
+  color: var(--polyton-gold);
+  transform: rotate(-12deg) scale(1.15);
+}
+
+.site-footer-link:hover .site-footer-arrow,
+.site-footer-link:focus-visible .site-footer-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.site-footer-link:focus-visible {
+  outline: 3px solid var(--polyton-gold);
+  outline-offset: 4px;
+}
+
+.site-footer-legal {
+  margin: 0;
+  color: var(--polyton-sand);
+  font-family: var(--font-subtitle);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    min-height: 70svh;
+  }
+
+  .site-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* En touch no hay hover: la flecha queda siempre visible */
+  .site-footer-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-link::after,
+  .site-footer-roll > span,
+  .site-footer-icon,
+  .site-footer-arrow {
+    transition: none;
+  }
 }
 
 /* ── Titulo de seccion ── */
@@ -3272,5 +3709,243 @@ a {
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ============================================================
+   NAVBAR — barra vertical a la izquierda + panel desplegable
+   ============================================================ */
+
+.side-nav {
+  position: fixed;
+  top: clamp(0.75rem, 2vh, 1.25rem);
+  left: clamp(0.75rem, 1.4vw, 1.25rem);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.side-nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: 3px solid var(--polyton-ink);
+  border-radius: 12px;
+  background: var(--polyton-red);
+  box-shadow: 4px 4px 0 var(--polyton-ink);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.side-nav-toggle:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--polyton-ink);
+}
+
+.side-nav-toggle:focus-visible {
+  outline: 3px solid var(--polyton-gold);
+  outline-offset: 3px;
+}
+
+.side-nav-toggle span {
+  display: block;
+  width: 1.4rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--polyton-cream);
+  transition: transform 0.35s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.2s ease;
+}
+
+.side-nav.is-open .side-nav-toggle span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.side-nav.is-open .side-nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.side-nav.is-open .side-nav-toggle span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Marca escrita en vertical, como un cartel colgado */
+.side-nav-brand {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 0.9rem 0.45rem;
+  border: 3px solid var(--polyton-ink);
+  border-radius: 12px;
+  background: var(--polyton-cream);
+  box-shadow: -4px -4px 0 var(--polyton-ink);
+  color: var(--polyton-night);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.2s ease;
+}
+
+.side-nav-brand:hover {
+  background: var(--polyton-gold);
+}
+
+.side-nav-year {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: var(--polyton-gold);
+  font-family: var(--font-subtitle);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-shadow: 1px 1px 0 var(--polyton-ink);
+}
+
+/* Al abrir, la marca se esconde: el panel ya la muestra */
+.side-nav.is-open .side-nav-brand,
+.side-nav.is-open .side-nav-year {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.side-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--polyton-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.side-nav-backdrop.is-open {
+  opacity: 0.55;
+  pointer-events: auto;
+}
+
+/* ── Panel ── */
+.side-nav-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  width: min(30rem, 100vw);
+  padding: 5.5rem clamp(1.5rem, 3vw, 2.5rem) 2rem calc(clamp(0.75rem, 1.4vw, 1.25rem) + 4.5rem);
+  overflow-y: auto;
+  border-right: 4px solid var(--polyton-ink);
+  background: var(--polyton-night);
+  box-shadow: 10px 0 0 var(--polyton-ink);
+  color: var(--polyton-cream);
+}
+
+.side-nav-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+.side-nav-panel-label {
+  margin: 0 0 1.2rem;
+  color: var(--polyton-gold);
+  font-family: var(--font-subtitle);
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.side-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-nav-item a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.3rem 0;
+  color: var(--polyton-cream);
+  text-decoration: none;
+}
+
+.side-nav-num {
+  min-width: 1.6rem;
+  color: var(--polyton-sand);
+  font-family: var(--font-subtitle);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.side-nav-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.4vh, 2.6rem);
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), text-shadow 0.25s ease;
+}
+
+.side-nav-item a:hover .side-nav-text,
+.side-nav-item a:focus-visible .side-nav-text {
+  color: var(--polyton-gold);
+  transform: translateX(0.5rem) rotate(-1.5deg);
+  text-shadow: 3px 3px 0 var(--polyton-ink);
+}
+
+.side-nav-item a:focus-visible {
+  outline: none;
+}
+
+.side-nav-panel-foot {
+  margin: auto 0 0;
+  padding-top: 1.5rem;
+  color: var(--polyton-sand);
+  font-family: var(--font-subtitle);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  /* En mobile solo el botón: la marca vertical taparía el contenido */
+  .side-nav-brand,
+  .side-nav-year {
+    display: none;
+  }
+
+  .side-nav-toggle {
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+
+  .side-nav-panel {
+    width: 100vw;
+    padding-left: 1.5rem;
+    border-right: 0;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-nav-toggle span,
+  .side-nav-text,
+  .side-nav-backdrop {
+    transition: none;
   }
 }

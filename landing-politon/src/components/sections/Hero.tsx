@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--polyton-night)',
-        /* top: espacio para el CardNav flotante */
+        /* top: aire arriba del bloque de texto */
         padding: 'clamp(7.5rem, 17vh, 10rem) 1.25rem 3rem',
       }}
     >

@@ -716,12 +716,17 @@ a {
   mix-blend-mode: overlay;
 }
 
-/* Hero: Polito volando, tamaño medio, arriba del texto */
+/* Hero: Polito de fondo, abajo a la derecha y detrás del texto */
 .hero-polito {
-  position: relative;
-  z-index: 3;
-  width: clamp(220px, 24vw, 360px);
+  position: absolute;
+  z-index: 1;
+  right: clamp(-2rem, 4vw, 6rem);
+  bottom: clamp(-3rem, -4vh, 0rem);
+  width: clamp(320px, 40vw, 620px);
   pointer-events: none;
+}
+
+.hero-polito-flight {
   will-change: transform;
 }
 
@@ -753,7 +758,10 @@ a {
   }
 
   .hero-polito {
-    width: min(64vw, 260px);
+    width: min(88vw, 400px);
+    right: 50%;
+    bottom: 2svh;
+    transform: translateX(50%);
   }
 
   section#hero h1 {

@@ -1044,12 +1044,16 @@ a {
 
 @media (max-width: 768px) {
   /* Mobile también pinea: las etapas pasan con el scroll vertical */
+  /* lvh: cubre toda la pantalla aunque Safari colapse sus barras.
+     El padding inferior suma lo que ocupan las barras expandidas,
+     así el contenido nunca queda tapado por la toolbar. */
   .process-section {
-    min-height: 100svh;
+    min-height: 100vh;
+    min-height: 100lvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2.6rem 0 3.4rem;
+    padding: 2.6rem 0 calc(2.6rem + 100lvh - 100svh);
   }
 
   .process-copy {
@@ -1081,13 +1085,13 @@ a {
 
   .process-track {
     gap: 2.25rem;
-    margin-top: 1.75rem;
-    padding: 0 1.1rem 2.1rem;
+    margin-top: 2.25rem;
+    padding: 0 1.1rem 0;
   }
 
   .process-step {
     flex: 0 0 min(88vw, 22rem);
-    min-height: 10.5rem;
+    min-height: 13rem;
     padding: 0 1.25rem 2rem;
     border: 0;
     background: transparent;
@@ -1109,28 +1113,30 @@ a {
   }
 
   .process-step-number {
-    margin-bottom: 0.25rem;
-    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
   }
 
   .process-step h3 {
     max-width: 8.8ch;
     overflow-wrap: normal;
-    font-size: clamp(2.15rem, 10.8vw, 3.25rem);
+    font-size: clamp(2.3rem, 11.4vw, 3.4rem);
     line-height: 0.88;
   }
 
   .process-step p {
-    max-width: 15rem;
-    margin-top: 0.45rem;
-    font-size: 0.82rem;
-    line-height: 1.28;
+    max-width: 17rem;
+    margin-top: 0.7rem;
+    font-size: 0.98rem;
+    line-height: 1.35;
   }
 
+  /* La barra de progreso va en el flujo, justo debajo de las etapas */
   .process-rail {
-    left: 1.1rem;
-    right: 1.1rem;
-    bottom: 1.4rem;
+    position: relative;
+    order: 1;
+    inset: auto;
+    margin: 2.6rem 1.1rem 0;
   }
 }
 
@@ -2119,13 +2125,15 @@ a {
     --gutter: 1.5rem;
     --slide-gap: 0.8rem;
     --slide-w: 78vw;
-    /* Pineada a pantalla completa: intro arriba, cards ocupan el resto */
-    height: 100svh;
+    /* Pineada a pantalla completa: intro arriba, cards ocupan el resto.
+       lvh + padding con la diferencia de las barras de Safari (ver process) */
+    height: 100vh;
+    height: 100lvh;
     min-height: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 1.5rem;
-    padding: 2.5rem 0 2rem;
+    padding: 2.5rem 0 calc(2rem + 100lvh - 100svh);
   }
 
   .talks-carousel-intro {

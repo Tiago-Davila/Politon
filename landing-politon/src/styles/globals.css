@@ -1043,9 +1043,13 @@ a {
 }
 
 @media (max-width: 768px) {
+  /* Mobile también pinea: las etapas pasan con el scroll vertical */
   .process-section {
-    min-height: auto;
-    padding: 2.6rem 0 2.3rem;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.6rem 0 3.4rem;
   }
 
   .process-copy {
@@ -1076,27 +1080,9 @@ a {
   }
 
   .process-track {
-    display: flex;
-    width: 100%;
-    min-width: 100%;
     gap: 2.25rem;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
     margin-top: 1.75rem;
-    padding: 0 3.25rem 2.1rem 1.1rem;
-    transform: none !important;
-    will-change: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .process-track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .process-track::after {
-    content: '';
-    flex: 0 0 1.6rem;
+    padding: 0 1.1rem 2.1rem;
   }
 
   .process-step {
@@ -1106,7 +1092,6 @@ a {
     border: 0;
     background: transparent;
     box-shadow: none;
-    scroll-snap-align: start;
   }
 
   .process-step::before {
@@ -1140,6 +1125,26 @@ a {
     margin-top: 0.45rem;
     font-size: 0.82rem;
     line-height: 1.28;
+  }
+
+  .process-rail {
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 1.4rem;
+  }
+}
+
+/* Reduced motion: sin pin, scroll horizontal nativo con snap */
+@media (prefers-reduced-motion: reduce) {
+  .process-track {
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .process-step {
+    scroll-snap-align: start;
   }
 
   .process-rail {
@@ -2076,8 +2081,8 @@ a {
   transform: translateY(0) rotate(0) scale(1);
 }
 
-/* ── Mobile / reduced motion: scroll horizontal nativo con snap ── */
-@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+/* ── Reduced motion: scroll horizontal nativo con snap ── */
+@media (prefers-reduced-motion: reduce) {
   .talks-carousel-section {
     --slide-gap: 1rem;
     height: auto;
@@ -2113,12 +2118,14 @@ a {
   .talks-carousel-section {
     --gutter: 1.5rem;
     --slide-gap: 0.8rem;
-    --slide-h: 72vh;
     --slide-w: 78vw;
+    /* Pineada a pantalla completa: intro arriba, cards ocupan el resto */
+    height: 100svh;
+    min-height: 0;
     flex-direction: column;
     align-items: stretch;
-    gap: 2rem;
-    padding: 4rem 0;
+    gap: 1.5rem;
+    padding: 2.5rem 0 2rem;
   }
 
   .talks-carousel-intro {
@@ -2126,20 +2133,26 @@ a {
     padding: 0 var(--gutter);
   }
 
+  .talks-carousel-title {
+    margin-bottom: 1rem;
+  }
+
   .talks-carousel-track {
-    flex: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
     margin-left: 0;
     padding-left: var(--gutter);
   }
 
   .talk-slide {
-    height: var(--slide-h);
+    height: 100%;
     box-shadow: 6px 6px 0 var(--polyton-ink);
     border-radius: 22px;
   }
 
   .talk-slide-name {
-    font-size: clamp(2.6rem, 13vw, 4rem);
+    font-size: clamp(2rem, 10vw, 3.4rem);
   }
 
   .talk-slide-content {

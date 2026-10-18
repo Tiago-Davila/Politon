@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politón 2026 - Streaming 16:9</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Lilita+One&family=Nunito:wght@400;700;800;900&family=Special+Elite&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --polyton-night: #1e2d5c;
+        --polyton-blue: #2c3a6b;
+        --polyton-gold: #e8a020;
+        --polyton-cream: #ede0bc;
+        --polyton-red: #c94c2e;
+        --polyton-ink: #1a1a1a;
+        --polyton-paper: #fdfaf2;
+        --polyton-vintage: #f5edcf;
+        --font-display: "Lilita One", system-ui, sans-serif;
+        --font-subtitle: "Boogaloo", system-ui, sans-serif;
+        --font-body: "Nunito", system-ui, sans-serif;
+        --font-accent: "Special Elite", serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        background: #121212;
+      }
+
+      .poster {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        border: 22px solid var(--polyton-ink);
+        background:
+          radial-gradient(circle at 88% 12%, rgba(232, 160, 32, 0.18) 0 15%, transparent 16%),
+          var(--polyton-night);
+        color: var(--polyton-paper);
+        font-family: var(--font-body);
+      }
+
+      .poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.35;
+        background-image:
+          radial-gradient(var(--polyton-paper) 0.8px, transparent 0.8px),
+          radial-gradient(var(--polyton-gold) 1px, transparent 1px);
+        background-position: 0 0, 17px 23px;
+        background-size: 21px 21px, 54px 54px;
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.28;
+        background:
+          linear-gradient(90deg, transparent 0 49%, rgba(253, 250, 242, 0.06) 50%, transparent 51%),
+          repeating-linear-gradient(0deg, rgba(26, 26, 26, 0.13) 0 1px, transparent 1px 5px);
+        pointer-events: none;
+      }
+
+      .logo {
+        position: absolute;
+        left: 98px;
+        top: 76px;
+        width: 310px;
+        z-index: 4;
+        mix-blend-mode: screen;
+        filter: drop-shadow(8px 8px 0 rgba(26, 26, 26, 0.45));
+      }
+
+      .burst {
+        position: absolute;
+        right: -160px;
+        top: -110px;
+        width: 930px;
+        height: 930px;
+        z-index: 0;
+        background: repeating-conic-gradient(from -8deg, var(--polyton-gold) 0deg 7deg, transparent 7deg 15deg);
+        clip-path: circle(50%);
+      }
+
+      .mascot {
+        position: absolute;
+        right: 58px;
+        top: 88px;
+        width: 610px;
+        z-index: 3;
+        transform: rotate(5deg);
+        filter: drop-shadow(16px 18px 0 rgba(26, 26, 26, 0.62));
+      }
+
+      .star {
+        position: absolute;
+        width: 46px;
+        height: 46px;
+        z-index: 2;
+        background: var(--polyton-gold);
+        clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+        filter: drop-shadow(4px 4px 0 var(--polyton-ink));
+      }
+
+      .s1 { left: 96px; top: 238px; transform: rotate(13deg); }
+      .s2 { left: 850px; top: 118px; width: 34px; height: 34px; transform: rotate(-10deg); }
+      .s3 { right: 118px; bottom: 96px; width: 42px; height: 42px; transform: rotate(16deg); }
+
+      .headline {
+        position: absolute;
+        left: 94px;
+        top: 268px;
+        z-index: 5;
+        transform: rotate(-1.2deg);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 10px 22px 7px;
+        border: 7px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--polyton-gold);
+        color: var(--polyton-ink);
+        font: 48px/1 var(--font-subtitle);
+        box-shadow: 9px 9px 0 var(--polyton-red);
+      }
+
+      h1 {
+        margin: 26px 0 0;
+        color: var(--polyton-cream);
+        font: 146px/0.82 var(--font-display);
+        letter-spacing: 0;
+        text-transform: uppercase;
+        text-shadow:
+          8px 8px 0 var(--polyton-ink),
+          15px 15px 0 var(--polyton-red);
+      }
+
+      .sub {
+        width: 820px;
+        margin: 14px 0 0;
+        color: var(--polyton-paper);
+        font: 900 43px/1.04 var(--font-body);
+        text-shadow: 4px 4px 0 var(--polyton-ink);
+      }
+
+      .date {
+        position: absolute;
+        right: 150px;
+        top: 668px;
+        z-index: 6;
+        color: var(--polyton-cream);
+        font: 34px/1 var(--font-accent);
+        transform: rotate(3deg);
+        text-shadow: 3px 3px 0 var(--polyton-ink);
+      }
+
+      .ribbon {
+        position: absolute;
+        left: -36px;
+        right: -36px;
+        bottom: 224px;
+        z-index: 5;
+        padding: 17px 90px 13px;
+        border-block: 11px solid var(--polyton-ink);
+        background: var(--polyton-cream);
+        color: var(--polyton-red);
+        text-align: center;
+        font: 72px/0.92 var(--font-display);
+        text-shadow: 5px 5px 0 var(--polyton-ink);
+        transform: rotate(0.8deg);
+      }
+
+      .channel-card {
+        position: absolute;
+        left: 108px;
+        right: 108px;
+        bottom: 68px;
+        z-index: 7;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        align-items: center;
+        gap: 34px;
+        padding: 28px 42px;
+        border: 9px solid var(--polyton-ink);
+        border-radius: 8px;
+        background: var(--polyton-vintage);
+        box-shadow: 14px 14px 0 var(--shadow-color);
+        transform: rotate(-0.5deg);
+      }
+
+      .platform {
+        display: block;
+        padding: 11px 22px 7px;
+        border: 6px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--platform-color);
+        color: var(--polyton-paper);
+        text-align: center;
+        font: 50px/1 var(--font-subtitle);
+        text-shadow: 2px 2px 0 var(--polyton-ink);
+      }
+
+      .link-slot {
+        height: 74px;
+        border: 5px dashed var(--polyton-blue);
+        border-radius: 999px;
+        background: repeating-linear-gradient(
+          -8deg,
+          rgba(44, 58, 107, 0.08) 0 14px,
+          rgba(44, 58, 107, 0.02) 14px 28px
+        );
+      }
+
+      .site {
+        position: absolute;
+        left: 456px;
+        top: 92px;
+        z-index: 8;
+        padding: 12px 28px 8px;
+        border: 7px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--polyton-gold);
+        color: var(--polyton-ink);
+        font: 34px/1 var(--font-subtitle);
+        box-shadow: 8px 8px 0 var(--polyton-red);
+        transform: rotate(-0.5deg);
+      }
+
+      .youtube {
+        --platform-color: var(--polyton-red);
+        --shadow-color: var(--polyton-gold);
+      }
+
+      .twitch {
+        --platform-color: var(--polyton-blue);
+        --shadow-color: var(--polyton-red);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="poster youtube">
+      <div class="burst"></div>
+      <span class="star s1"></span>
+      <span class="star s2"></span>
+      <span class="star s3"></span>
+
+      <img class="logo" src="../../src/assets/logo-completo.png" alt="Politón 2026" />
+      <img class="mascot" src="../../src/assets/polito-hero.png" alt="Polito" />
+
+      <section class="headline">
+        <div class="eyebrow">¡Seguinos en directo!</div>
+        <h1>POLITÓN<br />EN VIVO</h1>
+        <p class="sub">Viví la hackathon del IPM en directo.</p>
+      </section>
+
+      <div class="date">24 · 25 · 26 de junio</div>
+      <div class="site">politon.ipm.edu.ar</div>
+      <div class="ribbon">STREAMING EN VIVO</div>
+
+      <section class="channel-card" aria-label="Espacio para link">
+        <span class="platform">YouTube</span>
+        <span class="link-slot"></span>
+      </section>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const channel = params.get("channel") === "twitch" ? "twitch" : "youtube";
+      const poster = document.querySelector(".poster");
+      const platform = document.querySelector(".platform");
+      poster.classList.toggle("youtube", channel === "youtube");
+      poster.classList.toggle("twitch", channel === "twitch");
+      platform.textContent = channel === "twitch" ? "Twitch" : "YouTube";
+    </script>
+  </body>
+</html>

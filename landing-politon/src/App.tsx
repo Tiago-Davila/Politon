@@ -50,7 +50,10 @@ const AppContent: React.FC = () => {
   return (
     <>
       <PageLoader isVisible={isLoading} />
-      <Navbar />
+      {/* Navbar oculto temporalmente (no eliminado) */}
+      <div style={{ display: 'none' }} aria-hidden="true">
+        <Navbar />
+      </div>
       <main>
         <Hero />
         <WhatIsHackathon />

@@ -1863,478 +1863,279 @@ a {
    TALKS — Sección de Speakers
    ============================================================ */
 
-/* ── Talks — Cards Stack on Scroll ── */
-.talks-stack-section {
+/* ── Talks — Carrusel horizontal pineado (ref. agencefoudre "Nous les rendons sociaux") ── */
+.talks-carousel-section {
+  --gutter: 3.5vw;
+  /* Dónde arranca el carril (deja espacio libre entre el texto y las cards) */
+  --track-x: 48vw;
+  --slide-gap: 1.2vw;
+  /* Cards verticales: más altas que anchas */
+  --slide-h: 92vh;
+  --slide-w: calc(var(--slide-h) * 0.72);
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 var(--gutter);
   background: var(--polyton-night);
   overflow: hidden;
 }
 
-.talks-stack-inner {
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-  padding: 6rem 4rem;
-  gap: 2rem;
-  max-width: 1300px;
-  margin: 0 auto;
+.talks-carousel-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
 }
 
-/* ── Left column ── */
-.talks-stack-left {
-  flex: 0 0 340px;
+/* ── Columna izquierda (texto) ── */
+.talks-carousel-intro {
   position: relative;
-  z-index: 5;
-  padding-right: 2rem;
+  z-index: 2;
+  flex: 0 0 30vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.talks-stack-eyebrow {
-  font-family: var(--font-accent);
-  font-size: 0.85rem;
+.talks-carousel-eyebrow {
+  font-family: var(--font-subtitle);
+  font-size: 1rem;
   color: var(--polyton-cream);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
 }
 
-.talks-stack-title {
+.talks-carousel-eyebrow span {
+  color: var(--polyton-gold);
+}
+
+.talks-carousel-title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 5vw, 5rem);
+  font-size: clamp(3.5rem, 8vw, 8rem);
   color: var(--polyton-cream);
   text-transform: uppercase;
   line-height: 0.85;
-  letter-spacing: 0.03em;
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.6rem;
+  text-shadow: 5px 5px 0 var(--polyton-ink);
+  transform: rotate(-1.5deg);
+  transform-origin: left bottom;
 }
 
-.talks-stack-desc {
+.talks-carousel-desc {
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--polyton-sand);
   line-height: 1.6;
-  margin: 0 0 2rem;
-  max-width: 300px;
+  margin: 0;
+  max-width: 320px;
 }
 
-.talks-stack-count {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-
-.tsc-number {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--polyton-gold);
-  line-height: 1;
-}
-
-.tsc-label {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--polyton-cream);
-  opacity: 0.6;
-  line-height: 1.3;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-/* ── Right column — card stack ── */
-.talks-stack-right {
-  flex: 1;
+/* ── Carril de cards ── */
+.talks-carousel-track {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 500px;
-}
-
-.talks-stack-cards {
-  position: relative;
-  width: 320px;
-  height: 420px;
-}
-
-.stack-card {
-  position: absolute;
-  inset: 0;
-  background: var(--card-bg, var(--polyton-night));
-  border: 4px solid var(--polyton-ink);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 8px 8px 0 var(--polyton-ink);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transition: background-color 0.6s ease;
-}
-
-/* Photo occupies the entire card */
-.stack-card-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.stack-card-photo--mystery {
-  background:
-    radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--card-accent) 50%, transparent) 0 14%, transparent 42%),
-    radial-gradient(circle at 50% 64%, rgba(237, 224, 188, 0.16) 0 8%, transparent 42%),
-    linear-gradient(155deg, var(--polyton-blue), var(--polyton-night) 48%, var(--polyton-ink));
-}
-
-.stack-card-photo--mystery::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(232, 160, 32, 0.22) 0 2px, transparent 3px),
-    radial-gradient(circle at 72% 30%, rgba(237, 224, 188, 0.16) 0 2px, transparent 3px),
-    radial-gradient(circle at 38% 70%, rgba(232, 160, 32, 0.12) 0 1px, transparent 2px),
-    linear-gradient(to bottom, rgba(26, 26, 26, 0.06), rgba(26, 26, 26, 0.82));
-  background-size: 54px 54px, 42px 42px, 30px 30px, 100% 100%;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-.stack-card-photo--mystery::after {
-  content: 'A revelar';
-  position: absolute;
-  right: -2.2rem;
-  top: 4.4rem;
-  z-index: 5;
-  width: 12rem;
-  padding: 0.25rem 0;
-  transform: rotate(32deg);
-  border-top: 2px solid var(--polyton-ink);
-  border-bottom: 2px solid var(--polyton-ink);
-  background: var(--polyton-gold);
-  color: var(--polyton-ink);
-  font-family: var(--font-subtitle);
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-  text-align: center;
-  text-transform: uppercase;
-  box-shadow: 0 3px 0 var(--polyton-ink);
-}
-
-.speaker-shadow {
-  position: absolute;
-  left: 50%;
-  bottom: -0.2rem;
-  z-index: 2;
-  width: 72%;
-  height: 86%;
-  transform: translateX(-50%);
-  filter:
-    drop-shadow(10px 12px 0 rgba(0, 0, 0, 0.3))
-    drop-shadow(0 0 22px color-mix(in srgb, var(--card-accent) 30%, transparent));
-}
-
-.speaker-shadow-head,
-.speaker-shadow-neck,
-.speaker-shadow-body {
-  position: absolute;
-  left: 50%;
-  display: block;
-  transform: translateX(-50%);
-  background: var(--polyton-ink);
-}
-
-.speaker-shadow-head {
-  top: 0.5rem;
-  width: 4.8rem;
-  height: 5.65rem;
-  border-radius: 46% 54% 48% 48% / 38% 40% 56% 56%;
-  box-shadow:
-    -0.65rem 1.75rem 0 -0.42rem var(--polyton-ink),
-    0.65rem 1.75rem 0 -0.42rem var(--polyton-ink),
-    0 -0.35rem 0 0.15rem var(--polyton-ink);
-}
-
-.speaker-shadow-head::before,
-.speaker-shadow-head::after {
-  content: '';
-  position: absolute;
-  background: var(--polyton-ink);
-}
-
-.speaker-shadow-head::before {
-  left: -0.35rem;
-  top: 0.45rem;
-  width: 5.25rem;
-  height: 2rem;
-  border-radius: 58% 42% 45% 38%;
-  transform: rotate(-7deg);
-}
-
-.speaker-shadow-head::after {
-  left: 50%;
-  bottom: -0.15rem;
-  width: 2.35rem;
-  height: 1rem;
-  border-radius: 0 0 999px 999px;
-  transform: translateX(-50%);
-}
-
-.speaker-shadow-neck {
-  top: 5.55rem;
-  width: 2rem;
-  height: 3rem;
-  border-radius: 0 0 1.1rem 1.1rem;
-}
-
-.speaker-shadow-body {
-  bottom: -1.2rem;
-  width: 13.8rem;
-  height: 15.2rem;
-  border-radius: 48% 52% 0 0 / 20% 20% 0 0;
-  clip-path: polygon(18% 9%, 38% 0, 62% 0, 82% 9%, 100% 100%, 0 100%);
-}
-
-.speaker-shadow-body::before,
-.speaker-shadow-body::after {
-  content: '';
-  position: absolute;
-  top: 1.15rem;
-  width: 3.25rem;
-  height: 11.3rem;
-  border-radius: 999px 999px 2rem 2rem;
-  background: var(--polyton-ink);
-}
-
-.speaker-shadow-body::before {
-  left: -0.65rem;
-  transform: rotate(13deg);
-}
-
-.speaker-shadow-body::after {
-  right: -0.65rem;
-  transform: rotate(-13deg);
-}
-
-.stack-card-photo--man-a .speaker-shadow-head {
-  transform: translateX(-50%) rotate(-2deg);
-}
-
-.stack-card-photo--man-b .speaker-shadow {
-  width: 75%;
-  height: 87%;
-}
-
-.stack-card-photo--man-b .speaker-shadow-head {
-  width: 5.05rem;
-  height: 5.8rem;
-  border-radius: 52% 48% 50% 46% / 40% 42% 55% 55%;
-  transform: translateX(-50%) rotate(3deg);
-}
-
-.stack-card-photo--man-b .speaker-shadow-head::before {
-  left: -0.05rem;
-  width: 5.2rem;
-  height: 1.65rem;
-  border-radius: 46% 54% 34% 50%;
-  transform: rotate(9deg);
-}
-
-.stack-card-photo--man-b .speaker-shadow-body {
-  width: 14.6rem;
-  clip-path: polygon(14% 10%, 36% 0, 64% 0, 86% 10%, 100% 100%, 0 100%);
-}
-
-.stack-card-photo--woman .speaker-shadow {
-  width: 68%;
-  height: 88%;
-}
-
-.stack-card-photo--woman .speaker-shadow-head {
-  width: 4.75rem;
-  height: 5.55rem;
-  border-radius: 50% 50% 46% 46% / 38% 38% 58% 58%;
-  box-shadow:
-    -1.2rem 1rem 0 0.1rem var(--polyton-ink),
-    1.2rem 1rem 0 0.1rem var(--polyton-ink),
-    -1rem 2.8rem 0 -0.05rem var(--polyton-ink),
-    1rem 2.8rem 0 -0.05rem var(--polyton-ink),
-    0 -0.25rem 0 0.1rem var(--polyton-ink);
-}
-
-.stack-card-photo--woman .speaker-shadow-head::before {
-  left: -0.9rem;
-  top: 0.15rem;
-  width: 6.5rem;
-  height: 4.2rem;
-  border-radius: 48% 52% 42% 44%;
-  transform: rotate(-2deg);
-}
-
-.stack-card-photo--woman .speaker-shadow-neck {
-  width: 1.7rem;
-}
-
-.stack-card-photo--woman .speaker-shadow-body {
-  width: 12.4rem;
-  height: 15.6rem;
-  border-radius: 48% 52% 0 0 / 23% 23% 0 0;
-  clip-path: polygon(20% 10%, 40% 0, 60% 0, 80% 10%, 96% 100%, 4% 100%);
-}
-
-.stack-card-photo--woman .speaker-shadow-body::before {
-  left: -0.45rem;
-  transform: rotate(8deg);
-}
-
-.stack-card-photo--woman .speaker-shadow-body::after {
-  right: -0.45rem;
-  transform: rotate(-8deg);
-}
-
-.stack-card-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ── Background gradient fallback for speaker photo ── */
-.stack-card-photo-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-/* ── Real speaker photo ── */
-.stack-card-photo-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
   z-index: 1;
+  flex: 0 0 calc(100vw - var(--track-x));
+  margin-left: auto;
+  min-width: 0;
+  height: var(--slide-h);
+  display: flex;
+  align-items: stretch;
+  gap: var(--slide-gap);
 }
 
-/* ── Ghibli-style painterly overlay ── */
-.stack-card-ghibli-overlay {
+.talk-slide {
+  position: relative;
+  flex: 0 0 var(--slide-w);
+  height: 100%;
+  border: 4px solid var(--polyton-ink);
+  border-radius: 28px;
+  box-shadow: 8px 8px 0 var(--polyton-ink);
+  background: var(--polyton-ink);
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.talk-slide-img {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.35) 100%),
-    linear-gradient(135deg, rgba(232, 160, 32, 0.1), transparent 50%),
-    linear-gradient(225deg, transparent 60%, rgba(201, 76, 46, 0.06));
-  mix-blend-mode: soft-light;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: sepia(0.2) contrast(1.05);
+  transform: scale(1.15);
+  transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* Body overlays the bottom of the image. No solid background. */
-.stack-card-body {
+.talk-slide.-active .talk-slide-img {
+  transform: scale(1);
+}
+
+/* Velo plano para legibilidad del texto sobre la foto */
+.talk-slide-tint {
+  position: absolute;
+  inset: 0;
+  background: var(--polyton-ink);
+  opacity: 0.22;
+}
+
+.talk-slide-content {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 2;
-  padding: 1rem 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
   align-items: flex-start;
-  background: transparent;
+  gap: 0.6rem;
+  padding: 1.6rem;
 }
 
-.stack-card-tag {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: var(--polyton-cream);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 3px 10px;
-  border-radius: 3px;
-  align-self: flex-start;
-  margin-bottom: 0.5rem;
-}
-
-.stack-card-name {
+.talk-slide-name {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  color: var(--card-name-color, var(--polyton-cream));
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--polyton-cream);
+  text-shadow: 4px 4px 0 var(--polyton-ink);
   margin: 0;
-  line-height: 1.1;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 0 var(--polyton-ink);
+  transform: translateY(0.8rem);
+  transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
 }
 
-.stack-card-topic {
+.talk-slide-topic {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--card-topic-color, var(--polyton-blue));
-  font-weight: 700;
-  margin: 0.2rem 0 0;
-}
-
-.stack-card-num {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--polyton-ink);
-  opacity: 0.06;
-  line-height: 1;
-  pointer-events: none;
-}
-
-.stack-card-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 3px solid var(--polyton-ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
+  font-weight: 800;
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.4;
   color: var(--polyton-cream);
+  text-shadow: 2px 2px 0 var(--polyton-ink);
+  margin: 0;
+  max-width: 34ch;
+  transform: translateY(0.8rem);
+  transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.talk-slide.-active .talk-slide-name,
+.talk-slide.-active .talk-slide-topic {
+  transform: translateY(0);
+}
+
+/* Etiquetas debajo del nombre: aparecen cuando la card queda activa */
+.talk-slide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+
+.talk-slide-tag {
+  font-family: var(--font-subtitle);
+  font-size: clamp(0.9rem, 1.05vw, 1.1rem);
+  letter-spacing: 0.04em;
+  color: var(--polyton-ink);
+  background: var(--polyton-cream);
+  border: 2px solid var(--polyton-ink);
+  border-radius: 999px;
+  padding: 0.2rem 0.85rem;
   box-shadow: 2px 2px 0 var(--polyton-ink);
-  pointer-events: none;
+  opacity: 0;
+  transform: translateY(50%) rotate(3deg) scale(0);
+  transform-origin: left center;
+  transition:
+    transform 0.8s cubic-bezier(0.86, 0, 0.07, 1) var(--delay, 0ms),
+    opacity 0.8s cubic-bezier(0.86, 0, 0.07, 1) var(--delay, 0ms);
+}
+
+.talk-slide-tag:nth-child(even) {
+  background: var(--card-accent);
+}
+
+.talk-slide.-active .talk-slide-tag {
+  opacity: 1;
+  transform: translateY(0) rotate(0) scale(1);
+}
+
+/* ── Mobile / reduced motion: scroll horizontal nativo con snap ── */
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .talks-carousel-section {
+    --slide-gap: 1rem;
+    height: auto;
+    min-height: 0;
+  }
+
+  .talks-carousel-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--gutter);
+    scrollbar-width: none;
+    padding-right: var(--gutter);
+    padding-bottom: 1rem;
+    height: auto;
+  }
+
+  .talks-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .talk-slide {
+    scroll-snap-align: start;
+  }
+
+  .talk-slide-tag,
+  .talk-slide-name,
+  .talk-slide-topic {
+    transition: none;
+  }
 }
 
 @media (max-width: 900px) {
-  .talks-stack-inner {
+  .talks-carousel-section {
+    --gutter: 1.5rem;
+    --slide-gap: 0.8rem;
+    --slide-h: 72vh;
+    --slide-w: 78vw;
     flex-direction: column;
-    padding: 5rem 1.5rem;
-    gap: 3rem;
+    align-items: stretch;
+    gap: 2rem;
+    padding: 4rem 0;
   }
 
-  .talks-stack-left {
+  .talks-carousel-intro {
     flex: none;
-    width: 100%;
-    max-width: 400px;
-    padding-right: 0;
-    text-align: center;
+    padding: 0 var(--gutter);
   }
 
-  .talks-stack-desc {
-    max-width: none;
+  .talks-carousel-track {
+    flex: none;
+    margin-left: 0;
+    padding-left: var(--gutter);
   }
 
-  .talks-stack-count {
-    justify-content: center;
+  .talk-slide {
+    height: var(--slide-h);
+    box-shadow: 6px 6px 0 var(--polyton-ink);
+    border-radius: 22px;
   }
 
-  .talks-stack-cards {
-    width: 280px;
-    height: 380px;
+  .talk-slide-name {
+    font-size: clamp(2.6rem, 13vw, 4rem);
+  }
+
+  .talk-slide-content {
+    padding: 1.1rem;
   }
 }
 

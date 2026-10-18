@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politón 2026 - Streaming 9:16</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Lilita+One&family=Nunito:wght@400;700;800;900&family=Special+Elite&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --polyton-night: #1e2d5c;
+        --polyton-blue: #2c3a6b;
+        --polyton-gold: #e8a020;
+        --polyton-cream: #ede0bc;
+        --polyton-red: #c94c2e;
+        --polyton-ink: #1a1a1a;
+        --polyton-paper: #fdfaf2;
+        --polyton-vintage: #f5edcf;
+        --font-display: "Lilita One", system-ui, sans-serif;
+        --font-subtitle: "Boogaloo", system-ui, sans-serif;
+        --font-body: "Nunito", system-ui, sans-serif;
+        --font-accent: "Special Elite", serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        width: 1080px;
+        height: 1920px;
+        margin: 0;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        background: #121212;
+      }
+
+      .poster {
+        --channel-main: var(--polyton-red);
+        --channel-deep: var(--polyton-night);
+        --channel-shadow: var(--polyton-gold);
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        border: 18px solid var(--polyton-ink);
+        background:
+          radial-gradient(circle at 86% 6%, rgba(232, 160, 32, 0.2) 0 15%, transparent 16%),
+          linear-gradient(180deg, var(--channel-deep) 0%, var(--polyton-night) 58%, #17264f 100%);
+        color: var(--polyton-paper);
+        font-family: var(--font-body);
+      }
+
+      .poster.twitch {
+        --channel-main: var(--polyton-blue);
+        --channel-deep: #26366f;
+        --channel-shadow: var(--polyton-red);
+      }
+
+      .poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.34;
+        background-image:
+          radial-gradient(var(--polyton-paper) 0.8px, transparent 0.8px),
+          radial-gradient(var(--polyton-gold) 1px, transparent 1px);
+        background-position: 0 0, 17px 23px;
+        background-size: 21px 21px, 54px 54px;
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.3;
+        background:
+          linear-gradient(90deg, transparent 0 49%, rgba(253, 250, 242, 0.06) 50%, transparent 51%),
+          repeating-linear-gradient(0deg, rgba(26, 26, 26, 0.13) 0 1px, transparent 1px 5px);
+        pointer-events: none;
+      }
+
+      .logo {
+        position: absolute;
+        left: 70px;
+        top: 64px;
+        width: 278px;
+        z-index: 4;
+        mix-blend-mode: screen;
+        filter: drop-shadow(8px 8px 0 rgba(26, 26, 26, 0.45));
+      }
+
+      .site {
+        position: absolute;
+        right: 62px;
+        top: 92px;
+        z-index: 6;
+        padding: 12px 26px 8px;
+        border: 7px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--polyton-gold);
+        color: var(--polyton-ink);
+        font: 37px/1 var(--font-subtitle);
+        box-shadow: 8px 8px 0 var(--channel-main);
+        transform: rotate(0.8deg);
+      }
+
+      .burst {
+        position: absolute;
+        right: -180px;
+        top: 140px;
+        width: 760px;
+        height: 760px;
+        z-index: 0;
+        background: repeating-conic-gradient(from -8deg, var(--polyton-gold) 0deg 7deg, transparent 7deg 15deg);
+        clip-path: circle(50%);
+      }
+
+      .mascot {
+        position: absolute;
+        right: -30px;
+        top: 270px;
+        width: 540px;
+        z-index: 3;
+        transform: rotate(5deg);
+        filter: drop-shadow(14px 16px 0 rgba(26, 26, 26, 0.62));
+      }
+
+      .star {
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        z-index: 2;
+        background: var(--polyton-gold);
+        clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+        filter: drop-shadow(4px 4px 0 var(--polyton-ink));
+      }
+
+      .s1 { left: 82px; top: 232px; transform: rotate(13deg); }
+      .s2 { right: 88px; top: 840px; width: 34px; height: 34px; transform: rotate(-10deg); }
+      .s3 { left: 76px; bottom: 164px; width: 38px; height: 38px; transform: rotate(16deg); }
+
+      .headline {
+        position: absolute;
+        left: 66px;
+        top: 495px;
+        z-index: 5;
+        transform: rotate(-1.2deg);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 10px 20px 7px;
+        border: 6px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--polyton-gold);
+        color: var(--polyton-ink);
+        font: 42px/1 var(--font-subtitle);
+        box-shadow: 8px 8px 0 var(--channel-main);
+      }
+
+      h1 {
+        margin: 26px 0 0;
+        color: var(--polyton-cream);
+        font: 116px/0.82 var(--font-display);
+        letter-spacing: 0;
+        text-transform: uppercase;
+        text-shadow:
+          7px 7px 0 var(--polyton-ink),
+          13px 13px 0 var(--channel-main);
+      }
+
+      .sub {
+        width: 590px;
+        margin: 16px 0 0;
+        color: var(--polyton-paper);
+        font: 900 32px/1.05 var(--font-body);
+        text-shadow: 3px 3px 0 var(--polyton-ink);
+      }
+
+      .date {
+        position: absolute;
+        right: 72px;
+        top: 838px;
+        z-index: 6;
+        color: var(--polyton-cream);
+        font: 30px/1 var(--font-accent);
+        transform: rotate(3deg);
+        text-shadow: 3px 3px 0 var(--polyton-ink);
+      }
+
+      .ribbon {
+        position: absolute;
+        left: -28px;
+        right: -28px;
+        top: 1010px;
+        z-index: 5;
+        padding: 25px 80px 20px;
+        border-block: 10px solid var(--polyton-ink);
+        background: var(--polyton-cream);
+        color: var(--channel-main);
+        text-align: center;
+        font: 76px/0.92 var(--font-display);
+        text-shadow: 4px 4px 0 var(--polyton-ink);
+        transform: rotate(1deg);
+      }
+
+      .channel-card {
+        position: absolute;
+        left: 68px;
+        right: 68px;
+        bottom: 20px;
+        z-index: 7;
+        padding: 36px 36px 34px;
+        border: 8px solid var(--polyton-ink);
+        border-radius: 8px;
+        background: var(--polyton-vintage);
+        box-shadow: 13px 13px 0 var(--channel-shadow);
+        transform: rotate(-0.6deg);
+      }
+
+      .platform {
+        display: inline-block;
+        min-width: 300px;
+        margin-bottom: 28px;
+        padding: 12px 24px 8px;
+        border: 6px solid var(--polyton-ink);
+        border-radius: 999px;
+        background: var(--channel-main);
+        color: var(--polyton-paper);
+        text-align: center;
+        font: 54px/1 var(--font-subtitle);
+        text-shadow: 2px 2px 0 var(--polyton-ink);
+      }
+
+      .link-slot {
+        display: block;
+        width: 100%;
+        height: 86px;
+        border: 5px dashed var(--polyton-blue);
+        border-radius: 999px;
+        background: repeating-linear-gradient(
+          -8deg,
+          rgba(44, 58, 107, 0.08) 0 14px,
+          rgba(44, 58, 107, 0.02) 14px 28px
+        );
+      }
+
+      .hint {
+        margin-top: 24px;
+        color: var(--polyton-blue);
+        font: 900 30px/1.05 var(--font-body);
+      }
+
+      .twitch .hint {
+        color: var(--polyton-night);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="poster youtube">
+      <div class="burst"></div>
+      <span class="star s1"></span>
+      <span class="star s2"></span>
+      <span class="star s3"></span>
+
+      <img class="logo" src="../../src/assets/logo-completo.png" alt="Politón 2026" />
+      
+      <img class="mascot" src="../../src/assets/polito-hero.png" alt="Polito" />
+
+      <section class="headline">
+        <div class="eyebrow">¡Seguinos en directo!</div>
+        <h1>POLITÓN<br />EN VIVO</h1>
+        <p class="sub">Viví la hackathon del IPM por <span class="channel-copy">YouTube</span>.</p>
+      </section>
+
+      <div class="date">24 · 25 · 26 de junio</div>
+      <div class="ribbon">STREAMING EN VIVO</div>
+
+      <section class="channel-card" aria-label="Espacio para link">
+        <span class="platform">Twitch</span>
+        <span class="link-slot"></span>
+        <p class="hint">Espacio para pegar el link en Instagram</p>
+      </section>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const channel = params.get("channel") === "twitch" ? "twitch" : "youtube";
+      const poster = document.querySelector(".poster");
+      const platform = document.querySelector(".platform");
+      const copy = document.querySelector(".channel-copy");
+      poster.classList.toggle("youtube", channel === "youtube");
+      poster.classList.toggle("twitch", channel === "twitch");
+      platform.textContent = channel === "twitch" ? "Twitch" : "YouTube";
+      copy.textContent = channel === "twitch" ? "Twitch" : "YouTube";
+    </script>
+  </body>
+</html>

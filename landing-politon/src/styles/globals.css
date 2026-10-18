@@ -716,28 +716,6 @@ a {
   mix-blend-mode: overlay;
 }
 
-/* Hero: Polito de fondo, abajo a la derecha y detrás del texto */
-.hero-polito {
-  position: absolute;
-  z-index: 1;
-  right: clamp(-2rem, 4vw, 6rem);
-  bottom: clamp(-3rem, -4vh, 0rem);
-  width: clamp(320px, 40vw, 620px);
-  pointer-events: none;
-}
-
-.hero-polito-flight {
-  will-change: transform;
-}
-
-.hero-polito img {
-  display: block;
-  width: 100%;
-  height: auto;
-  /* Sombra cartoon dura, sin desenfoque */
-  filter: drop-shadow(6px 8px 0 var(--polyton-ink));
-}
-
 /* Hero: filete ornamental a los lados de la fecha */
 .hero-date-rule {
   width: 3rem;
@@ -755,13 +733,6 @@ a {
 
   .hero-date-rule {
     display: none;
-  }
-
-  .hero-polito {
-    width: min(88vw, 400px);
-    right: 50%;
-    bottom: 2svh;
-    transform: translateX(50%);
   }
 
   section#hero h1 {
@@ -800,8 +771,18 @@ a {
   align-items: center;
   justify-content: center;
   background-color: var(--polyton-paper);
-  padding: 2rem 1rem;
+  padding: 2rem clamp(1rem, 5vw, 4rem);
   overflow: hidden;
+}
+
+/* Texto a la izquierda, Polito a la derecha */
+.what-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  width: 100%;
+  max-width: 1180px;
 }
 
 .what-container {
@@ -809,13 +790,30 @@ a {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: 1rem;
-  max-width: 720px;
   min-height: 390px;
   width: 100%;
-  text-align: center;
+  text-align: left;
+}
+
+.what-polito {
+  justify-self: center;
+  width: min(100%, 420px);
+  pointer-events: none;
+}
+
+.what-polito-flight {
+  will-change: transform;
+}
+
+.what-polito img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Sombra cartoon dura, sin desenfoque */
+  filter: drop-shadow(6px 8px 0 var(--polyton-ink));
 }
 
 .what-title {
@@ -847,9 +845,19 @@ a {
     align-items: flex-start;
   }
 
+  /* Mobile: texto arriba, Polito abajo */
+  .what-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .what-container {
     min-height: 0;
     gap: 0.75rem;
+  }
+
+  .what-polito {
+    width: min(72vw, 300px);
   }
 
   .what-title {
@@ -1163,359 +1171,250 @@ a {
    ============================================================ */
 
 /* ============================================================
-   SIGNUP ACCORDION SECTION
+   FASE 01 — fotos que suben + textos que cambian (ref. singlefin.nc)
    ============================================================ */
 
-.signup-accordion-section {
+.recap-section {
   position: relative;
   height: 100vh;
-  min-height: 720px;
+  height: 100lvh;
+  min-height: 600px;
   overflow: hidden;
-  background: var(--polyton-night);
-  color: var(--polyton-cream);
+  background: var(--polyton-paper);
 }
 
-.signup-accordion-bg {
+.recap-grain {
   position: absolute;
   inset: 0;
+  z-index: 3;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 78% 22%, rgba(232, 160, 32, 0.22) 0 8%, transparent 32%),
-    radial-gradient(circle at 18% 76%, rgba(201, 76, 46, 0.28) 0 7%, transparent 30%),
-    radial-gradient(var(--polyton-gold) 1px, transparent 1.5px);
-  background-size: auto, auto, 34px 34px;
-  opacity: 0.9;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
 }
 
-.signup-accordion-section::before {
-  content: '';
+/* ── Fotos ── */
+.recap-photos {
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
-  opacity: 0.13;
-  background:
-    linear-gradient(115deg, transparent 0 47%, var(--polyton-gold) 47% 49%, transparent 49% 100%),
-    radial-gradient(var(--polyton-cream) 1px, transparent 1.5px);
-  background-size: 140px 140px, 22px 22px;
 }
 
-.signup-accordion-inner {
+.recap-photo {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: clamp(160px, var(--w), 380px);
+  margin: 0;
+  /* Arranca fuera de pantalla hasta que GSAP la posicione */
+  transform: translateY(110vh);
+  will-change: transform, filter;
+}
+
+.recap-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: 3px solid var(--polyton-ink);
+  filter: sepia(0.25) contrast(1.05);
+  transform: rotate(var(--r));
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.4s ease;
+}
+
+/* Las verticales vienen en 9:16: se recortan a 3:4 para que no queden tan largas */
+.recap-photo.-portrait img {
+  aspect-ratio: 3 / 4;
+}
+
+@media (hover: hover) {
+  .recap-photo:hover img {
+    transform: rotate(0deg) scale(1.08);
+    filter: none;
+  }
+}
+
+/* ── Centro: sello + textos ── */
+.recap-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(38rem, 46vw);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Etiqueta + sello pegado a su derecha */
+.recap-kicker-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.recap-stamp {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(24rem, 0.9fr);
+  flex: none;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(1.5rem, 3vw, 3.5rem);
-  height: 100%;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: clamp(2.2rem, 4.2vw, 4.2rem) clamp(1.25rem, 5vw, 4rem) clamp(1.6rem, 3vw, 2.8rem);
-}
-
-.signup-accordion-copy {
-  min-width: 0;
-}
-
-.signup-accordion-eyebrow {
-  width: fit-content;
-  margin: 0 0 0.7rem;
-  padding: 0.35rem 0.8rem 0.25rem;
-  transform: rotate(-1.5deg);
-  border: 3px solid var(--polyton-ink);
-  background: var(--polyton-gold);
-  box-shadow: 4px 4px 0 var(--polyton-ink);
-  color: var(--polyton-ink);
-  font-family: var(--font-subtitle);
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.signup-accordion-title {
-  max-width: 12ch;
-  margin: 0;
-  color: var(--polyton-cream);
-  font-family: var(--font-display);
-  font-size: clamp(2.7rem, 5.4vw, 5.45rem);
-  line-height: 0.84;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  text-shadow: 5px 5px 0 var(--polyton-ink);
-}
-
-.signup-accordion-intro {
-  max-width: 34rem;
-  margin: 0.95rem 0 1.45rem;
-  color: var(--polyton-sand);
-  font-family: var(--font-body);
-  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
-  font-weight: 800;
-  line-height: 1.45;
-}
-
-.signup-accordion-list {
-  display: grid;
-  gap: 0;
-}
-
-.signup-accordion-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.7rem;
-  width: 100%;
-  padding: 0.08rem 0;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.signup-accordion-number {
-  color: var(--polyton-gold);
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.7vw, 1.65rem);
-  line-height: 1;
-  transition: transform 220ms ease;
-}
-
-.signup-accordion-heading {
-  color: transparent;
-  -webkit-text-stroke: 1.7px rgba(237, 224, 188, 0.46);
-  font-family: var(--font-display);
-  font-size: clamp(2.35rem, 4.35vw, 4.8rem);
-  line-height: 0.82;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  transition: color 220ms ease, -webkit-text-stroke-color 220ms ease, transform 220ms ease;
-}
-
-.signup-accordion-item:hover .signup-accordion-heading,
-.signup-accordion-item:focus-visible .signup-accordion-heading,
-.signup-accordion-item.is-active .signup-accordion-heading {
-  color: var(--polyton-gold);
-  -webkit-text-stroke-color: var(--polyton-ink);
-  transform: translateX(0.25rem);
-}
-
-.signup-accordion-item.is-active .signup-accordion-number {
-  transform: rotate(-4deg) scale(1.15);
-}
-
-.signup-accordion-item:focus-visible {
-  outline: 3px solid var(--polyton-gold);
-  outline-offset: 0.25rem;
-}
-
-.signup-accordion-panel {
-  position: relative;
-  display: grid;
-  align-items: end;
-  min-height: min(67vh, 37rem);
-}
-
-.signup-accordion-card {
-  position: relative;
-  z-index: 4;
-  width: min(100%, 27rem);
-  margin-left: auto;
-  margin-bottom: clamp(1rem, 4vh, 2.5rem);
-  padding: 1rem 1.1rem;
-  transform: rotate(1.2deg);
+  justify-content: center;
+  width: 5.6rem;
+  aspect-ratio: 1;
+  margin-left: -0.9rem;
   border: 4px solid var(--polyton-ink);
-  background: var(--polyton-paper);
-  box-shadow: 8px 8px 0 var(--polyton-ink);
+  border-radius: 50%;
+  outline: 3px solid var(--polyton-red);
+  outline-offset: -11px;
+  background: var(--polyton-gold);
+  box-shadow: 5px 5px 0 var(--polyton-ink);
   color: var(--polyton-ink);
+  transform: rotate(-12deg);
+  line-height: 1;
 }
 
-.signup-accordion-kicker {
-  margin: 0 0 0.45rem;
-  color: var(--polyton-red);
+.recap-stamp span {
   font-family: var(--font-subtitle);
-  font-size: 1rem;
-  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.signup-accordion-text {
-  margin: 0;
-  color: var(--polyton-ink);
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.34;
+.recap-stamp strong {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--polyton-night);
 }
 
-.signup-accordion-cta {
-  display: inline-block;
-  margin-top: 0.75rem;
-  padding: 0.62rem 1.05rem;
+/* Los slides se apilan en la misma celda: el contenedor toma el alto del más alto */
+.recap-slides {
+  display: grid;
+  width: 100%;
+}
+
+.recap-slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recap-kicker {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin: 0;
+  padding: 0.35rem 0.85rem 0.25rem;
+  transform: rotate(-1.5deg);
   border: 3px solid var(--polyton-ink);
   background: var(--polyton-red);
   box-shadow: 4px 4px 0 var(--polyton-ink);
   color: var(--polyton-cream);
   font-family: var(--font-subtitle);
-  font-size: 1rem;
+  font-size: 1.05rem;
   letter-spacing: 0.08em;
-  text-decoration: none;
   text-transform: uppercase;
-  transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
-.signup-accordion-cta:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--polyton-ink);
+.recap-title {
+  margin: 0;
+  color: var(--polyton-night);
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 8vw, 7.5rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-shadow: 5px 5px 0 var(--polyton-ink);
 }
 
-.signup-accordion-visual {
-  position: absolute;
-  inset: -2rem -2rem 6.2rem -2rem;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
+.recap-text {
+  max-width: 30rem;
+  margin: 1.1rem 0 0;
+  color: var(--polyton-ink);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1.45;
+  /* Halo papel: se lee aunque pase una foto por detrás */
+  text-shadow:
+    0 0 4px var(--polyton-paper),
+    0 0 8px var(--polyton-paper),
+    0 0 14px var(--polyton-paper);
 }
 
-.signup-accordion-visual::before {
-  content: '';
-  position: absolute;
-  width: min(72vw, 34rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 160, 32, 0.24) 0 28%, transparent 68%);
-  filter: blur(10px);
-}
-
-.signup-accordion-image {
-  position: absolute;
-  width: min(45vw, 34rem);
-  max-height: 56vh;
-  object-fit: contain;
-  opacity: 0;
-  transform: translateY(1rem) scale(0.9) rotate(-2deg);
-  filter: drop-shadow(14px 18px 0 rgba(0, 0, 0, 0.32));
-  transition: opacity 280ms ease, transform 420ms cubic-bezier(.2,.8,.2,1);
-}
-
-.signup-accordion-image.is-active {
-  opacity: 1;
-  transform: translateY(0) scale(1) rotate(1deg);
-}
-
-@media (max-width: 960px) {
-  .signup-accordion-section {
-    height: auto;
-    min-height: auto;
+/* ── Mobile: menos fotos, texto en tarjeta para que siempre se lea ── */
+@media (max-width: 768px) {
+  /* Fotos más grandes; se corre la x para que las de la derecha no queden afuera */
+  .recap-photo {
+    left: calc(var(--x) * 0.75 - 6%);
+    width: calc(var(--w) * 2.3);
   }
 
-  .signup-accordion-inner {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 0.9rem;
+  .recap-center {
+    width: min(88vw, 24rem);
+    padding: 1.4rem 1.1rem 1.1rem;
+    border: 4px solid var(--polyton-ink);
+    background: var(--polyton-paper);
+    box-shadow: 7px 7px 0 var(--polyton-ink);
   }
 
-  .signup-accordion-panel {
-    display: flex;
+  .recap-stamp {
+    width: 4.6rem;
+    outline-offset: -8px;
+  }
+
+  .recap-stamp span {
+    font-size: 0.6rem;
+  }
+
+  .recap-stamp strong {
+    font-size: 1.55rem;
+  }
+
+  .recap-title {
+    font-size: clamp(2.6rem, 13vw, 3.6rem);
+    text-shadow: 3px 3px 0 var(--polyton-ink);
+  }
+
+  .recap-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* ── Reduced motion: sin pin, los tres textos uno debajo del otro ── */
+@media (prefers-reduced-motion: reduce) {
+  .recap-section {
+    height: auto;
     min-height: 0;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 0.75rem;
+    padding: 4rem 1.25rem;
   }
 
-  .signup-accordion-card {
-    width: min(100%, 24rem);
-    margin: 0;
+  .recap-photos {
+    display: none;
   }
 
-  .signup-accordion-visual {
+  .recap-center {
     position: relative;
-    inset: auto;
-    width: 100%;
-    min-height: 17rem;
-    place-items: center;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
   }
 
-  .signup-accordion-image {
-    width: min(86vw, 26rem);
-    max-height: 17rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .signup-accordion-inner {
-    padding: 3rem 1.1rem 2.5rem;
+  .recap-slides {
+    gap: 3rem;
   }
 
-  .signup-accordion-title {
-    font-size: clamp(2.65rem, 13vw, 3.85rem);
-    line-height: 0.88;
-  }
-
-  .signup-accordion-intro {
-    margin: 0.65rem 0 0.85rem;
-    font-size: 0.82rem;
-    line-height: 1.34;
-  }
-
-  .signup-accordion-item {
-    grid-template-columns: 2.1rem minmax(0, 1fr);
-  }
-
-  .signup-accordion-heading {
-    font-size: clamp(2rem, 10vw, 3.15rem);
-    line-height: 0.86;
-    overflow-wrap: anywhere;
-  }
-
-  .signup-accordion-panel {
-    gap: 0.5rem;
-  }
-
-  .signup-accordion-card {
-    width: min(100%, 22rem);
-    padding: 1rem;
-  }
-
-  .signup-accordion-visual {
-    min-height: 13.5rem;
-  }
-
-  .signup-accordion-image {
-    width: min(88vw, 20.5rem);
-    max-height: 13.5rem;
-  }
-}
-
-@media (max-height: 760px) and (min-width: 961px) {
-  .signup-accordion-section {
-    min-height: 640px;
-  }
-
-  .signup-accordion-inner {
-    padding-top: 1.5rem;
-    padding-bottom: 1.25rem;
-  }
-
-  .signup-accordion-title {
-    font-size: clamp(2.5rem, 4.8vw, 4.9rem);
-  }
-
-  .signup-accordion-intro {
-    margin-bottom: 1rem;
-  }
-
-  .signup-accordion-heading {
-    font-size: clamp(2.1rem, 3.9vw, 4.25rem);
-  }
-
-  .signup-accordion-image {
-    max-height: 50vh;
-  }
-
-  .signup-accordion-card {
-    margin-bottom: 1rem;
+  .recap-slide {
+    grid-area: auto;
   }
 }
 

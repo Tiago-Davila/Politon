@@ -2,15 +2,13 @@
  * Hero.tsx — POLITÓN 2026
  *
  * Bloque de texto en la parte alta sobre fondo Dither (React Bits) en modo
- * halftone, con la paleta de la marca + grain vintage encima. Polito entra
- * volando en pose Superman y queda flotando de fondo, abajo y detrás del texto.
+ * halftone, con la paleta de la marca + grain vintage encima.
  */
 import React, { useEffect, useMemo, useRef } from 'react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
-import politoVolando from '../../assets/mascot/polito-volando.webp'
 
 /* El shader necesita los HEX reales: se leen de los tokens de globals.css */
 const readToken = (name: string) =>
@@ -29,7 +27,6 @@ const Hero: React.FC = () => {
   const eyebrowRef = useRef<HTMLParagraphElement>(null)
   const specialRef = useRef<HTMLDivElement>(null)
   const dateRef = useRef<HTMLDivElement>(null)
-  const politoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsLoading(false)
@@ -83,32 +80,6 @@ const Hero: React.FC = () => {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
       )
-
-      /* 5 — Polito: entrada volando → flotar en el lugar.
-             Cada movimiento va en su propia capa para que no se pisen:
-             .hero-polito-flight (entrada) > img (idle) */
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (!reduced && politoRef.current) {
-        const polito = politoRef.current
-        const flight = polito.querySelector('.hero-polito-flight')
-        const img = polito.querySelector('img')
-
-        gsap
-          .timeline({ delay: 0.9 })
-          .fromTo(
-            flight,
-            { x: '-80vw', y: '40vh', rotate: -28, scale: 0.6 },
-            { x: 0, y: 0, rotate: 0, scale: 1, duration: 1.3, ease: 'back.out(1.2)' }
-          )
-          .to(img, {
-            y: -16,
-            rotate: 2.5,
-            duration: 1.8,
-            ease: 'sine.inOut',
-            repeat: -1,
-            yoyo: true,
-          })
-      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -148,22 +119,6 @@ const Hero: React.FC = () => {
         />
       </div>
       <div className="hero-grain" aria-hidden="true" />
-
-      {/* ═══════════════════════════════════════
-          POLITO — volando en pose Superman, de fondo detrás del texto
-          ═══════════════════════════════════════ */}
-      <div ref={politoRef} className="hero-polito">
-        <div className="hero-polito-flight">
-          <img
-            src={politoVolando}
-            alt="Polito, el zeppelin mascota del IPM, volando"
-            width={900}
-            height={688}
-            decoding="async"
-            fetchPriority="high"
-          />
-        </div>
-      </div>
 
       {/* ═══════════════════════════════════════
           CONTENIDO — bloque de texto centrado

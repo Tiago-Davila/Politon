@@ -168,7 +168,7 @@ const FinalistsIndex: React.FC<FinalistsIndexProps> = ({ onOpen }) => {
               <a
                 className={`fin-row fin-tone-${i % 6}`}
                 style={{ '--len': [...team.name].length } as React.CSSProperties}
-                href={`?equipo=${team.slug}`}
+                href={`/equipo/${team.slug}`}
                 aria-label={`${team.name}, equipo finalista ${team.number}`}
                 onPointerEnter={(e) => { paintRow(e, true); showCover(i) }}
                 onPointerLeave={(e) => paintRow(e, false)}

@@ -1,7 +1,8 @@
 {
   "rewrites": [
     { "source": "/segunda-fase", "destination": "/index.html" },
-    { "source": "/segunda-fase/", "destination": "/index.html" }
+    { "source": "/segunda-fase/", "destination": "/index.html" },
+    { "source": "/equipo/:slug", "destination": "/index.html" }
   ],
   "headers": [
     {

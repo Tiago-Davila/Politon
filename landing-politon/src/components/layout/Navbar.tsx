@@ -1,8 +1,8 @@
 /**
  * Navbar.tsx — POLITÓN 2026
  *
- * Barra vertical fija a la izquierda: botón de menú arriba y la marca escrita
- * en vertical. Al abrir, un panel se despliega desde la izquierda con los
+ * Botón de menú fijo arriba a la izquierda. Al abrir, un panel se despliega
+ * desde la izquierda con los
  * links apilados, que entran en cascada.
  */
 import React, { useEffect, useRef, useState } from 'react'
@@ -120,14 +120,6 @@ const Navbar: React.FC = () => {
           <span />
           <span />
         </button>
-
-        <a href="#hero" className="side-nav-brand" onClick={go('#hero')}>
-          Politón
-        </a>
-
-        <span className="side-nav-year" aria-hidden="true">
-          ✦ 2026
-        </span>
       </header>
 
       <div

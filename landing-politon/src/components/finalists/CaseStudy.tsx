@@ -7,7 +7,8 @@
  */
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { ArrowRight, Download, FileText, Play, Sparkles, X } from 'lucide-react'
-import { gsap } from '../../lib/gsap'
+import Lenis from 'lenis'
+import { gsap, ScrollTrigger } from '../../lib/gsap'
 import type { Finalist, FinalistMedia } from '../../data/finalists'
 import CircularText from '../ui/CircularText'
 import TeamCover from './TeamCover'
@@ -25,6 +26,9 @@ interface CaseStudyProps {
 }
 
 const prefersReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+/* Mismo criterio que useLenis: sin smooth scroll en touch ni con reduced motion */
+const canSmoothScroll = () =>
+  !prefersReduced() && !window.matchMedia('(hover: none), (pointer: coarse), (max-width: 768px)').matches
 
 const insetFrom = (r: Origin) =>
   `inset(${r.top}px ${window.innerWidth - r.left - r.width}px ${window.innerHeight - r.top - r.height}px ${r.left}px)`
@@ -56,6 +60,37 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
   const contentRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const firstSlugRef = useRef(team.slug)
+  const lenisRef = useRef<Lenis | null>(null)
+
+  /* Smooth scroll propio: el Lenis de la home queda en pausa mientras tanto */
+  useEffect(() => {
+    const root = rootRef.current
+    const content = contentRef.current
+    if (!root || !content || !canSmoothScroll()) return
+
+    const lenis = new Lenis({
+      wrapper: root,
+      content,
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    })
+    lenisRef.current = lenis
+    lenis.on('scroll', ScrollTrigger.update)
+
+    let frame = 0
+    const raf = (time: number) => {
+      lenis.raf(time)
+      frame = requestAnimationFrame(raf)
+    }
+    frame = requestAnimationFrame(raf)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      lenis.destroy()
+      lenisRef.current = null
+    }
+  }, [])
 
   /* Apertura: el recorte crece desde el origen hasta la pantalla completa */
   useLayoutEffect(() => {
@@ -84,7 +119,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
     const content = contentRef.current
     if (!root || !content || firstSlugRef.current === team.slug) return
     firstSlugRef.current = ''
-    root.scrollTop = 0
+    if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true })
+    else root.scrollTop = 0
     if (!prefersReduced()) gsap.fromTo(content, { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'expo.out' })
   }, [team.slug])
 
@@ -132,7 +168,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
       role="dialog"
       aria-modal="true"
       aria-labelledby="fin-cs-title"
-      data-lenis-prevent
+      data-lenis-scope
     >
       <div className="fin-cs-bar">
         <p><span>{team.number}</span> {team.name}</p>

@@ -409,21 +409,6 @@
   box-shadow: 2px 2px 0 var(--polyton-ink);
 }
 
-.fin-cs-pdf.is-pending {
-  color: var(--tone-fg);
-  background: transparent;
-  border-style: dashed;
-  border-color: currentColor;
-  box-shadow: none;
-  opacity: .75;
-  cursor: default;
-}
-
-.fin-cs-pdf.is-pending:hover,
-.fin-cs-pdf.is-pending:active {
-  transform: rotate(-1.5deg);
-  box-shadow: none;
-}
 
 .fin-cs-head-art {
   position: relative;
@@ -640,61 +625,6 @@
   scroll-snap-align: start;
 }
 
-.fin-cs-photos {
-  columns: 3 260px;
-  column-gap: 1.6rem;
-}
-
-.fin-cs-photo {
-  break-inside: avoid;
-  margin-bottom: 1.6rem;
-  background: var(--polyton-vintage);
-  border: 3px solid var(--polyton-ink);
-  box-shadow: 6px 6px 0 var(--polyton-ink);
-}
-
-.fin-cs-photo img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: filter .6s cubic-bezier(.16, 1, .3, 1);
-}
-
-.fin-cs-photo:hover img {
-  filter: sepia(.65) contrast(1.05);
-}
-
-.fin-cs-photo figcaption {
-  padding: .6rem .9rem;
-  font: 1.05rem var(--font-subtitle);
-  letter-spacing: .06em;
-  border-top: 3px solid var(--polyton-ink);
-}
-
-.fin-cs-photo-empty {
-  display: grid;
-  justify-items: center;
-  gap: .5rem;
-  padding: clamp(3rem, 6vw, 5rem) 1.5rem;
-  text-align: center;
-  background: var(--polyton-vintage);
-  border: 3px dashed var(--polyton-ink);
-}
-
-.fin-cs-photo-empty > span {
-  font-size: 2.4rem;
-  line-height: 1;
-  color: var(--polyton-gold);
-}
-
-.fin-cs-photo-empty strong {
-  font: clamp(2rem, 3.5vw, 2.8rem) var(--font-display);
-  color: var(--polyton-night);
-}
-
-.fin-cs-photo-empty p {
-  font: 400 1.05rem/1.6 var(--font-body);
-}
 
 .fin-cs-next {
   position: relative;

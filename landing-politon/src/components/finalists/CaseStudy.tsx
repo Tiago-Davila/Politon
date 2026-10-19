@@ -6,7 +6,7 @@
  * "Seguí explorando" pasa al siguiente equipo sin cerrar.
  */
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import { ArrowRight, Download, FileText, Play, Sparkles, X } from 'lucide-react'
+import { ArrowRight, Play, Sparkles, X } from 'lucide-react'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 import type { Finalist, FinalistMedia } from '../../data/finalists'
@@ -32,6 +32,16 @@ const canSmoothScroll = () =>
 
 const insetFrom = (r: Origin) =>
   `inset(${r.top}px ${window.innerWidth - r.left - r.width}px ${window.innerHeight - r.top - r.height}px ${r.left}px)`
+
+/* Hoja con la esquina doblada y la etiqueta "PDF", en el trazo de lucide */
+const PdfIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <path d="M14 2v6h6" />
+    <rect x="1.5" y="11.5" width="17" height="7.5" rx="1" fill="var(--polyton-red)" stroke="var(--polyton-ink)" strokeWidth="1.5" />
+    <text x="10" y="17.4" textAnchor="middle" fill="var(--polyton-paper)" stroke="none" fontFamily="var(--font-display)" fontSize="6">PDF</text>
+  </svg>
+)
 
 function VideoCard({ media, label, index }: { media: FinalistMedia | null; label: string; index?: number }) {
   return (
@@ -184,15 +194,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
             <h2 id="fin-cs-title" className="fin-cs-title" aria-label={team.name}>
               {[...team.name].map((char, i) => <span className="fin-char" aria-hidden="true" key={i}>{char}</span>)}
             </h2>
-            {team.pdf ? (
-              <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} download>
-                <Download size={20} strokeWidth={2.5} aria-hidden="true" /> Descargar PDF del proyecto
-              </a>
-            ) : (
-              <span className="fin-cs-intro fin-cs-pdf is-pending" aria-disabled="true">
-                <FileText size={20} strokeWidth={2.5} aria-hidden="true" /> PDF en preparación
-              </span>
-            )}
+            <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} target="_blank" rel="noopener noreferrer">
+              <PdfIcon /> Informe final - PDF
+            </a>
           </div>
           <div className="fin-cs-head-art">
             <TeamCover team={team} index={index} />
@@ -229,26 +233,6 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
               ? team.promos.map((media, i) => <VideoCard key={media.src} media={media} label={media.title} index={i + 1} />)
               : <VideoCard media={null} label="Video promocional" index={1} />}
           </div>
-        </section>
-
-        <section className="fin-cs-section" aria-labelledby="fin-photos-title">
-          <div className="fin-cs-subhead fin-cs-reveal"><span>05 / DETRÁS DE ESCENA</span><h3 id="fin-photos-title">FOTOS <em>EXTRA</em></h3></div>
-          {team.photos.length ? (
-            <div className="fin-cs-photos">
-              {team.photos.map((photo) => (
-                <figure className="fin-cs-photo fin-cs-reveal" key={photo.src}>
-                  <img src={photo.src} alt={photo.alt ?? photo.title} loading="lazy" />
-                  <figcaption>{photo.title}</figcaption>
-                </figure>
-              ))}
-            </div>
-          ) : (
-            <div className="fin-cs-photo-empty fin-cs-reveal">
-              <span aria-hidden="true">✦</span>
-              <strong>Próximamente</strong>
-              <p>Las fotos de {team.name} van a aparecer acá.</p>
-            </div>
-          )}
         </section>
 
         <button type="button" className="fin-cs-next" onClick={goNext}>

@@ -5,13 +5,12 @@
  * halftone, con la paleta de la marca + grain vintage encima.
  */
 import React, { useEffect, useMemo, useRef } from 'react'
-import { ArrowDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
 import CircularText from '../ui/CircularText'
-import { scrollToSection } from '../../lib/scrollToSection'
 
 /* El shader necesita los HEX reales: se leen de los tokens de globals.css */
 const readToken = (name: string) =>
@@ -261,17 +260,12 @@ const Hero: React.FC = () => {
           ═══════════════════════════════════════ */}
       <a
         ref={fase2Ref}
-        href="#equipos"
+        href="/segunda-fase"
         className="hero-fase2"
-        onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          scrollToSection('#equipos')
-        }}
       >
         <span className="hero-fase2-label">¡Mirá la fase 2!</span>
         <CircularText className="hero-fase2-seal" text="FASE 02 ✦ FINALISTAS ✦ " duration={14}>
-          <ArrowDown size={26} strokeWidth={2.8} aria-hidden="true" />
+          <ArrowRight size={26} strokeWidth={2.8} aria-hidden="true" />
         </CircularText>
       </a>
     </section>

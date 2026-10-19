@@ -1,4 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/segunda-fase", "destination": "/index.html" },
+    { "source": "/segunda-fase/", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

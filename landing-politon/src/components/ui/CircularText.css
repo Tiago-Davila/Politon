@@ -1,0 +1,31 @@
+.circular-text {
+  --circular-size: 160px;
+  position: relative;
+  width: var(--circular-size);
+  height: var(--circular-size);
+  border-radius: 50%;
+}
+
+.circular-text-ring {
+  position: absolute;
+  inset: 0;
+}
+
+.circular-text-ring span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1em;
+  height: 50%;
+  margin-left: -0.5em;
+  text-align: center;
+  transform-origin: 50% 100%;
+}
+
+.circular-text-center {
+  position: absolute;
+  inset: 22%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}

@@ -39,8 +39,7 @@ const Process: React.FC = () => {
     if (!section || !track) return
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-    if (reduced || isMobile) return
+    if (reduced) return
 
     const travel = () => {
       const sectionWidth = section.getBoundingClientRect().width || window.innerWidth
@@ -56,6 +55,7 @@ const Process: React.FC = () => {
           pin: true,
           scrub: 1,
           start: 'top top',
+          anticipatePin: 1,
           end: () => `+=${travel() + window.innerHeight * 0.85}`,
           invalidateOnRefresh: true,
           onUpdate: (self) => {

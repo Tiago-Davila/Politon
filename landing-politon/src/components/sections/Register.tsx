@@ -1,176 +1,82 @@
 /**
  * Register.tsx — POLITÓN 2026
  *
- * Sección final: transmisión en vivo + redes sociales + inscripción.
- * Layout de 3 columnas:
- *  - Izquierda: tarjeta de stream en vivo (YouTube + Twitch)
- *  - Centro:    foto del colegio + redes sociales
- *  - Derecha:   QR + CTA "¿Te animás?"
+ * Footer: el hashtag gigante extruido en 3D (React Bits "DepthText") y, abajo a la
+ * izquierda, los links a redes con efecto de texto que rueda al hacer hover.
  */
 import React from 'react'
+import DepthText from '../ui/DepthText'
 
-import StreamPreviewVideo from '../../assets/stream-preview.mp4'
-
-const IconInstagram: React.FC = () => (
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-  </svg>
-)
-
-const IconYouTube: React.FC = () => (
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-  </svg>
-)
-
-const IconTwitch: React.FC = () => (
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582h-5.731l-3.045 3.045v-3.045H4.836V2.149h16.478v11.463zm-3.224-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269h-2.149V6.269h2.149z" />
-  </svg>
-)
+const SOCIALS = [
+  {
+    name: 'YouTube',
+    href: 'https://www.youtube.com/@politecnicomodelo',
+    icon: (
+      <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.1V8.9l5.8 3.1-5.8 3.1Z" />
+    ),
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/politecnicomodelo/',
+    icon: (
+      <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-9.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" />
+    ),
+  },
+  {
+    name: 'Twitch',
+    href: 'https://www.twitch.tv/ipmtv_',
+    icon: (
+      <path d="M4.3 1 1.5 4.6v15.1h4.8V23h2.7l3.3-3.3h4.2L23 13.2V1H4.3Zm16.4 11.1-3.4 3.4h-4.8l-3 3v-3H5.4V3.2h15.3v8.9ZM17.6 6.4h-2.2v6.1h2.2V6.4Zm-5.8 0H9.6v6.1h2.2V6.4Z" />
+    ),
+  },
+]
 
 const Register: React.FC = () => (
-  <section id="registro" className="reg-section">
-    {/* Grain de fondo */}
-    <div className="reg-grain" aria-hidden="true" />
+  <footer id="registro" className="site-footer">
+    <div className="site-footer-grain" aria-hidden="true" />
 
-    {/* Línea animada comentada — firulete naranja sacado
-    <ConnectionLine />
-    */}
-
-    {/* Título Principal */}
-    <div className="reg-section-title-wrap">
-      <h2 className="reg-section-title">Seguilo en vivo</h2>
+    <div className="site-footer-mark">
+      <DepthText
+        text="#POLITÓN2026"
+        className="site-footer-depth"
+        faceColor="var(--polyton-cream)"
+        depthColor="var(--polyton-ink)"
+        layers={18}
+        depth={1.8}
+        tilt={7}
+        orbitSpeed={0.12}
+        shadow={false}
+        fontSize="clamp(3rem, 13.6vw, 15rem)"
+        fontWeight={400}
+      />
     </div>
 
-    {/* Ornamento de texto rotado */}
-    <span className="reg-watermark" aria-hidden="true">#POLITÓN2026</span>
+    <div className="site-footer-bottom">
+      <nav className="site-footer-social" aria-label="Redes sociales">
+        <p className="site-footer-label">✦ Seguinos</p>
+        <ul>
+          {SOCIALS.map((s, i) => (
+            <li key={s.name}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" className="site-footer-link">
+                <span className="site-footer-index">{String(i + 1).padStart(2, '0')}</span>
+                <svg className="site-footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  {s.icon}
+                </svg>
+                {/* Texto que rueda: la copia de abajo sube al hacer hover */}
+                <span className="site-footer-roll">
+                  <span>{s.name}</span>
+                  <span aria-hidden="true">{s.name}</span>
+                </span>
+                <span className="site-footer-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-    <div className="reg-container">
-
-      {/* ── COLUMNA IZQUIERDA: tarjeta de transmisión en vivo ── */}
-      <div className="reg-col reg-col-left">
-        <div className="reg-stream-card">
-
-          {/* Badge EN VIVO */}
-          <div className="reg-stream-live-badge" aria-label="Transmisión en vivo">
-            <span className="reg-stream-live-dot" aria-hidden="true" />
-            <span className="reg-stream-live-text">EN VIVO</span>
-          </div>
-
-          <p className="reg-stream-headline">
-            Viví la hackatón<br />completa online
-          </p>
-
-          <p className="reg-stream-sub">
-            La producción está a cargo<br />de los propios alumnos del IPM.
-          </p>
-
-          <p className="reg-stream-dates">24 · 25 · 26 de Junio 2026</p>
-
-        </div>
-      </div>
-
-      {/* ── COLUMNA CENTRAL: foto + redes ── */}
-      <div className="reg-col reg-col-center">
-
-        {/* Video preview del stream */}
-        <div className="reg-school-photo-wrap">
-          <video
-            src={StreamPreviewVideo}
-            className="reg-school-photo"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            aria-label="Preview del stream del Politón 2026"
-          />
-          <div className="reg-school-photo-overlay" />
-          <span className="reg-school-badge">IPM</span>
-        </div>
-
-        {/* Separador ornamental */}
-        <div className="reg-divider" aria-hidden="true">
-          <span /><span className="reg-divider-star">✦</span><span />
-        </div>
-
-        {/* Texto + redes */}
-        <div className="reg-social-block">
-          <p className="reg-follow-label">Seguinos y no te perdés nada</p>
-
-          <div className="reg-social-links-row">
-            <a
-              href="https://www.instagram.com/politecnicomodelo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reg-social-btn-icon"
-              aria-label="Instagram"
-            >
-              <IconInstagram />
-            </a>
-            <a
-              href="https://www.youtube.com/@politecnicomodelo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reg-social-btn-icon"
-              aria-label="YouTube"
-            >
-              <IconYouTube />
-            </a>
-            <a
-              href="https://www.twitch.tv/ipmtv_"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="reg-social-btn-icon"
-              aria-label="Twitch"
-            >
-              <IconTwitch />
-            </a>
-          </div>
-
-          <p className="reg-hashtag">#POLITÓN2026</p>
-        </div>
-      </div>
-
-      {/* ── COLUMNA DERECHA: qué vas a ver en el stream ── */}
-      <div className="reg-col reg-col-right">
-        <div className="reg-stream-card">
-
-          {/* Badge CONTENIDO */}
-          <div className="reg-stream-content-badge" aria-label="Contenido del stream">
-            CONTENIDO
-          </div>
-
-          <p className="reg-stream-headline">
-            ¿Qué vas<br />a ver?
-          </p>
-
-          <div className="reg-feature-list">
-            {[
-              { titulo: 'Cámara en vivo', desc: 'El evento en tiempo real' },
-              { titulo: 'Entrevistas', desc: 'Equipos, jurados y referentes' },
-              { titulo: 'Móviles', desc: 'Cobertura desde adentro' },
-              { titulo: 'Secciones especiales', desc: 'Pitches, votaciones, juegos y más' },
-            ].map(({ titulo, desc }, index) => (
-              <div
-                key={titulo}
-                className="reg-feature-item"
-              >
-                <span className="reg-feature-number">{String(index + 1).padStart(2, '0')}</span>
-                <div className="reg-feature-copy">
-                  <p className="reg-feature-title">{titulo}</p>
-                  <p className="reg-feature-desc">{desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
-
+      <p className="site-footer-legal">© 2026 Politón · IPM</p>
     </div>
-  </section>
+  </footer>
 )
 
 export default Register

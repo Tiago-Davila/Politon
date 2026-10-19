@@ -1,149 +1,219 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { gsap } from '../../lib/gsap'
 
 const SPEAKERS = [
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'man-a',
-    accent: '#C94C2E',
+    name: 'Paloma Conde',
+    topic: 'La Paradoja de la Conexión: vínculos y ansiedad en la era digital',
+    photoUrl: '/speakers/paloma-conde.webp',
+    tags: ['Salud mental', 'Redes sociales', 'Vínculos', 'Ansiedad digital'],
+    accent: '#C94C6E',
+    sectionBg: '#2D1B4E',
   },
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'woman',
+    name: 'Lucas Saclier',
+    topic: 'IA, Empleo y Profesiones del Futuro',
+    photoUrl: '/speakers/lucas-saclier.webp',
+    tags: ['Inteligencia artificial', 'Empleo', 'Futuro del trabajo', 'Tecnología'],
     accent: '#E8A020',
+    sectionBg: '#1A4A5C',
   },
   {
-    name: 'Oculto',
-    topic: 'Aún no se revelará',
-    silhouette: 'man-b',
-    accent: '#2C3A6B',
+    name: 'Micaela Brahim',
+    topic: 'Pequeñas Acciones, Grandes Cambios: El Impacto Ambiental y la Sustentabilidad',
+    photoUrl: '/speakers/micaela-brahim.webp',
+    tags: ['Ambiente', 'Sustentabilidad', 'Impacto local', 'Acción colectiva'],
+    accent: '#D4A040',
+    sectionBg: '#2D4A2E',
+  },
+  {
+    name: 'Marco Pontoriero',
+    topic: 'Diseño web',
+    photoUrl: '/speakers/marco-pontoriero.webp',
+    tags: ['UX/UI', 'Diseño web', 'Prototipado', 'Identidad visual'],
+    accent: '#C94C2E',
+    sectionBg: '#4A2C1C',
   },
 ]
 
+/* Desktop y mobile pinean; solo reduced motion cae al scroll horizontal nativo */
+const PINNED_QUERY = '(prefers-reduced-motion: no-preference)'
+/* Duración de cada pausa (card quieta mientras seguís scrolleando) */
+const HOLD = 0.9
+/* Duración del pase de una card a la siguiente (más alto = transición más lenta) */
+const MOVE = 5
+/* Scroll (en altos de viewport) por cada unidad de timeline */
+const VH_PER_UNIT = 0.2
+
+/**
+ * Carrusel horizontal pineado (ref: agencefoudre.com — "Nous les rendons sociaux").
+ * Texto a la izquierda, espacio libre en el medio y cards a la derecha:
+ * cards verticales altas, se ve una card y parte de la siguiente.
+ * Todo el carril se desplaza con el scroll; las cards que salen se recortan en el
+ * borde izquierdo del carril. La card activa despliega sus etiquetas.
+ */
 const Talks: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null)
-  const stackRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
 
+  /* Pin + scrub */
   useEffect(() => {
     const section = sectionRef.current
-    const stack = stackRef.current
-    if (!section || !stack) return
+    const track = trackRef.current
+    if (!section || !track) return
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-    if (reduced || isMobile) return
+    const mm = gsap.matchMedia()
 
-    const cards = Array.from(stack.querySelectorAll<HTMLElement>('.stack-card'))
-    if (!cards.length) return
+    mm.add(PINNED_QUERY, () => {
+      const cards = Array.from(track.querySelectorAll<HTMLElement>('.talk-slide'))
+      const N = cards.length
+      let step = 0
+      let current = -1
 
-    const N = cards.length
-    // How many viewport heights the user must scroll per card reveal.
-    // Increase this to require more scrolling to reveal the next card.
-    const SCROLL_PER_CARD = 140 // in vh
+      const measure = () => {
+        step = N > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 0
+      }
+      measure()
 
-    /* Posiciones iniciales: stack visual con offset y escala */
-    cards.forEach((card, i) => {
-      const fromTop = N - 1 - i
-      gsap.set(card, {
-        y: -fromTop * 12,
-        scale: 1 - fromTop * 0.03,
-        zIndex: fromTop,
-      })
-    })
-
-    /* Timeline: las cards salen de arriba hacia abajo */
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        pin: true,
-        start: 'top top',
-        end: `+=${N * SCROLL_PER_CARD}vh`,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      },
-    })
-
-    // Animate cards in DOM order: card 0 (first) should go first, leaving the last card as the base
-    for (let i = 0; i < N; i++) {
-      if (i === N - 1) continue
-      const pos = i / N
-      tl.to(
-        cards[i],
-        {
-          y: '-120%',
-          opacity: 0,
-          scale: 0.8,
-          rotation: -5,
+      const setActiveIndex = (i: number) => {
+        if (i === current) return
+        current = i
+        setActive(i)
+        gsap.to(section, {
+          backgroundColor: SPEAKERS[i].sectionBg,
+          duration: 0.8,
           ease: 'power2.inOut',
-          duration: 1 / N,
+          overwrite: 'auto',
+        })
+      }
+
+      const render = (p: number) => {
+        /* Todo el carril se desplaza junto: las cards nunca se superponen */
+        const shift = p * step * (N - 1)
+        cards.forEach((card, i) => {
+          /* Cuánto salió la card por la izquierda del carril (0 → 1) */
+          const out = step ? gsap.utils.clamp(0, 1, (shift - i * step) / step) : 0
+          gsap.set(card, {
+            x: -shift,
+            scale: 1 - out * 0.08,
+            opacity: 1 - gsap.utils.clamp(0, 1, out * 2.2),
+            transformOrigin: 'right center',
+          })
+        })
+        setActiveIndex(Math.min(N - 1, Math.round(p * (N - 1))))
+      }
+
+      const state = { p: 0 }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          pin: true,
+          anticipatePin: 1,
+          start: 'top top',
+          /* Pausas + desplazamientos: HOLD + (N - 1) * (MOVE + HOLD) unidades */
+          end: () => `+=${window.innerHeight * VH_PER_UNIT * (HOLD + (N - 1) * (MOVE + HOLD))}`,
+          scrub: 2.2,
+          invalidateOnRefresh: true,
+          onRefresh: measure,
         },
-        pos
-      )
+      })
+      /* Pausa (card quieta) → desplazamiento → pausa ... : en cada card el scroll
+         sigue pero el carril no avanza, así se puede leer */
+      tl.to({}, { duration: HOLD })
+      for (let i = 1; i < N; i++) {
+        tl.to(state, {
+          p: i / (N - 1),
+          ease: 'sine.inOut',
+          duration: MOVE,
+          onUpdate: () => render(state.p),
+        })
+        tl.to({}, { duration: HOLD })
+      }
+
+      render(0)
+
+      return () => {
+        cards.forEach((card) => {
+          gsap.set(card, { clearProps: 'transform,opacity' })
+        })
+        section.style.backgroundColor = SPEAKERS[0].sectionBg
+      }
+    })
+
+    return () => mm.revert()
+  }, [])
+
+  /* Reduced motion: scroll horizontal nativo con snap */
+  useEffect(() => {
+    const track = trackRef.current
+    const section = sectionRef.current
+    if (!track || !section) return
+
+    const onScroll = () => {
+      if (window.matchMedia(PINNED_QUERY).matches) return
+      const cards = track.querySelectorAll<HTMLElement>('.talk-slide')
+      if (cards.length < 2) return
+      const step = cards[1].offsetLeft - cards[0].offsetLeft
+      const i = Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step)))
+      setActive(i)
+      section.style.backgroundColor = SPEAKERS[i].sectionBg
     }
 
-    return () => {
-      tl.scrollTrigger?.kill()
-      tl.kill()
-    }
+    track.addEventListener('scroll', onScroll, { passive: true })
+    return () => track.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
-    <section ref={sectionRef} id="charlas" className="talks-stack-section">
-      <div className="talks-stack-inner">
-        <div className="talks-stack-left">
-          <p className="talks-stack-eyebrow">
-            <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-            {' '}Inspiración{' '}
-            <span style={{ color: 'var(--polyton-gold)' }}>✦</span>
-          </p>
-          <h2 className="talks-stack-title">Charlas</h2>
-          <p className="talks-stack-desc">
-            Conocé a las personas que van a exponer las problemáticas con las que los equipos trabajarán.
-            Cada charla trae una perspectiva única.
-          </p>
-          {/* <div className="talks-stack-count">
-            <span className="tsc-number">{String(SPEAKERS.length).padStart(2, '0')}</span>
-            <span className="tsc-label">charlas<br />a confirmar</span>
-          </div> */}
-        </div>
+    <section
+      ref={sectionRef}
+      id="charlas"
+      className="talks-carousel-section"
+      style={{ backgroundColor: SPEAKERS[0].sectionBg }}
+    >
+      <div className="talks-carousel-grain" aria-hidden="true" />
 
-        <div ref={stackRef} className="talks-stack-right">
-          <div className="talks-stack-cards">
-            {SPEAKERS.map((s, i) => (
-              <article
-                key={i}
-                className="stack-card"
-                style={{ '--card-accent': s.accent } as React.CSSProperties}
-              >
-                <div
-                  className={`stack-card-photo stack-card-photo--mystery stack-card-photo--${s.silhouette}`}
-                  aria-label={`${s.name}: identidad a revelar`}
-                >
-                  <div className="speaker-shadow" aria-hidden="true">
-                    <span className="speaker-shadow-head" />
-                    <span className="speaker-shadow-neck" />
-                    <span className="speaker-shadow-body" />
-                  </div>
-                </div>
-                <div className="stack-card-body">
-                  <div className="stack-card-tag" style={{ background: s.accent }}>
-                    Charla
-                  </div>
-                  <h3 className="stack-card-name">{s.name}</h3>
-                  <p className="stack-card-topic">{s.topic}</p>
-                </div>
-                <div className="stack-card-num" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <div className="stack-card-badge" aria-hidden="true" style={{ background: s.accent }}>
-                  ★
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+      <div className="talks-carousel-intro">
+        <p className="talks-carousel-eyebrow">
+          <span>✦</span> Inspiración <span>✦</span>
+        </p>
+        <h2 className="talks-carousel-title">Charlas</h2>
+
+        <p className="talks-carousel-desc">
+          Conocé a las personas que van a exponer las problemáticas con las que los equipos
+          trabajarán.
+        </p>
+      </div>
+
+      <div ref={trackRef} className="talks-carousel-track">
+        {SPEAKERS.map((s, i) => (
+          <article
+            key={s.name}
+            className={`talk-slide${i === active ? ' -active' : ''}`}
+            style={{ zIndex: i + 1, '--card-accent': s.accent } as React.CSSProperties}
+          >
+            <img className="talk-slide-img" src={s.photoUrl} alt="" loading="lazy" />
+            <div className="talk-slide-tint" aria-hidden="true" />
+
+            <div className="talk-slide-content">
+              <h3 className="talk-slide-name">{s.name}</h3>
+              <p className="talk-slide-topic">{s.topic}</p>
+
+              <ul className="talk-slide-tags" aria-label="Temas de la charla">
+                {s.tags.map((tag, t) => (
+                  <li
+                    key={tag}
+                    className="talk-slide-tag"
+                    style={{ '--delay': `${120 + t * 90}ms` } as React.CSSProperties}
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </article>
+        ))}
       </div>
     </section>
   )

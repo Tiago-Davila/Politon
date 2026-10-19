@@ -47,11 +47,12 @@ const PdfIcon = () => (
 const youtubeId = (url: string) =>
   url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/)?.[1] ?? null
 
-function VideoCard({ media, label, index }: { media: FinalistVideo | null; label: string; index?: number }) {
+/* vertical: formato reel 9:16 para los videos promocionales */
+function VideoCard({ media, label, index, vertical }: { media: FinalistVideo | null; label: string; index?: number; vertical?: boolean }) {
   const id = media ? youtubeId(media.youtube) : null
 
   return (
-    <article className="fin-media">
+    <article className={vertical ? 'fin-media fin-media-reel' : 'fin-media'}>
       {media && id ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
@@ -251,9 +252,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
         <section className="fin-cs-section" aria-labelledby="fin-promos-title">
           <div className="fin-cs-subhead fin-cs-reveal"><span>04 / PARA COMPARTIR</span><h3 id="fin-promos-title">VIDEOS <em>PROMOCIONALES</em></h3></div>
           <div className="fin-cs-promos fin-cs-reveal">
-            {team.promos.length
-              ? team.promos.map((media, i) => <VideoCard key={`${media.youtube}-${i}`}media={media} label={media.title} index={i + 1} />)
-              : <VideoCard media={null} label="Video promocional" index={1} />}
+            {[0, 1].map((i) => (
+              <VideoCard key={i} media={team.promos[i] ?? null} label={team.promos[i]?.title ?? 'Reel promocional'} index={i + 1} vertical />
+            ))}
           </div>
         </section>
 

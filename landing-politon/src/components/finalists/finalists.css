@@ -656,18 +656,33 @@
   color: var(--polyton-gold);
 }
 
+/* Reels: dos videos verticales lado a lado, inclinados como stickers */
 .fin-cs-promos {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: min(82%, 680px);
-  gap: 2rem;
-  padding: 0 14px 18px 0;
+  grid-auto-columns: min(72%, 340px);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: 8px 14px 18px 4px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
 }
 
 .fin-cs-promos > * {
   scroll-snap-align: start;
+}
+
+.fin-media-reel {
+  rotate: -1.5deg;
+}
+
+.fin-media-reel:nth-child(2) {
+  rotate: 1.5deg;
+  margin-top: 2.5rem;
+}
+
+.fin-media-reel iframe,
+.fin-media-reel .fin-media-empty {
+  aspect-ratio: 9 / 16;
 }
 
 

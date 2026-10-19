@@ -37,7 +37,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo EcoSmart va a contar acá qué problema eligió abordar, a quién afecta y por qué importa resolverlo.',
     product: 'Acá EcoSmart va a mostrar cómo convirtió su idea inicial en una propuesta concreta y qué aprendió durante el proceso.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
   {
@@ -45,7 +48,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo MindFirst va a presentar acá el desafío que investigó, su contexto y la oportunidad que encontró.',
     product: 'Acá MindFirst va a contar el recorrido desde los primeros bocetos hasta el producto que llegó a la final.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
   {
@@ -53,7 +59,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo #NoLoNormalices va a explicar acá qué situación decidió cuestionar y cuál es el foco de su proyecto.',
     product: 'Acá #NoLoNormalices va a mostrar las decisiones, pruebas y cambios que transformaron su idea en producto.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
   {
@@ -61,7 +70,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo BloqIA va a describir acá el problema que trabajó y la solución que propone.',
     product: 'Acá BloqIA va a contar cómo desarrolló su propuesta, qué validó y cómo funciona el resultado.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
   {
@@ -69,7 +81,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo (des)conectado va a compartir acá su mirada sobre el desafío elegido y las personas a las que busca llegar.',
     product: 'Acá (des)conectado va a recorrer las etapas que llevaron de la primera idea a su producto final.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
   {
@@ -77,7 +92,10 @@ export const finalists: Finalist[] = [
     summary: 'El equipo salimos va a presentar acá el problema real que lo impulsó y el objetivo de su propuesta.',
     product: 'Acá salimos va a mostrar su proceso de creación, las pruebas realizadas y el producto que presenta en la final.',
     demo: { youtube: DEMO_VIDEO, title: 'Demo del proyecto' },
-    promos: [{ youtube: DEMO_VIDEO, title: 'Video promocional' }],
+    promos: [
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+      { youtube: DEMO_VIDEO, title: 'Reel promocional' },
+    ],
     photos: [], pdf: '/informes/informe-demo.pdf', apk: null,
   },
 ]

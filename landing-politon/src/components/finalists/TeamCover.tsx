@@ -1,6 +1,6 @@
 /**
  * TeamCover.tsx — portada de un equipo finalista.
- * Usa la primera foto (o el poster del demo) cuando existe; mientras tanto,
+ * Usa la primera foto cuando existe; mientras tanto,
  * un afiche ilustrado con el número del equipo y Polito.
  */
 import React from 'react'
@@ -14,7 +14,7 @@ interface TeamCoverProps {
 }
 
 const TeamCover: React.FC<TeamCoverProps> = ({ team, index, size = 'lg' }) => {
-  const media = team.photos[0]?.src ?? team.demo?.poster ?? null
+  const media = team.photos[0]?.src ?? null
 
   return (
     <div className={`fin-cover fin-cover-${size} fin-tone-${index % 6}`} style={{ '--tilt': `${index % 2 ? 8 : -6}deg` } as React.CSSProperties}>

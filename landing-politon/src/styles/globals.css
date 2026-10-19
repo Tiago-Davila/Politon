@@ -716,6 +716,90 @@ a {
   mix-blend-mode: overlay;
 }
 
+/* Hero: sticker que lleva a los finalistas de la fase 02 */
+.hero-fase2 {
+  position: absolute;
+  z-index: 3;
+  right: clamp(1.25rem, 5vw, 4.5rem);
+  bottom: clamp(2rem, 9vh, 5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+}
+
+.hero-fase2-label {
+  padding: 0.55rem 1.15rem;
+  font: clamp(1.3rem, 1.9vw, 1.75rem) var(--font-display);
+  color: var(--polyton-cream);
+  background: var(--polyton-red);
+  border: 3px solid var(--polyton-ink);
+  box-shadow: 5px 5px 0 var(--polyton-ink);
+  white-space: nowrap;
+  transform: rotate(-3deg);
+  transition: box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), translate 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-fase2:hover .hero-fase2-label {
+  translate: -2px -3px;
+  box-shadow: 8px 8px 0 var(--polyton-ink);
+}
+
+.hero-fase2:active .hero-fase2-label {
+  translate: 2px 2px;
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+}
+
+.hero-fase2 .hero-fase2-seal {
+  --circular-size: clamp(88px, 8.5vw, 124px);
+  flex-shrink: 0;
+  font: 0.85rem var(--font-subtitle);
+  letter-spacing: 0.1em;
+  color: var(--polyton-ink);
+  background: var(--polyton-gold);
+  border: 3px solid var(--polyton-ink);
+  box-shadow: 5px 5px 0 var(--polyton-ink);
+}
+
+.hero-fase2-seal .circular-text-ring {
+  inset: 7px;
+}
+
+.hero-fase2-seal .circular-text-center {
+  color: var(--polyton-cream);
+  background: var(--polyton-red);
+  border: 3px solid var(--polyton-ink);
+}
+
+.hero-fase2-seal .circular-text-center svg {
+  animation: hero-fase2-nudge 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-fase2-nudge {
+  0%, 100% { transform: translateY(-3px); }
+  50% { transform: translateY(4px); }
+}
+
+@media (max-width: 768px) {
+  .hero-fase2 {
+    left: 1rem;
+    right: 1rem;
+    bottom: 2.5rem;
+    justify-content: center;
+  }
+
+  .hero-fase2 .hero-fase2-seal {
+    --circular-size: 96px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fase2-seal .circular-text-center svg {
+    animation: none;
+  }
+}
+
 /* Hero: filete ornamental a los lados de la fecha */
 .hero-date-rule {
   width: 3rem;

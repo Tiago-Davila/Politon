@@ -1,9 +1,11 @@
 # Sitio de finalistas
 
-La segunda fase está disponible en `/segunda-fase`. La landing original sigue en `/`.
+Los finalistas están en la home, en la sección `#equipos` (el sticker
+«¡Mirá la fase 2!» del hero lleva ahí). Cada equipo tiene su página en
+`/equipo/<slug>`, por ejemplo `/equipo/ecosmart`.
+Los links viejos a `/segunda-fase` redirigen a `/#equipos` y
+`/segunda-fase?equipo=x` a `/equipo/x`.
 El código está en `src/components/finalists/`.
-Cuando se agregue el modal en la página principal, su enlace puede apuntar a
-`/segunda-fase` (o a `/segunda-fase?equipo=ecosmart` para abrir un equipo).
 
 ## Completar los proyectos
 
@@ -51,5 +53,5 @@ pdf: '/finalistas/ecosmart/ecosmart.pdf',
 
 ## Probar localmente
 
-Desde `landing-politon/`: `npm run dev`. Abrí la URL que muestra Vite y sumá
-`/segunda-fase` al final.
+Desde `landing-politon/`: `npm run dev`. Abrí la URL que muestra Vite y abrí la home o
+`/equipo/<slug>`.

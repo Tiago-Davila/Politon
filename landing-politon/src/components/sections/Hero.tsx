@@ -5,10 +5,13 @@
  * halftone, con la paleta de la marca + grain vintage encima.
  */
 import React, { useEffect, useMemo, useRef } from 'react'
+import { ArrowDown } from 'lucide-react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
+import CircularText from '../ui/CircularText'
+import { scrollToSection } from '../../lib/scrollToSection'
 
 /* El shader necesita los HEX reales: se leen de los tokens de globals.css */
 const readToken = (name: string) =>
@@ -27,6 +30,7 @@ const Hero: React.FC = () => {
   const eyebrowRef = useRef<HTMLParagraphElement>(null)
   const specialRef = useRef<HTMLDivElement>(null)
   const dateRef = useRef<HTMLDivElement>(null)
+  const fase2Ref = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     setIsLoading(false)
@@ -80,6 +84,21 @@ const Hero: React.FC = () => {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
       )
+
+      /* 5 — Sticker "Mirá la fase 2": entra girando y queda saludando */
+      const fase2 = fase2Ref.current
+      if (fase2) {
+        gsap.fromTo(
+          fase2.querySelector('.hero-fase2-seal'),
+          { scale: 0, rotate: -120 },
+          { scale: 1, rotate: 0, duration: 0.9, ease: 'back.out(1.8)', delay: 1 }
+        )
+        gsap.fromTo(
+          fase2.querySelector('.hero-fase2-label'),
+          { opacity: 0, x: 40, rotate: 8 },
+          { opacity: 1, x: 0, rotate: -3, duration: 0.7, ease: 'back.out(2)', delay: 1.2 }
+        )
+      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -236,6 +255,25 @@ const Hero: React.FC = () => {
           <span className="hero-date-rule" aria-hidden="true" />
         </div>
       </div>
+
+      {/* ═══════════════════════════════════════
+          FASE 02 — acceso a los finalistas
+          ═══════════════════════════════════════ */}
+      <a
+        ref={fase2Ref}
+        href="#equipos"
+        className="hero-fase2"
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          scrollToSection('#equipos')
+        }}
+      >
+        <span className="hero-fase2-label">¡Mirá la fase 2!</span>
+        <CircularText className="hero-fase2-seal" text="FASE 02 ✦ FINALISTAS ✦ " duration={14}>
+          <ArrowDown size={26} strokeWidth={2.8} aria-hidden="true" />
+        </CircularText>
+      </a>
     </section>
   )
 }

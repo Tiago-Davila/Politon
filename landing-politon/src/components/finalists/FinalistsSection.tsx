@@ -26,7 +26,12 @@ function slugFromLocation(): string | null {
 
 type OpenState = { slug: string; origin: Origin | null }
 
-const FinalistsSection: React.FC = () => {
+interface FinalistsSectionProps {
+  /* Título de la pestaña cuando no hay ningún equipo abierto */
+  pageTitle?: string
+}
+
+const FinalistsSection: React.FC<FinalistsSectionProps> = ({ pageTitle = SITE_TITLE }) => {
   const [open, setOpen] = useState<OpenState | null>(() => {
     const slug = slugFromLocation()
     return slug ? { slug, origin: null } : null
@@ -45,10 +50,10 @@ const FinalistsSection: React.FC = () => {
   const isOpen = team !== null
 
   useEffect(() => {
-    document.title = team ? `${team.name} — Finalistas | POLITÓN 2026` : SITE_TITLE
-  }, [team])
+    document.title = team ? `${team.name} — Finalistas | POLITÓN 2026` : pageTitle
+  }, [team, pageTitle])
 
-  /* Links viejos a /segunda-fase llegan como /#equipos */
+  /* Links directos a /#equipos */
   useEffect(() => {
     if (window.location.hash !== '#equipos') return
     const timer = window.setTimeout(() => scrollToSection('#equipos'), 600)

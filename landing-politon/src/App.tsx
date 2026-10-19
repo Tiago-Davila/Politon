@@ -12,6 +12,7 @@ import PageLoader from './components/ui/PageLoader'
 import { finalists } from './data/finalists'
 
 const NotFound = React.lazy(() => import('./components/NotFound'))
+const SegundaFase = React.lazy(() => import('./components/SegundaFase'))
 
 const RegistrationAccordion = React.lazy(() => import('./components/sections/RegistrationAccordion'))
 const EventDaysSummary = React.lazy(() => import('./components/sections/EventDaysSummary'))
@@ -19,13 +20,15 @@ const Talks = React.lazy(() => import('./components/sections/Talks'))
 const Stream = React.lazy(() => import('./components/sections/Stream'))
 const Register = React.lazy(() => import('./components/sections/Register'))
 
-/* /segunda-fase ya no existe: sus links van a la sección o a la página del equipo */
-if (window.location.pathname.replace(/\/$/, '') === '/segunda-fase') {
+const isSegundaFase = () => window.location.pathname.replace(/\/+$/, '') === '/segunda-fase'
+
+/* Links viejos a /segunda-fase?equipo=<slug> van a la página del equipo */
+if (isSegundaFase()) {
   const equipo = new URLSearchParams(window.location.search).get('equipo')
-  window.history.replaceState(null, '', equipo ? `/equipo/${encodeURIComponent(equipo)}` : '/#equipos')
+  if (equipo) window.history.replaceState(null, '', `/equipo/${encodeURIComponent(equipo)}`)
 }
 
-/* Rutas válidas: la home y la página de cada equipo. El resto es 404 */
+/* Rutas válidas: la home, /segunda-fase y la página de cada equipo. El resto es 404 */
 const isKnownRoute = () => {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
   if (path === '/' || path === '/index.html') return true
@@ -126,6 +129,10 @@ const AppContent: React.FC = () => {
 }
 
 const App: React.FC = () => {
+  if (isSegundaFase()) {
+    return <Suspense fallback={null}><SegundaFase /></Suspense>
+  }
+
   if (!isKnownRoute()) {
     return <Suspense fallback={null}><NotFound /></Suspense>
   }

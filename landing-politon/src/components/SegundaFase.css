@@ -1,0 +1,40 @@
+/* Botón fijo para volver a la home, mismo sello que el CTA del 404 */
+.segunda-fase-back {
+  position: fixed;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  left: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  font: 1.2rem var(--font-subtitle);
+  color: var(--polyton-cream);
+  text-decoration: none;
+  background: var(--polyton-red);
+  border: 3px solid var(--polyton-ink);
+  box-shadow: 4px 4px 0 var(--polyton-ink);
+  transform: rotate(-1.5deg);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.segunda-fase-back:hover {
+  transform: translate(-2px, -3px) rotate(-1.5deg);
+  box-shadow: 7px 7px 0 var(--polyton-ink);
+}
+
+.segunda-fase-back:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--polyton-ink);
+}
+
+.segunda-fase-back:focus-visible {
+  outline: 3px solid var(--polyton-gold);
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segunda-fase-back {
+    transition: none;
+  }
+}

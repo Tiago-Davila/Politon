@@ -1,6 +1,7 @@
 # Sitio de finalistas
 
 La segunda fase está disponible en `/segunda-fase`. La landing original sigue en `/`.
+El código está en `src/components/finalists/`.
 Cuando se agregue el modal en la página principal, su enlace puede apuntar a
 `/segunda-fase` (o a `/segunda-fase?equipo=ecosmart` para abrir un equipo).
 
@@ -13,6 +14,7 @@ Editá `src/data/finalists.ts`. Cada equipo tiene la misma estructura:
 - `demo`: un video o `null`.
 - `promos`: uno o varios videos.
 - `photos`: una o varias fotos.
+- `pdf`: ruta al PDF descargable con más información, o `null`.
 
 Guardá los medios en `public/finalistas/<equipo>/` y usá rutas como
 `/finalistas/ecosmart/demo.mp4`. Los videos admiten `poster` opcional y las
@@ -36,6 +38,16 @@ Mientras no se carguen los medios, la página muestra tarjetas de
 «Video en preparación» y «Próximamente». Los textos actuales son provisionales:
 indican qué información corresponde en cada bloque, sin inventar datos de los
 proyectos.
+
+## Subir los PDF
+
+Cada proyecto tiene un botón «Descargar PDF del proyecto». Mientras `pdf` sea
+`null`, el botón aparece como «PDF en preparación». Para activarlo, guardá el
+archivo en `public/finalistas/<equipo>/` y completá la ruta:
+
+```ts
+pdf: '/finalistas/ecosmart/ecosmart.pdf',
+```
 
 ## Probar localmente
 

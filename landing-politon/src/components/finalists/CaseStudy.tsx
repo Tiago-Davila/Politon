@@ -6,10 +6,10 @@
  * "Seguí explorando" pasa al siguiente equipo sin cerrar.
  */
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-import { ArrowRight, Play, Sparkles, X } from 'lucide-react'
+import { ArrowRight, Download, Play, Sparkles, X } from 'lucide-react'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
-import type { Finalist, FinalistMedia } from '../../data/finalists'
+import type { Finalist, FinalistVideo } from '../../data/finalists'
 import CircularText from '../ui/CircularText'
 import TeamCover from './TeamCover'
 import type { Origin } from './FinalistsIndex'
@@ -43,14 +43,24 @@ const PdfIcon = () => (
   </svg>
 )
 
-function VideoCard({ media, label, index }: { media: FinalistMedia | null; label: string; index?: number }) {
+/* Saca el id de cualquier link de YouTube (watch?v=, youtu.be/, shorts/, embed/) */
+const youtubeId = (url: string) =>
+  url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/)?.[1] ?? null
+
+function VideoCard({ media, label, index }: { media: FinalistVideo | null; label: string; index?: number }) {
+  const id = media ? youtubeId(media.youtube) : null
+
   return (
     <article className="fin-media">
-      {media ? (
-        <video controls preload="none" poster={media.poster} aria-label={media.title}>
-          <source src={media.src} />
-          Tu navegador no puede reproducir este video.
-        </video>
+      {media && id ? (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
+          title={media.title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
       ) : (
         <div className="fin-media-empty" aria-label={`${label} pendiente de publicación`}>
           <span className="fin-media-play" aria-hidden="true"><Play fill="currentColor" size={30} /></span>
@@ -194,9 +204,21 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
             <h2 id="fin-cs-title" className="fin-cs-title" aria-label={team.name}>
               {[...team.name].map((char, i) => <span className="fin-char" aria-hidden="true" key={i}>{char}</span>)}
             </h2>
-            <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} target="_blank" rel="noopener noreferrer">
-              <PdfIcon /> Informe final - PDF
-            </a>
+            <div className="fin-cs-links">
+              {/* Sin APK publicado queda el botón como placeholder, sin link */}
+              <a
+                className="fin-cs-intro fin-cs-pdf fin-cs-apk"
+                href={team.apk ?? undefined}
+                download={team.apk ? true : undefined}
+                aria-disabled={team.apk ? undefined : true}
+              >
+                <Download size={22} strokeWidth={2.5} aria-hidden="true" /> Descargá la app - APK
+                {team.apk ? null : <span className="fin-cs-soon">Pronto</span>}
+              </a>
+              <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} target="_blank" rel="noopener noreferrer">
+                <PdfIcon /> Informe final - PDF
+              </a>
+            </div>
           </div>
           <div className="fin-cs-head-art">
             <TeamCover team={team} index={index} />
@@ -230,7 +252,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
           <div className="fin-cs-subhead fin-cs-reveal"><span>04 / PARA COMPARTIR</span><h3 id="fin-promos-title">VIDEOS <em>PROMOCIONALES</em></h3></div>
           <div className="fin-cs-promos fin-cs-reveal">
             {team.promos.length
-              ? team.promos.map((media, i) => <VideoCard key={media.src} media={media} label={media.title} index={i + 1} />)
+              ? team.promos.map((media, i) => <VideoCard key={`${media.youtube}-${i}`}media={media} label={media.title} index={i + 1} />)
               : <VideoCard media={null} label="Video promocional" index={1} />}
           </div>
         </section>

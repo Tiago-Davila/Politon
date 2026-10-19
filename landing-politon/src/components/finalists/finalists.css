@@ -409,6 +409,50 @@
   box-shadow: 2px 2px 0 var(--polyton-ink);
 }
 
+/* APK + informe, uno al lado del otro */
+.fin-cs-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem 1.4rem;
+  margin-top: 2rem;
+}
+
+.fin-cs-links .fin-cs-pdf {
+  margin-top: 0;
+}
+
+.fin-cs-apk {
+  color: var(--polyton-cream);
+  background: var(--polyton-red);
+  transform: rotate(1.5deg);
+}
+
+.fin-cs-apk:hover {
+  transform: translate(-2px, -3px) rotate(1.5deg);
+}
+
+/* Placeholder: se ve igual pero no reacciona */
+.fin-cs-apk[aria-disabled='true'] {
+  cursor: default;
+}
+
+.fin-cs-apk[aria-disabled='true']:hover,
+.fin-cs-apk[aria-disabled='true']:active {
+  transform: rotate(1.5deg);
+  box-shadow: 5px 5px 0 var(--polyton-ink);
+}
+
+.fin-cs-soon {
+  padding: .1rem .5rem;
+  font-size: .85rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--polyton-ink);
+  background: var(--polyton-gold);
+  border: 2px solid var(--polyton-ink);
+}
+
 
 .fin-cs-head-art {
   position: relative;
@@ -558,11 +602,12 @@
   box-shadow: 10px 10px 0 var(--polyton-ink);
 }
 
-.fin-media video {
+.fin-media iframe {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--polyton-ink);
+  border: 0;
 }
 
 .fin-media-empty {

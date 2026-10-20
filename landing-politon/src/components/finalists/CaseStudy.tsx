@@ -212,15 +212,17 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
               {[...team.name].map((char, i) => <span className="fin-char" aria-hidden="true" key={i}>{char}</span>)}
             </h2>
             <div className="fin-cs-links">
-              {/* Sin APK publicado queda el botón como placeholder, sin link */}
+              {/* Sin link publicado queda el botón como placeholder, sin link */}
               <a
                 className="fin-cs-intro fin-cs-pdf fin-cs-apk"
                 href={team.apk ?? undefined}
                 target="_blank"
-                download={team.apk ? true : undefined}
+                rel={team.linkType === 'pagina' ? 'noopener noreferrer' : undefined}
+                download={team.apk && team.linkType === 'apk' ? true : undefined}
                 aria-disabled={team.apk ? undefined : true}
               >
-                <Download size={22} strokeWidth={2.5} aria-hidden="true" /> Visitá la página / Descargá la app
+                <Download size={22} strokeWidth={2.5} aria-hidden="true" />
+                {team.linkType === 'apk' ? 'Descargá la app' : 'Visitá la página'}
                 {team.apk ? null : <span className="fin-cs-soon">Pronto</span>}
               </a>
               <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} target="_blank" rel="noopener noreferrer">

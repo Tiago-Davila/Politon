@@ -24,8 +24,10 @@ export type Finalist = {
   cover: { src: string; portrait?: boolean }
   /* Informe final del proyecto (por ahora todos apuntan al PDF demo) */
   pdf: string
-  /* Descarga del APK de la app, o null mientras no esté publicado */
+  /* Link de la app o página del proyecto, o null mientras no esté publicado */
   apk: string | null
+  /* 'apk' = descarga de archivo, 'pagina' = visita a sitio web (sin download) */
+  linkType: 'apk' | 'pagina'
 }
 
 /* Placeholder hasta tener los videos de cada equipo */
@@ -44,7 +46,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/fbpHYMmTdKI?feature=share', title: 'Reel promocional' },
     ],
     cover: { src: '/equipos/ecosmart.webp' },
-    photos: [], pdf: '/informes/Informe-EcoSmart.pdf', apk: null,
+    photos: [], pdf: '/informes/Informe-EcoSmart.pdf', apk: 'https://politecnicomodelo-my.sharepoint.com/:u:/g/personal/martin_barbieri_ipm_edu_ar/IQCTT95_yHf8SIn0m38YjE3EATD0Jn49mz-ocgLgfUI6mks?e=0PEGm8', linkType: 'apk',
   },
   {
     slug: 'mindfirst', name: 'MindFirst', number: '02',
@@ -58,7 +60,7 @@ export const finalists: Finalist[] = [
 
     ],
     cover: { src: '/equipos/MindFirst.webp' },
-    photos: [], pdf: '/informes/Informe-MindFirst.pdf', apk: 'https://mindfirst.policloudservices.ipm.edu.ar/',
+    photos: [], pdf: '/informes/Informe-MindFirst.pdf', apk: 'https://mindfirst.policloudservices.ipm.edu.ar/', linkType: 'pagina',
   },
   {
     slug: 'nolonormalices', name: '#NoLoNormalices', number: '03',
@@ -71,7 +73,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/rx6VRW6x6qk?feature=share', title: 'Reel promocional' },
     ],
     cover: { src: '/equipos/nolonormalices.webp', portrait: true },
-    photos: [], pdf: '/informes/Informe-NoLoNormalices.pdf', apk: 'https://www.instagram.com/nolonormalices.ipm',
+    photos: [], pdf: '/informes/Informe-NoLoNormalices.pdf', apk: 'https://www.instagram.com/nolonormalices.ipm', linkType: 'pagina',
   },
   {
     slug: 'bloqia', name: 'BloqIA', number: '04',
@@ -83,7 +85,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtu.be/ko6X3IEO5w0', title: 'Reel promocional' },
     ],
     cover: { src: '/equipos/bloquia.webp' },
-    photos: [], pdf: '/informes/Informe-BloqIA.pdf', apk: 'https://bloqia.policloudservices.ipm.edu.ar/',
+    photos: [], pdf: '/informes/Informe-BloqIA.pdf', apk: 'https://bloqia.policloudservices.ipm.edu.ar/', linkType: 'pagina',
   },
   {
     slug: 'desconectados', name: '(des)conectado', number: '05',
@@ -97,7 +99,7 @@ export const finalists: Finalist[] = [
 
     ],
     cover: { src: '/equipos/desconectado.webp' },
-    photos: [], pdf: '/informes/Informe-(DES)CONECTADO.pdf', apk: null,
+    photos: [], pdf: '/informes/Informe-(DES)CONECTADO.pdf', apk: 'https://politecnicomodelo-my.sharepoint.com/:u:/g/personal/martin_barbieri_ipm_edu_ar/IQDN6TZ6HW7ESrqCq1DAEmGVAXpGVCkTSwrp-8gWnIDAa38?e=CHc8fA', linkType: 'apk',
   },
   {
     slug: 'salimos', name: 'salimos', number: '06',
@@ -111,6 +113,6 @@ export const finalists: Finalist[] = [
 
     ],
     cover: { src: '/equipos/salimos.webp' },
-    photos: [], pdf: '/informes/Informe-Salimos.pdf', apk: 'https://salimos-ten.vercel.app/login',
+    photos: [], pdf: '/informes/Informe-Salimos.pdf', apk: 'https://salimos-ten.vercel.app/login', linkType: 'pagina',
   },
 ]

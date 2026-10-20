@@ -64,7 +64,6 @@ export const finalists: Finalist[] = [
     promos: [
       { youtube: 'https://youtube.com/shorts/1lFqA8A5AOg?feature=share', title: 'Reel primera fase' },
       { youtube: 'https://youtube.com/shorts/-9IHXzCgIKA?feature=share', title: 'Reel promocional' },
-      { youtube: 'https://youtube.com/shorts/I8eynT5QzJE?feature=share', title: 'Reel promocional' },
       { youtube: 'https://youtube.com/shorts/rx6VRW6x6qk?feature=share', title: 'Reel promocional' },
     ],
     photos: [], pdf: '/informes/Informe-NoLoNormalices.pdf', apk: 'https://www.instagram.com/nolonormalices.ipm',

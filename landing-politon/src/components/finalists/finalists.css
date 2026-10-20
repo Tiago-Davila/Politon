@@ -50,6 +50,8 @@
 
 /* ---------- ÍNDICE ---------- */
 .fin-index {
+  /* 1vw que deja de crecer al llegar al max-width de .fin-index-inner (1480px) */
+  --fin-vw: min(1vw, 14.8px);
   position: relative;
   overflow-x: clip;
   color: var(--polyton-ink);
@@ -80,14 +82,14 @@
 
 .fin-index-head h2 {
   margin: 0;
-  font: clamp(2.8rem, 7.5vw, 8rem)/.85 var(--font-display);
+  font: clamp(2.8rem, calc(7.5 * var(--fin-vw)), 8rem)/.85 var(--font-display);
   letter-spacing: -.02em;
   color: var(--polyton-night);
 }
 
 .fin-index-head h2 span {
   display: block;
-  padding-left: clamp(1.5rem, 8vw, 8rem);
+  padding-left: clamp(1.5rem, calc(8 * var(--fin-vw)), 8rem);
   color: var(--polyton-red);
   text-shadow: 5px 5px 0 var(--polyton-ink);
 }
@@ -106,7 +108,7 @@
 }
 
 .fin-row {
-  --name-size: clamp(1.9rem, min(8vw, calc(68vw / (var(--len) * .58))), 8.4rem);
+  --name-size: clamp(1.9rem, min(calc(8 * var(--fin-vw)), calc(68 * var(--fin-vw) / (var(--len) * .58))), 8.4rem);
   position: relative;
   isolation: isolate;
   display: grid;

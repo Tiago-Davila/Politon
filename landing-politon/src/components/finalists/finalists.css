@@ -656,7 +656,7 @@
   color: var(--polyton-gold);
 }
 
-/* Reels: dos videos verticales lado a lado, inclinados como stickers */
+/* Reels verticales en un carrusel responsive, inclinados como stickers */
 .fin-cs-promos {
   display: grid;
   grid-auto-flow: column;
@@ -675,7 +675,7 @@
   rotate: -1.5deg;
 }
 
-.fin-media-reel:nth-child(2) {
+.fin-media-reel:nth-child(even) {
   rotate: 1.5deg;
   margin-top: 2.5rem;
 }

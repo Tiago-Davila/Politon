@@ -210,10 +210,11 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
               <a
                 className="fin-cs-intro fin-cs-pdf fin-cs-apk"
                 href={team.apk ?? undefined}
+                target="_blank"
                 download={team.apk ? true : undefined}
                 aria-disabled={team.apk ? undefined : true}
               >
-                <Download size={22} strokeWidth={2.5} aria-hidden="true" /> Descargá la app - APK
+                <Download size={22} strokeWidth={2.5} aria-hidden="true" /> Visitá la página / Descargá la app
                 {team.apk ? null : <span className="fin-cs-soon">Pronto</span>}
               </a>
               <a className="fin-cs-intro fin-cs-pdf" href={team.pdf} target="_blank" rel="noopener noreferrer">
@@ -252,8 +253,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
         <section className="fin-cs-section" aria-labelledby="fin-promos-title">
           <div className="fin-cs-subhead fin-cs-reveal"><span>04 / PARA COMPARTIR</span><h3 id="fin-promos-title">VIDEOS <em>PROMOCIONALES</em></h3></div>
           <div className="fin-cs-promos fin-cs-reveal">
-            {[0, 1].map((i) => (
-              <VideoCard key={i} media={team.promos[i] ?? null} label={team.promos[i]?.title ?? 'Reel promocional'} index={i + 1} vertical />
+            {team.promos.map((media, i) => (
+              <VideoCard key={`${media.youtube}-${i}`} media={media} label={media.title} index={i + 1} vertical />
             ))}
           </div>
         </section>

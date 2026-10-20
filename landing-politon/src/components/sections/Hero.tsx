@@ -282,7 +282,7 @@ const Hero: React.FC = () => {
           ═══════════════════════════════════════ */}
       <a
         ref={igRef}
-        href="https://www.instagram.com/politecnicomodelo/"
+        href="https://www.instagram.com/stories/highlights/17898223374450633/"
         target="_blank"
         rel="noopener noreferrer"
         className="hero-ig"

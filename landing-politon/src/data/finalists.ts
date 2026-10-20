@@ -31,7 +31,7 @@ export type Finalist = {
 }
 
 /* Placeholder hasta tener los videos de cada equipo */
-const DEMO_VIDEO = 'https://www.youtube.com/watch?v=aqz-KE-bpKQ'
+const DEMO_VIDEO = 'https://youtu.be/wan86C-XMII'
 
 // El contenido de los proyectos y sus archivos se completa acá. Los textos
 // actuales indican qué falta, sin atribuirles ideas o productos no confirmados.

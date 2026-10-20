@@ -5,7 +5,7 @@
  * hasta cubrir la pantalla. Tiene su propio scroll (Lenis queda en pausa) y
  * "Seguí explorando" pasa al siguiente equipo sin cerrar.
  */
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ArrowRight, Download, Play, Sparkles, X } from 'lucide-react'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
@@ -82,6 +82,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
   const closeRef = useRef<HTMLButtonElement>(null)
   const firstSlugRef = useRef(team.slug)
   const lenisRef = useRef<Lenis | null>(null)
+  const [expanded, setExpanded] = useState(false)
+  const paragraphs = team.product.split('\n\n')
+  const isLong = paragraphs.length > 1 || team.product.length > 320
+
+  /* Cada equipo arranca con el proceso colapsado */
+  useEffect(() => { setExpanded(false) }, [team.slug])
 
   /* Smooth scroll propio: el Lenis de la home queda en pausa mientras tanto */
   useEffect(() => {
@@ -241,7 +247,25 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
             <span className="fin-cs-ghost" aria-hidden="true">02</span>
             <span className="fin-cs-label">02 / EL PROCESO</span>
             <h3>De la idea <em>al producto</em></h3>
-            <p>{team.product}</p>
+            <div id="fin-cs-product" className={expanded ? 'fin-cs-more is-open' : 'fin-cs-more'}>
+              {(expanded ? paragraphs : paragraphs.slice(0, 1)).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            {isLong && (
+              <button
+                type="button"
+                className="fin-cs-toggle"
+                aria-expanded={expanded}
+                aria-controls="fin-cs-product"
+                onClick={() => {
+                  setExpanded((v) => !v)
+                  requestAnimationFrame(() => ScrollTrigger.refresh())
+                }}
+              >
+                {expanded ? 'Ver menos −' : 'Ver más +'}
+              </button>
+            )}
           </article>
         </div>
 

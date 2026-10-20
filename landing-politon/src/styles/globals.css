@@ -2424,6 +2424,15 @@ a {
   background: var(--polyton-gold);
 }
 
+/* Botón al stream: el mismo del hero, pero en el flujo del overlay */
+.hero-ig.stream-cta {
+  position: relative;
+  inset: auto;
+  margin: 2rem 0 0;
+  pointer-events: auto;
+  rotate: -1.5deg;
+}
+
 @media (max-width: 768px) {
   .stream-frame {
     clip-path: inset(33% 7% 33% 7% round 24px);

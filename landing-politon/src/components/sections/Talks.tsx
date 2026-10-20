@@ -34,6 +34,14 @@ const SPEAKERS = [
     accent: '#C94C2E',
     sectionBg: '#4A2C1C',
   },
+  {
+    name: 'Julieta Molina',
+    topic: 'Cómo armar un buen pitch',
+    photoUrl: '/speakers/julieta-molina.webp',
+    tags: ['Comunicación', 'Hooks', 'Oratoria', 'Persuasión'],
+    accent: '#E8836A',
+    sectionBg: '#1E2D5C',
+  },
 ]
 
 /* Desktop y mobile pinean; solo reduced motion cae al scroll horizontal nativo */

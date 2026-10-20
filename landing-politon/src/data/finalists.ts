@@ -20,6 +20,8 @@ export type Finalist = {
   demo: FinalistVideo | null
   promos: FinalistVideo[]
   photos: FinalistMedia[]
+  /* Portada del hover y del caso; casi todas son horizontales */
+  cover: { src: string; portrait?: boolean }
   /* Informe final del proyecto (por ahora todos apuntan al PDF demo) */
   pdf: string
   /* Descarga del APK de la app, o null mientras no esté publicado */
@@ -41,6 +43,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/FBN5INpaWrk?feature=share', title: 'Reel primera fase' },
       { youtube: 'https://youtube.com/shorts/fbpHYMmTdKI?feature=share', title: 'Reel promocional' },
     ],
+    cover: { src: '/equipos/ecosmart.webp' },
     photos: [], pdf: '/informes/Informe-EcoSmart.pdf', apk: null,
   },
   {
@@ -54,6 +57,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/y5WAOrL0TsQ?feature=share', title: 'Reel promocional' },
 
     ],
+    cover: { src: '/equipos/MindFirst.webp' },
     photos: [], pdf: '/informes/Informe-MindFirst.pdf', apk: 'https://mindfirst.policloudservices.ipm.edu.ar/',
   },
   {
@@ -66,6 +70,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/-9IHXzCgIKA?feature=share', title: 'Reel promocional' },
       { youtube: 'https://youtube.com/shorts/rx6VRW6x6qk?feature=share', title: 'Reel promocional' },
     ],
+    cover: { src: '/equipos/nolonormalices.webp', portrait: true },
     photos: [], pdf: '/informes/Informe-NoLoNormalices.pdf', apk: 'https://www.instagram.com/nolonormalices.ipm',
   },
   {
@@ -77,6 +82,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/Qx-hjN7l_pg?feature=share', title: 'Reel primera fase' },
       { youtube: 'https://youtu.be/ko6X3IEO5w0', title: 'Reel promocional' },
     ],
+    cover: { src: '/equipos/bloquia.webp' },
     photos: [], pdf: '/informes/Informe-BloqIA.pdf', apk: 'https://bloqia.policloudservices.ipm.edu.ar/',
   },
   {
@@ -90,6 +96,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/gltuG5VmmLY?feature=share', title: 'Reel promocional' },
 
     ],
+    cover: { src: '/equipos/desconectado.webp' },
     photos: [], pdf: '/informes/Informe-(DES)CONECTADO.pdf', apk: null,
   },
   {
@@ -103,6 +110,7 @@ export const finalists: Finalist[] = [
       { youtube: 'https://youtube.com/shorts/icNDqOLZMkg?feature=share', title: 'Reel promocional' },
 
     ],
+    cover: { src: '/equipos/salimos.webp' },
     photos: [], pdf: '/informes/Informe-Salimos.pdf', apk: 'https://salimos-ten.vercel.app/login',
   },
 ]

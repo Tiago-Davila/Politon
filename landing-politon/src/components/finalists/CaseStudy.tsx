@@ -228,7 +228,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
               </a>
             </div>
           </div>
-          <div className="fin-cs-head-art">
+          <div className={`fin-cs-head-art${team.cover.portrait ? ' is-portrait' : ''}`}>
             <TeamCover team={team} index={index} />
             <CircularText className="fin-cs-stamp" text="FASE 02 ✦ FASE 02 ✦ FASE 02 ✦ " duration={16}>
               <Sparkles size={26} strokeWidth={2.2} aria-hidden="true" />

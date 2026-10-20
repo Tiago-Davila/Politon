@@ -124,6 +124,8 @@ const FinalistsIndex: React.FC<FinalistsIndexProps> = ({ onOpen }) => {
     const cover = coverRefs.current[i]
     if (!follow || !cover || activeRef.current === i) return
     activeRef.current = i
+    /* La tarjeta se acomoda a la orientación de la portada */
+    previewRef.current?.classList.toggle('is-portrait', Boolean(finalists[i].cover.portrait))
     layerRef.current += 1
     gsap.set(cover, { zIndex: layerRef.current })
     gsap.fromTo(cover, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.out' })

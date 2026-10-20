@@ -220,13 +220,22 @@
   top: 0;
   left: 0;
   z-index: 40;
-  width: clamp(240px, 21vw, 330px);
-  aspect-ratio: 4 / 5;
+  /* Las portadas son 1024×574; la de #NoLoNormalices es vertical (483×512) */
+  --w: clamp(300px, 27vw, 430px);
+  --h: clamp(260px, 25vw, 380px);
+  width: var(--w);
+  height: calc(var(--w) * 574 / 1024);
   pointer-events: none;
+  transition: width .6s cubic-bezier(.16, 1, .3, 1), height .6s cubic-bezier(.16, 1, .3, 1);
   background: var(--polyton-ink);
   border: 4px solid var(--polyton-ink);
   box-shadow: 10px 10px 0 var(--polyton-ink);
   overflow: hidden;
+}
+
+.fin-preview.is-portrait {
+  width: calc(var(--h) * 483 / 512);
+  height: var(--h);
 }
 
 .fin-preview-layer {
@@ -457,9 +466,14 @@
 .fin-cs-head-art {
   position: relative;
   justify-self: end;
-  width: min(100%, 360px);
-  aspect-ratio: 4 / 5;
+  width: min(100%, 460px);
+  aspect-ratio: 1024 / 574;
   transform: rotate(2deg);
+}
+
+.fin-cs-head-art.is-portrait {
+  width: min(100%, 360px);
+  aspect-ratio: 483 / 512;
 }
 
 .fin-cs-head-art > .fin-cover {

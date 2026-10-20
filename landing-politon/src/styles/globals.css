@@ -3942,49 +3942,6 @@ a {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-<<<<<<< HEAD
-=======
-/* Marca escrita en vertical, como un cartel colgado */
-.side-nav-brand {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  padding: 0.9rem 0.45rem;
-  border: 3px solid var(--polyton-ink);
-  border-radius: 12px;
-  background: var(--polyton-cream);
-  box-shadow: -4px -4px 0 var(--polyton-ink);
-  color: var(--polyton-night);
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: background 0.2s ease;
-}
-
-.side-nav-brand:hover {
-  background: var(--polyton-gold);
-}
-
-.side-nav-year {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  color: var(--polyton-gold);
-  font-family: var(--font-subtitle);
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-shadow: 1px 1px 0 var(--polyton-ink);
-}
-
-/* Al abrir, la marca se esconde: el panel ya la muestra */
-.side-nav.is-open .side-nav-brand,
-.side-nav.is-open .side-nav-year {
-  opacity: 0;
-  pointer-events: none;
-}
-
->>>>>>> f45846d (feat: stream con scroll expand, footer con redes y navbar vertical)
 .side-nav-backdrop {
   position: fixed;
   inset: 0;
@@ -4093,15 +4050,6 @@ a {
 }
 
 @media (max-width: 768px) {
-<<<<<<< HEAD
-=======
-  /* En mobile solo el botón: la marca vertical taparía el contenido */
-  .side-nav-brand,
-  .side-nav-year {
-    display: none;
-  }
-
->>>>>>> f45846d (feat: stream con scroll expand, footer con redes y navbar vertical)
   .side-nav-toggle {
     width: 2.9rem;
     height: 2.9rem;

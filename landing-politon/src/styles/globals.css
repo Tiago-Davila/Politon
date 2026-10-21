@@ -960,7 +960,6 @@ a {
   align-items: flex-start;
   justify-content: flex-start;
   gap: 1rem;
-  min-height: 390px;
   width: 100%;
   text-align: left;
 }
@@ -1001,8 +1000,21 @@ a {
   color: var(--polyton-ink);
   line-height: 1.7;
   max-width: 680px;
-  min-height: 205px;
+  width: 100%;
   margin: 0;
+  /* Fantasma y texto tipeado ocupan la misma celda */
+  display: grid;
+}
+
+.what-body-ghost,
+.what-body-typed {
+  grid-area: 1 / 1;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.what-body-ghost {
+  visibility: hidden;
 }
 
 @media (max-width: 768px) {
@@ -1019,7 +1031,6 @@ a {
   }
 
   .what-container {
-    min-height: 0;
     gap: 0.75rem;
   }
 
@@ -1032,7 +1043,6 @@ a {
   }
 
   .what-body {
-    min-height: 0;
     text-align: left;
     font-size: clamp(0.9rem, 3.6vw, 1rem);
     line-height: 1.55;

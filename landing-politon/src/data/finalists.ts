@@ -60,7 +60,7 @@ export const finalists: Finalist[] = [
 
     ],
     cover: { src: '/equipos/MindFirst.webp' },
-    photos: [], pdf: '/informes/Informe-MindFirst.pdf', apk: 'https://mindfirst.policloudservices.ipm.edu.ar/', linkType: 'pagina',
+    photos: [], pdf: '/informes/Informe-Mindfirst.pdf', apk: 'https://mindfirst.policloudservices.ipm.edu.ar/', linkType: 'pagina',
   },
   {
     slug: 'nolonormalices', name: '#NoLoNormalices', number: '03',

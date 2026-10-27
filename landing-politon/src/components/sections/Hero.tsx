@@ -11,6 +11,7 @@ import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
 import CircularText from '../ui/CircularText'
+import politoVolando from '../../assets/mascot/polito-volando.webp'
 
 /* El shader necesita los HEX reales: se leen de los tokens de globals.css */
 const readToken = (name: string) =>
@@ -31,6 +32,7 @@ const Hero: React.FC = () => {
   const dateRef = useRef<HTMLDivElement>(null)
   const fase2Ref = useRef<HTMLAnchorElement>(null)
   const igRef = useRef<HTMLAnchorElement>(null)
+  const equiposRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     setIsLoading(false)
@@ -85,7 +87,14 @@ const Hero: React.FC = () => {
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
       )
 
-      /* 5 — Sticker "Mirá la fase 2": entra girando y queda saludando */
+      /* 5 — Botón para alentar a los equipos */
+      gsap.fromTo(
+        equiposRef.current,
+        { opacity: 0, y: 24, scale: 0.85 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(2)', delay: 0.9 }
+      )
+
+      /* 6 — Sticker "Mirá la fase 2": entra girando y queda saludando */
       const fase2 = fase2Ref.current
       if (fase2) {
         gsap.fromTo(
@@ -100,7 +109,7 @@ const Hero: React.FC = () => {
         )
       }
 
-      /* 6 — Link a Instagram: entra desde la izquierda */
+      /* 7 — Link a Instagram: entra desde la izquierda */
       gsap.fromTo(
         igRef.current,
         { opacity: 0, x: -40 },
@@ -261,6 +270,13 @@ const Hero: React.FC = () => {
           </p>
           <span className="hero-date-rule" aria-hidden="true" />
         </div>
+
+        {/* Acceso a la página de equipos */}
+        <a ref={equiposRef} href="/equipos" className="hero-equipos" style={{ opacity: 0 }}>
+          <img className="hero-equipos-polito" src={politoVolando} alt="" width={900} height={688} />
+          <span>¡Alentá a los equipos!</span>
+          <ArrowRight size={22} strokeWidth={2.8} aria-hidden="true" />
+        </a>
       </div>
 
       {/* ═══════════════════════════════════════

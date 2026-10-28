@@ -13,7 +13,6 @@ import { finalists } from './data/finalists'
 
 const NotFound = React.lazy(() => import('./components/NotFound'))
 const SegundaFase = React.lazy(() => import('./components/SegundaFase'))
-const Equipos = React.lazy(() => import('./components/Equipos'))
 
 const RegistrationAccordion = React.lazy(() => import('./components/sections/RegistrationAccordion'))
 const EventDaysSummary = React.lazy(() => import('./components/sections/EventDaysSummary'))
@@ -22,7 +21,6 @@ const Stream = React.lazy(() => import('./components/sections/Stream'))
 const Register = React.lazy(() => import('./components/sections/Register'))
 
 const isSegundaFase = () => window.location.pathname.replace(/\/+$/, '') === '/segunda-fase'
-const isEquipos = () => window.location.pathname.replace(/\/+$/, '') === '/equipos'
 
 /* Links viejos a /segunda-fase?equipo=<slug> van a la página del equipo */
 if (isSegundaFase()) {
@@ -133,10 +131,6 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   if (isSegundaFase()) {
     return <Suspense fallback={null}><SegundaFase /></Suspense>
-  }
-
-  if (isEquipos()) {
-    return <Suspense fallback={null}><Equipos /></Suspense>
   }
 
   if (!isKnownRoute()) {

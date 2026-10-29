@@ -2,9 +2,15 @@
   "rewrites": [
     { "source": "/segunda-fase", "destination": "/index.html" },
     { "source": "/segunda-fase/", "destination": "/index.html" },
-    { "source": "/equipo/:slug", "destination": "/index.html" }
+    { "source": "/equipo/:slug", "destination": "/index.html" },
+    { "source": "/equipos-puntos-2026", "destination": "/index.html" },
+    { "source": "/equipos-puntos-2026/", "destination": "/index.html" }
   ],
   "headers": [
+    {
+      "source": "/equipos-puntos-2026(/?)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [

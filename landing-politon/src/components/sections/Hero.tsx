@@ -120,12 +120,12 @@ const Hero: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--polyton-night)',
-        /* top: aire arriba del bloque de texto */
-        padding: 'clamp(7.5rem, 17vh, 10rem) 1.25rem 3rem',
+        /* Bloque de texto centrado en alto; el aire deja lugar al menú y los stickers */
+        padding: 'clamp(5rem, 10vh, 7rem) 1.25rem',
       }}
     >
       {/* ═══════════════════════════════════════

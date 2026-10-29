@@ -5,10 +5,12 @@
  * halftone, con la paleta de la marca + grain vintage encima.
  */
 import React, { useEffect, useMemo, useRef } from 'react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { gsap } from '../../lib/gsap'
 import { splitText } from '../../lib/textSplit'
 import { useLoader } from '../../contexts/LoaderContext'
 import Dither from '../ui/Dither'
+import CircularText from '../ui/CircularText'
 
 /* El shader necesita los HEX reales: se leen de los tokens de globals.css */
 const readToken = (name: string) =>
@@ -27,6 +29,8 @@ const Hero: React.FC = () => {
   const eyebrowRef = useRef<HTMLParagraphElement>(null)
   const specialRef = useRef<HTMLDivElement>(null)
   const dateRef = useRef<HTMLDivElement>(null)
+  const fase2Ref = useRef<HTMLAnchorElement>(null)
+  const igRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     setIsLoading(false)
@@ -79,6 +83,28 @@ const Hero: React.FC = () => {
         dateRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.75 }
+      )
+
+      /* 5 — Sticker "Mirá la fase 2": entra girando y queda saludando */
+      const fase2 = fase2Ref.current
+      if (fase2) {
+        gsap.fromTo(
+          fase2.querySelector('.hero-fase2-seal'),
+          { scale: 0, rotate: -120 },
+          { scale: 1, rotate: 0, duration: 0.9, ease: 'back.out(1.8)', delay: 1 }
+        )
+        gsap.fromTo(
+          fase2.querySelector('.hero-fase2-label'),
+          { opacity: 0, x: 40, rotate: 8 },
+          { opacity: 1, x: 0, rotate: -3, duration: 0.7, ease: 'back.out(2)', delay: 1.2 }
+        )
+      }
+
+      /* 6 — Link a Instagram: entra desde la izquierda */
+      gsap.fromTo(
+        igRef.current,
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.7, ease: 'back.out(2)', delay: 1.3 }
       )
     }, sectionRef)
 
@@ -236,6 +262,39 @@ const Hero: React.FC = () => {
           <span className="hero-date-rule" aria-hidden="true" />
         </div>
       </div>
+
+      {/* ═══════════════════════════════════════
+          FASE 02 — acceso a los finalistas
+          ═══════════════════════════════════════ */}
+      <a
+        ref={fase2Ref}
+        href="/segunda-fase"
+        className="hero-fase2"
+      >
+        <span className="hero-fase2-label">¡Mirá la fase 2!</span>
+        <CircularText className="hero-fase2-seal" text="FASE 02 ✦ FINALISTAS ✦ " duration={14}>
+          <ArrowRight size={26} strokeWidth={2.8} aria-hidden="true" />
+        </CircularText>
+      </a>
+
+      {/* ═══════════════════════════════════════
+          INSTAGRAM — últimas actualizaciones
+          ═══════════════════════════════════════ */}
+      <a
+        ref={igRef}
+        href="https://www.instagram.com/stories/highlights/17898223374450633/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hero-ig"
+      >
+        <span className="hero-ig-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-9.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" />
+          </svg>
+        </span>
+        <span className="hero-ig-label">Mirá las últimas actualizaciones</span>
+        <ArrowUpRight className="hero-ig-arrow" size={20} strokeWidth={2.6} aria-hidden="true" />
+      </a>
     </section>
   )
 }

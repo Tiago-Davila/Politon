@@ -57,16 +57,24 @@ const WhatIsHackathon: React.FC = () => {
           <h2 ref={titleRef} className="what-title">
             ¿Qué es una Hackatón?
           </h2>
-          <TextType
-            as="p"
-            text={BODY_TEXT}
-            typingSpeed={25}
-            loop={false}
-            showCursor
-            cursorCharacter="|"
-            className="what-body"
-            startOnVisible
-          />
+          {/* La copia invisible reserva el alto final del texto: así el tipeo
+              no agranda la sección en cada letra ni fuerza recalcular el layout */}
+          <div className="what-body">
+            <p className="what-body-ghost" aria-hidden="true">
+              {BODY_TEXT}
+              <span className="text-type__cursor">|</span>
+            </p>
+            <TextType
+              as="p"
+              text={BODY_TEXT}
+              typingSpeed={25}
+              loop={false}
+              showCursor
+              cursorCharacter="|"
+              className="what-body-typed"
+              startOnVisible
+            />
+          </div>
         </div>
 
         <div ref={politoRef} className="what-polito">

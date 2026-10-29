@@ -1,6 +1,6 @@
 # POLITÓN 2026 — Hackatón IPM
 
-Landing page oficial de **Politón 2026**, la hackatón del **Instituto Politécnico Mercedes (IPM)**, Buenos Aires, Argentina.  
+Landing page oficial de **Politón 2026**, la hackatón del **Instituto Politécnico Modelo (IPM)**, Buenos Aires, Argentina.  
 48 horas donde equipos de 4 estudiantes del ciclo superior (4to, 5to y 6to año) de Computación y Mecánica resuelven un problema real usando metodología **Design Thinking + Design Sprint**.
 
 **Sitio en vivo:** [politecnico.ipm.edu.ar](https://politecnico.ipm.edu.ar)

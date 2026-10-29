@@ -7,14 +7,34 @@ import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import WhatIsHackathon from './components/sections/WhatIsHackathon'
 import Process from './components/sections/Process'
+import FinalistsSection from './components/finalists/FinalistsSection'
 import PageLoader from './components/ui/PageLoader'
+import { finalists } from './data/finalists'
+
+const NotFound = React.lazy(() => import('./components/NotFound'))
+const SegundaFase = React.lazy(() => import('./components/SegundaFase'))
 
 const RegistrationAccordion = React.lazy(() => import('./components/sections/RegistrationAccordion'))
 const EventDaysSummary = React.lazy(() => import('./components/sections/EventDaysSummary'))
-const Challenges = React.lazy(() => import('./components/sections/Challenges'))
 const Talks = React.lazy(() => import('./components/sections/Talks'))
 const Stream = React.lazy(() => import('./components/sections/Stream'))
 const Register = React.lazy(() => import('./components/sections/Register'))
+
+const isSegundaFase = () => window.location.pathname.replace(/\/+$/, '') === '/segunda-fase'
+
+/* Links viejos a /segunda-fase?equipo=<slug> van a la página del equipo */
+if (isSegundaFase()) {
+  const equipo = new URLSearchParams(window.location.search).get('equipo')
+  if (equipo) window.history.replaceState(null, '', `/equipo/${encodeURIComponent(equipo)}`)
+}
+
+/* Rutas válidas: la home, /segunda-fase y la página de cada equipo. El resto es 404 */
+const isKnownRoute = () => {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  if (path === '/' || path === '/index.html') return true
+  const team = path.match(/^\/equipo\/([^/]+)$/)
+  return team !== null && finalists.some((t) => t.slug === decodeURIComponent(team[1]))
+}
 
 const LazySection = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -44,7 +64,7 @@ const LazySection = ({ children }: { children: React.ReactNode }) => {
   }, [shouldRender])
 
   return (
-    <div ref={ref} style={shouldRender ? undefined : { minHeight: 1 }}>
+    <div ref={ref} data-lazy-section style={shouldRender ? undefined : { minHeight: 1 }}>
       {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
     </div>
   )
@@ -93,9 +113,7 @@ const AppContent: React.FC = () => {
         <LazySection>
           <EventDaysSummary />
         </LazySection>
-        <LazySection>
-          <Challenges />
-        </LazySection>
+        <FinalistsSection />
         <LazySection>
           <Talks />
         </LazySection>
@@ -111,6 +129,14 @@ const AppContent: React.FC = () => {
 }
 
 const App: React.FC = () => {
+  if (isSegundaFase()) {
+    return <Suspense fallback={null}><SegundaFase /></Suspense>
+  }
+
+  if (!isKnownRoute()) {
+    return <Suspense fallback={null}><NotFound /></Suspense>
+  }
+
   return (
     <LoaderProvider>
       <AppContent />

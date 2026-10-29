@@ -2,7 +2,7 @@
 
 ## Contexto del proyecto
 
-Sitio web oficial de **Politón 2026**, la hackathon oficial del **Instituto Politécnico Mercedes (IPM)**, Buenos Aires, Argentina. Un evento de 48 horas donde equipos de 4 estudiantes del ciclo superior (4to, 5to y 6to año) de las orientaciones **Computación y Mecánica** trabajan juntos para entender un problema real, generar ideas y presentar una solución concreta mediante un pitch y un reel.
+Sitio web oficial de **Politón 2026**, la hackathon oficial del **Instituto Politécnico Modelo (IPM)**, Buenos Aires, Argentina. Un evento de 48 horas donde equipos de 4 estudiantes del ciclo superior (4to, 5to y 6to año) de las orientaciones **Computación y Mecánica** trabajan juntos para entender un problema real, generar ideas y presentar una solución concreta mediante un pitch y un reel.
 
 La metodología es **Design Thinking + Design Sprint**: comprender el problema → detectar oportunidades → generar ideas → validar propuestas → comunicarlas.
 
@@ -15,7 +15,7 @@ El sitio debe funcionar como una landing page de alto impacto visual. No es un s
 ```
 Nombre:         POLITÓN 2026
 Edición:        Fase 01 — primera edición con continuidad futura
-Institución:    Instituto Politécnico Mercedes (IPM)
+Institución:    Instituto Politécnico Modelo (IPM)
 Fechas:         24, 25 y 26 de junio de 2026
 Duración:       48 horas
 Hashtag:        #POLITÓN2026

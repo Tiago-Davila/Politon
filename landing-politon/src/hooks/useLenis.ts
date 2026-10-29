@@ -33,6 +33,8 @@ export function useLenis(): void {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      /* Zonas con su propio Lenis (p. ej. la página de cada equipo) */
+      prevent: (node: HTMLElement) => node.hasAttribute('data-lenis-scope'),
     })
 
     lenisInstance = lenis

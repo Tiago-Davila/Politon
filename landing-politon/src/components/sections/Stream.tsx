@@ -6,8 +6,11 @@
  * aparece encima el resumen de la transmisión.
  */
 import React, { useEffect, useRef } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { gsap } from '../../lib/gsap'
 import streamImg from '../../assets/stream/stream.webp'
+
+const STREAM_URL = 'https://www.youtube.com/@politecnicomodelo/streams'
 
 const CONTENT = ['Cámara en vivo', 'Entrevistas', 'Móviles', 'Secciones especiales']
 
@@ -35,6 +38,7 @@ const Stream: React.FC = () => {
   const tintRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     const section = sectionRef.current
@@ -44,7 +48,8 @@ const Stream: React.FC = () => {
     const tint = tintRef.current
     const title = titleRef.current
     const overlay = overlayRef.current
-    if (!section || !frame || !border || !media || !tint || !title || !overlay) return
+    const cta = ctaRef.current
+    if (!section || !frame || !border || !media || !tint || !title || !overlay || !cta) return
 
     const mm = gsap.matchMedia()
 
@@ -90,6 +95,8 @@ const Stream: React.FC = () => {
             const c = smoothstep(0.78 + i * 0.04, 0.88 + i * 0.04, p)
             gsap.set(chip, { opacity: c, y: 16 * (1 - c), rotate: (i % 2 ? 2 : -2) * c })
           })
+          /* El overlay no recibe clicks: el botón solo se activa cuando ya se ve */
+          cta.style.pointerEvents = inn > 0.6 ? 'auto' : 'none'
         }
 
         const state = { p: 0 }
@@ -116,6 +123,7 @@ const Stream: React.FC = () => {
 
         return () => {
           frame.style.clipPath = ''
+          cta.style.pointerEvents = ''
           gsap.set([border, media, tint, title, overlay, ...chips], {
             clearProps: 'top,bottom,left,right,borderRadius,opacity,transform',
           })
@@ -167,6 +175,21 @@ const Stream: React.FC = () => {
             </li>
           ))}
         </ul>
+        <a
+          ref={ctaRef}
+          href={STREAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-ig stream-cta"
+        >
+          <span className="hero-ig-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.1V8.9l5.8 3.1-5.8 3.1Z" />
+            </svg>
+          </span>
+          <span className="hero-ig-label">Mirá el stream</span>
+          <ArrowUpRight className="hero-ig-arrow" size={20} strokeWidth={2.6} aria-hidden="true" />
+        </a>
       </div>
     </section>
   )

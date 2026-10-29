@@ -28,11 +28,19 @@ const SPEAKERS = [
   },
   {
     name: 'Marco Pontoriero',
-    topic: 'Diseño web',
+    topic: 'Tu idea en un reel',
     photoUrl: '/speakers/marco-pontoriero.webp',
-    tags: ['UX/UI', 'Diseño web', 'Prototipado', 'Identidad visual'],
+    tags: ['Storytelling', 'Edición de video', 'Guion', 'Redes sociales'],
     accent: '#C94C2E',
     sectionBg: '#4A2C1C',
+  },
+  {
+    name: 'Julieta Molina',
+    topic: 'Cómo armar un buen pitch',
+    photoUrl: '/speakers/julieta-molina.webp',
+    tags: ['Comunicación', 'Hooks', 'Oratoria', 'Persuasión'],
+    accent: '#E8836A',
+    sectionBg: '#1E2D5C',
   },
 ]
 

@@ -464,6 +464,103 @@
   border: 2px solid var(--polyton-ink);
 }
 
+/* Polito para votar al equipo, debajo de los links */
+.fin-vote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  margin-top: 1.75rem;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fin-vote-art {
+  position: relative;
+  width: clamp(110px, 10vw, 150px);
+  aspect-ratio: 1;
+}
+
+.fin-vote-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(4px 4px 0 var(--polyton-ink));
+  animation: fin-vote-bob 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.fin-vote-hint {
+  padding: .15rem .6rem;
+  font: 1rem var(--font-subtitle);
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: var(--polyton-ink);
+  background: var(--polyton-paper);
+  border: 2px solid var(--polyton-ink);
+  box-shadow: 3px 3px 0 var(--polyton-ink);
+  rotate: -2deg;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.fin-vote.is-blocked {
+  cursor: not-allowed;
+}
+
+.fin-vote.is-blocked img {
+  filter: drop-shadow(4px 4px 0 var(--polyton-ink)) saturate(.35) brightness(.85);
+}
+
+.fin-vote.is-blocked .fin-vote-hint {
+  color: var(--polyton-cream);
+  background: var(--polyton-red);
+}
+
+@keyframes fin-vote-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -6px; }
+}
+
+/* "+1" que sale volando de Polito */
+.fin-vote-pops {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fin-vote-pop {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  font: 1.6rem var(--font-display);
+  color: var(--polyton-gold);
+  text-shadow: 2px 2px 0 var(--polyton-ink);
+  -webkit-text-stroke: 1.5px var(--polyton-ink);
+  paint-order: stroke fill;
+  animation: fin-vote-pop .8s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+@keyframes fin-vote-pop {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(.5); }
+  20% { opacity: 1; transform: translate(-50%, -14px) scale(1.15); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--drift)), -70px) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fin-vote-art img {
+    animation: none;
+  }
+
+  .fin-vote-pop {
+    display: none;
+  }
+}
 
 .fin-cs-head-art {
   position: relative;

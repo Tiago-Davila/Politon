@@ -883,51 +883,6 @@ a {
   }
 }
 
-/* Hero: botón a la página para alentar a los equipos */
-.hero-equipos {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.4rem;
-  padding: 0.55rem 1.2rem 0.55rem 0.6rem;
-  font: clamp(1.2rem, 1.7vw, 1.5rem) var(--font-subtitle);
-  letter-spacing: 0.04em;
-  color: var(--polyton-ink);
-  text-decoration: none;
-  background: var(--polyton-gold);
-  border: 3px solid var(--polyton-ink);
-  box-shadow: 5px 5px 0 var(--polyton-ink);
-  rotate: -1.5deg;
-  transition: box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), translate 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-equipos-polito {
-  width: 3.4rem;
-  height: auto;
-  margin-block: -1rem -0.6rem;
-  filter: drop-shadow(2px 2px 0 var(--polyton-ink));
-  transition: rotate 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-equipos:hover {
-  translate: -2px -3px;
-  box-shadow: 8px 8px 0 var(--polyton-ink);
-}
-
-.hero-equipos:hover .hero-equipos-polito {
-  rotate: -10deg;
-}
-
-.hero-equipos:active {
-  translate: 2px 2px;
-  box-shadow: 2px 2px 0 var(--polyton-ink);
-}
-
-.hero-equipos:focus-visible {
-  outline: 3px solid var(--polyton-cream);
-  outline-offset: 5px;
-}
-
 /* Hero: filete ornamental a los lados de la fecha */
 .hero-date-rule {
   width: 3rem;
@@ -2143,7 +2098,7 @@ a {
 
 .talk-slide-name {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
   line-height: 0.9;
   text-transform: uppercase;
   color: var(--polyton-cream);

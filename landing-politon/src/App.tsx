@@ -13,6 +13,7 @@ import { finalists } from './data/finalists'
 
 const NotFound = React.lazy(() => import('./components/NotFound'))
 const SegundaFase = React.lazy(() => import('./components/SegundaFase'))
+const EquiposPuntos = React.lazy(() => import('./components/EquiposPuntos'))
 
 const RegistrationAccordion = React.lazy(() => import('./components/sections/RegistrationAccordion'))
 const EventDaysSummary = React.lazy(() => import('./components/sections/EventDaysSummary'))
@@ -21,6 +22,8 @@ const Stream = React.lazy(() => import('./components/sections/Stream'))
 const Register = React.lazy(() => import('./components/sections/Register'))
 
 const isSegundaFase = () => window.location.pathname.replace(/\/+$/, '') === '/segunda-fase'
+/* Página oculta con los votos: no se linkea desde ningún lado */
+const isEquiposPuntos = () => window.location.pathname.replace(/\/+$/, '') === '/resultados-votos'
 
 /* Links viejos a /segunda-fase?equipo=<slug> van a la página del equipo */
 if (isSegundaFase()) {
@@ -131,6 +134,10 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   if (isSegundaFase()) {
     return <Suspense fallback={null}><SegundaFase /></Suspense>
+  }
+
+  if (isEquiposPuntos()) {
+    return <Suspense fallback={null}><EquiposPuntos /></Suspense>
   }
 
   if (!isKnownRoute()) {

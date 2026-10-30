@@ -271,7 +271,7 @@ const Hero: React.FC = () => {
         href="/segunda-fase"
         className="hero-fase2"
       >
-        <span className="hero-fase2-label">¡Mirá la fase 2!</span>
+        <span className="hero-fase2-label">Vota a cada equipo!</span>
         <CircularText className="hero-fase2-seal" text="FASE 02 ✦ FINALISTAS ✦ " duration={14}>
           <ArrowRight size={26} strokeWidth={2.8} aria-hidden="true" />
         </CircularText>

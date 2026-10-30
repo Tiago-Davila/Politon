@@ -2,9 +2,15 @@
   "rewrites": [
     { "source": "/segunda-fase", "destination": "/index.html" },
     { "source": "/segunda-fase/", "destination": "/index.html" },
-    { "source": "/equipo/:slug", "destination": "/index.html" }
+    { "source": "/equipo/:slug", "destination": "/index.html" },
+    { "source": "/resultados-votos", "destination": "/index.html" },
+    { "source": "/resultados-votos/", "destination": "/index.html" }
   ],
   "headers": [
+    {
+      "source": "/resultados-votos(/?)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [

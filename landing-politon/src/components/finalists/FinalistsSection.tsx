@@ -50,7 +50,7 @@ const FinalistsSection: React.FC<FinalistsSectionProps> = ({ pageTitle = SITE_TI
   const isOpen = team !== null
 
   useEffect(() => {
-    document.title = team ? `${team.name} — Finalistas | POLITÓN 2026` : pageTitle
+    document.title = team ? `${team.name} — Votos de la gente | POLITÓN 2026` : pageTitle
   }, [team, pageTitle])
 
   /* Links directos a /#equipos */

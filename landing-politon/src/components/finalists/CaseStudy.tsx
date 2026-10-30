@@ -12,6 +12,7 @@ import { gsap, ScrollTrigger } from '../../lib/gsap'
 import type { Finalist, FinalistVideo } from '../../data/finalists'
 import CircularText from '../ui/CircularText'
 import TeamCover from './TeamCover'
+import VotePolito from './VotePolito'
 import type { Origin } from './FinalistsIndex'
 
 interface CaseStudyProps {
@@ -229,6 +230,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ team, index, next, origin, closin
                 <PdfIcon /> Informe final - PDF
               </a>
             </div>
+            {/* key: la racha arranca de cero al pasar a otro equipo */}
+            <VotePolito key={team.slug} slug={team.slug} name={team.name} />
           </div>
           <div className={`fin-cs-head-art${team.cover.portrait ? ' is-portrait' : ''}`}>
             <TeamCover team={team} index={index} />

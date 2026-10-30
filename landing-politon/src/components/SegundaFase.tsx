@@ -20,7 +20,7 @@ const SegundaFase: React.FC = () => {
         <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" /> Volver al inicio
       </a>
       <main>
-        <FinalistsSection pageTitle="Finalistas — Segunda fase | POLITÓN 2026" />
+        <FinalistsSection pageTitle="Votos de la gente | POLITÓN 2026" />
       </main>
       <Register />
     </>

@@ -102,6 +102,22 @@
   padding-left: 1.1rem;
 }
 
+/* Sello de votación, levemente inclinado como un sticker */
+.fin-vote-call {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: .5rem;
+  padding: .5rem 1.4rem;
+  font: clamp(1.4rem, 2.4vw, 2rem)/1.1 var(--font-subtitle);
+  letter-spacing: .04em;
+  color: var(--polyton-ink);
+  background: var(--polyton-gold);
+  border: 3px solid var(--polyton-ink);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 var(--polyton-ink);
+  transform: rotate(-1.5deg);
+}
+
 .fin-index-list {
   list-style: none;
   border-top: 4px solid var(--polyton-ink);

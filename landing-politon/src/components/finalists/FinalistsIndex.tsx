@@ -162,6 +162,7 @@ const FinalistsIndex: React.FC<FinalistsIndexProps> = ({ onOpen }) => {
           <p className="fin-overline">✦ CONOCÉ SUS PROYECTOS ✦</p>
           <h2 id="fin-index-title">LOS <span>FINALISTAS</span></h2>
           <p className="fin-index-lead">Elegí un equipo y descubrí el camino que recorrió de la idea al producto.</p>
+          <div className="fin-vote-call">¡Votá a cada equipo!</div>
         </header>
 
         <ul ref={listRef} className="fin-index-list">

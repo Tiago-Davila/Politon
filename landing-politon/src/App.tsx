@@ -23,7 +23,7 @@ const Register = React.lazy(() => import('./components/sections/Register'))
 
 const isSegundaFase = () => window.location.pathname.replace(/\/+$/, '') === '/segunda-fase'
 /* Página oculta con los votos: no se linkea desde ningún lado */
-const isEquiposPuntos = () => window.location.pathname.replace(/\/+$/, '') === '/equipos-puntos-2026'
+const isEquiposPuntos = () => window.location.pathname.replace(/\/+$/, '') === '/resultados-votos'
 
 /* Links viejos a /segunda-fase?equipo=<slug> van a la página del equipo */
 if (isSegundaFase()) {

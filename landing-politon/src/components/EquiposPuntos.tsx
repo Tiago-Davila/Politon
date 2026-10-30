@@ -1,7 +1,7 @@
 /**
  * EquiposPuntos.tsx — POLITÓN 2026
  *
- * Página oculta /equipos-puntos-2026: el tablero con los votos de cada equipo.
+ * Página oculta /resultados-votos: el tablero con los votos de cada equipo.
  * No está linkeada desde ningún lado. Los totales los da GET /api/votos solo
  * con la clave (VOTOS_ADMIN_TOKEN), así que sin ella no se ve ningún número.
  * La clave queda guardada en este navegador para no pedirla cada vez.

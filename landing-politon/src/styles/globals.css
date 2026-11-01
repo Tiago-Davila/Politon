@@ -2191,6 +2191,11 @@ a {
     scroll-snap-align: start;
   }
 
+  .talk-slide-name{
+    font-size: 1.4rem;
+  }
+
+
   .talk-slide-tag,
   .talk-slide-name,
   .talk-slide-topic {
